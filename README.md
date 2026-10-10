@@ -4,9 +4,9 @@
 
 <br>
 
-[![License: MIT](https://img.shields.io/badge/license-MIT-0969da.svg)](LICENSE) [![Claude Code](https://img.shields.io/badge/Claude_Code-hooks_%2B_slash_commands-cc785c.svg)](https://claude.com/claude-code) [![Python 3.9+](https://img.shields.io/badge/python-3.9%2B-3776AB.svg?logo=python&logoColor=white)](#-依赖) [![Checks](https://img.shields.io/badge/consistency_checks-14-1a7f37.svg)](#-一致性检查) [![Docs](https://img.shields.io/badge/docs-中文-8250df.svg)](docs/架构说明.md) [![Smoke test](https://github.com/Zemmeng/claude-study-system/actions/workflows/smoke.yml/badge.svg)](https://github.com/Zemmeng/claude-study-system/actions/workflows/smoke.yml)
+[![License: MIT](https://img.shields.io/badge/license-MIT-0969da.svg)](LICENSE) [![Claude Code](https://img.shields.io/badge/Claude_Code-hooks_%2B_slash_commands-cc785c.svg)](https://claude.com/claude-code) [![Python 3.9+](https://img.shields.io/badge/python-3.9%2B-3776AB.svg?logo=python&logoColor=white)](#-依赖) [![Checks](https://img.shields.io/badge/consistency_checks-14-1a7f37.svg)](#-一致性检查) [![Docs](https://img.shields.io/badge/docs-中文-8250df.svg)](docs/架构说明.md) [![LLM](https://img.shields.io/badge/LLM-Claude_%7C_DeepSeek_%7C_Kimi_%7C_OpenAI--compatible-6e7781.svg)](docs/接入其他模型.md) [![Smoke test](https://github.com/Zemmeng/claude-study-system/actions/workflows/smoke.yml/badge.svg)](https://github.com/Zemmeng/claude-study-system/actions/workflows/smoke.yml)
 
-**中文** · [English](README_en.md) · [架构说明](docs/架构说明.md) · [自定义指南](docs/自定义指南.md) · [规则档案](shared/规则档案.md)
+**中文** · [English](README_en.md) · [架构说明](docs/架构说明.md) · [自定义指南](docs/自定义指南.md) · [接入其他模型](docs/接入其他模型.md) · [规则档案](shared/规则档案.md)
 
 </div>
 
@@ -16,6 +16,7 @@
 
 - Claude 按课件一页一页讲，讲完一块就出题，你答完它批，进度记进账本。
 - **三个 hook** 分别在会话开始、每条消息、每个回合结束时介入，把「Claude 应该记得的规则」变成「做不到就拦住」。
+- **不绑定 Claude**：可以让 Claude Code 改用 DeepSeek、Kimi、智谱 GLM，也可以用自带的 `./study` 接任何 OpenAI 兼容模型（OpenAI、通义、OpenRouter、Ollama 本地模型…）。
 
 > 作者读 CS 硕士的一个学期里，四门课全程用它跑，[规则档案](shared/规则档案.md)里记着 53 条规则各自是怎么来的。
 > 这里是**脱敏后的模板版**：课程材料、作业、成绩都不在里面，示例数据是两门虚构课（`algorithms` / `networks`）。
@@ -30,6 +31,7 @@
 - [写文件分区](#-写文件分区)
 - [实际长什么样](#-实际长什么样)
 - [快速开始](#-快速开始)
+- [接入其他模型](#-接入其他模型)
 - [命令](#-命令)
 - [一致性检查](#-一致性检查)
 - [目录结构](#-目录结构)
@@ -169,6 +171,21 @@ python3 shared/工具/初始化.py --apply    #    执行
 > [!WARNING]
 > **你自己的副本里会有课件、录音、作业，别设成 public。** 课件和录音一般是学校的版权，很多课明文禁止分享作业代码。
 
+## 🔌 接入其他模型
+
+不想用 Claude，或者想用自己的 API key，有两条路，共用同一份 `.env`：
+
+```bash
+cp .env.example .env      # 填 STUDY_PROVIDER（deepseek · kimi · glm · qwen · openai · openrouter · ollama …）和 STUDY_API_KEY
+```
+
+| 路线 | 适合 | 命令 |
+|---|---|---|
+| **A · Claude Code + 别家模型** | 功能最全（子 agent、MCP 都在）；厂商要有 Anthropic 兼容接口：DeepSeek · Kimi · 智谱 GLM | `python3 shared/工具/切换模型.py deepseek`，然后 `claude` |
+| **B · 自带运行时** | 不装 Claude Code；**任何 OpenAI 兼容接口**都行 | `./study` |
+
+两条路的三道门、规则、`/学` `/作业` `/总控` 都是同一套文件。功能差别、预设列表和权限说明见 **[接入其他模型](docs/接入其他模型.md)**。
+
 ## 🧰 命令
 
 | 命令 | 做什么 |
@@ -219,6 +236,7 @@ CLAUDE.md                  常驻规则：会话类型 · 怎么讲 / 出题 / �
 └── commands/              /学 /作业 /总控 /next /week /drill /预扫
 shared/
 ├── 配置.json              ⭐ 唯一要按自己学期改的配置
+├── 模型预设.json           各家模型的接口地址和默认模型
 ├── lecture台账.md         ⭐ 页数 / 讲到哪 / 字幕 / 到场 —— 欠帐的唯一数据源
 ├── deadlines.md           学期日历 + 时间线
 ├── 学习日志.md            当前状态 · 断点 · 反复犯的错
@@ -233,15 +251,17 @@ shared/
 ├── 工具手册.md            杂活怎么做：转录 · 截图 · 归档 · 预扫 · 邮箱 · LaTeX
 ├── 规则档案.md            每条规则为什么存在
 ├── API笔记/               探过的工具 API（Canvas · Ed …）
-└── 工具/                  初始化.py 配置.py 导航.py 检查.py 预扫.py 对齐.py 转录.sh md2pdf.py …
+└── 工具/                  初始化.py 配置.py 导航.py 检查.py 预扫.py 切换模型.py 对齐.py 转录.sh …
 <课程>/                    示例：algorithms/ networks/
 ├── CLAUDE.md              这门课的考核、hurdle、考试形式
 ├── 课件/  课件/_预扫/      PDF + 每份 deck 的机械事实
 ├── 字幕/                  转录 + <deck>-对照.md（按课件页码切的转录索引）
 ├── 笔记/  收尾卷/  作业/  tute/  教材/  例卷/  录音/
 └── 答题表达套件.md         把概念写成得分英文句的句式库
-docs/                      架构说明 · 自定义指南 · 图（tools/gen_diagrams.py 重新生成）
-tests/smoke.sh             冒烟测试：模拟新用户从 clone 到部署，CI 每次推送都跑
+study  runtime/            自带运行时：接任意 OpenAI 兼容模型（配置 · 模型客户端 · hook 调度 · 工具）
+.env.example               模型配置模板（复制成 .env，不会被提交）
+docs/                      架构说明 · 自定义指南 · 接入其他模型 · 图（tools/gen_diagrams.py 重新生成）
+tests/                     smoke.sh：新用户从 clone 到部署 · runtime_test.py：自带运行时协议测试
 ```
 
 </details>
@@ -250,7 +270,7 @@ tests/smoke.sh             冒烟测试：模拟新用户从 clone 到部署，C
 
 | 必需 | 用途 |
 |---|---|
-| [Claude Code](https://claude.com/claude-code) | 本体 |
+| [Claude Code](https://claude.com/claude-code)，**或**任意 OpenAI 兼容模型的 API key | 路线 A 用 Claude Code；路线 B 用自带运行时 `./study`（见[接入其他模型](docs/接入其他模型.md)）|
 | macOS 或 Linux | Windows 请用 WSL |
 | Python ≥ 3.9 | 所有脚本和 hook，只用标准库 |
 | `git` | 收尾门的快照和凭证锁（没配 `user.name` 也行，快照会用本地兜底身份）|
@@ -269,6 +289,12 @@ tests/smoke.sh             冒烟测试：模拟新用户从 clone 到部署，C
 <summary><b>只有 Claude Code CLI，没有桌面版，能用吗？</b></summary>
 
 能。依赖桌面版的只有两处：总控核对会话列表（`list_sessions`），以及把 PDF 发到侧边面板（`SendUserFile`）。CLI 下这两步跳过，改成报文件路径。三道门和所有脚本都和桌面版无关，`对齐.py` 读的 transcript 在 CLI 下同样存在。
+</details>
+
+<details>
+<summary><b>不用 Claude 行吗？</b></summary>
+
+行。DeepSeek、Kimi、智谱 GLM 可以直接接进 Claude Code；其他任何 OpenAI 兼容的模型用自带运行时 `./study`。规则、三道门、命令是同一套，见[接入其他模型](docs/接入其他模型.md)。建议用各家的旗舰模型：规则很长，小模型容易守不住。
 </details>
 
 <details>

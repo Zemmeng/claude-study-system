@@ -35,3 +35,8 @@ jobs:
           LANG: C.UTF-8
           PYTHONIOENCODING: utf-8
         run: bash tests/smoke.sh
+      - name: Runtime protocol test (mock LLM server)
+        env:
+          LANG: C.UTF-8
+          PYTHONIOENCODING: utf-8
+        run: python3 tests/runtime_test.py

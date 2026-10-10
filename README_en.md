@@ -4,9 +4,9 @@
 
 <br>
 
-[![License: MIT](https://img.shields.io/badge/license-MIT-0969da.svg)](LICENSE) [![Claude Code](https://img.shields.io/badge/Claude_Code-hooks_%2B_slash_commands-cc785c.svg)](https://claude.com/claude-code) [![Python 3.9+](https://img.shields.io/badge/python-3.9%2B-3776AB.svg?logo=python&logoColor=white)](#-requirements) [![Checks](https://img.shields.io/badge/consistency_checks-14-1a7f37.svg)](#-consistency-checks) [![Smoke test](https://github.com/Zemmeng/claude-study-system/actions/workflows/smoke.yml/badge.svg)](https://github.com/Zemmeng/claude-study-system/actions/workflows/smoke.yml)
+[![License: MIT](https://img.shields.io/badge/license-MIT-0969da.svg)](LICENSE) [![Claude Code](https://img.shields.io/badge/Claude_Code-hooks_%2B_slash_commands-cc785c.svg)](https://claude.com/claude-code) [![Python 3.9+](https://img.shields.io/badge/python-3.9%2B-3776AB.svg?logo=python&logoColor=white)](#-requirements) [![Checks](https://img.shields.io/badge/consistency_checks-14-1a7f37.svg)](#-consistency-checks) [![LLM](https://img.shields.io/badge/LLM-Claude_%7C_DeepSeek_%7C_Kimi_%7C_OpenAI--compatible-6e7781.svg)](docs/接入其他模型.md) [![Smoke test](https://github.com/Zemmeng/claude-study-system/actions/workflows/smoke.yml/badge.svg)](https://github.com/Zemmeng/claude-study-system/actions/workflows/smoke.yml)
 
-[中文](README.md) · **English** · [Architecture (zh)](docs/架构说明.md) · [Customization guide (zh)](docs/自定义指南.md)
+[中文](README.md) · **English** · [Architecture (zh)](docs/架构说明.md) · [Customization guide (zh)](docs/自定义指南.md) · [Other LLMs (zh)](docs/接入其他模型.md)
 
 </div>
 
@@ -16,6 +16,7 @@ A study harness that runs inside **Claude Code**. It is not a prompt collection.
 
 - Claude teaches your slides page by page. After each chunk it sets questions, you answer, it marks, and progress goes into a ledger.
 - **Three hooks** step in at session start, on every message, and at the end of every turn. They turn "rules Claude should remember" into "rules that block the turn when broken".
+- **Not tied to Claude**: point Claude Code at DeepSeek, Kimi or Zhipu GLM, or use the bundled `./study` runtime with any OpenAI-compatible model (OpenAI, Qwen, OpenRouter, local Ollama…).
 
 > The author ran a full semester of a CS master's degree (four courses) on it. The [rule archive](shared/规则档案.md) records where each of its 53 rules came from.
 > This is the **sanitized template**: no course materials, assignments or grades. The sample data is two made-up courses (`algorithms` / `networks`).
@@ -152,6 +153,21 @@ The ledger format contracts are in the [customization guide](docs/自定义指�
 > [!WARNING]
 > **Your own copy will contain slides, recordings and assignments. Keep it private.** Slides and recordings are usually university copyright, and many courses forbid sharing assignment code.
 
+## 🔌 Using other LLMs
+
+Two routes, one shared `.env`:
+
+```bash
+cp .env.example .env      # set STUDY_PROVIDER (deepseek · kimi · glm · qwen · openai · openrouter · ollama …) and STUDY_API_KEY
+```
+
+| Route | Best for | Command |
+|---|---|---|
+| **A · Claude Code with another model** | Full feature set (subagents, MCP). Needs an Anthropic-compatible endpoint: DeepSeek · Kimi · Zhipu GLM | `python3 shared/工具/切换模型.py deepseek`, then `claude` |
+| **B · Bundled runtime** | No Claude Code needed. **Any OpenAI-compatible API** | `./study` |
+
+Both routes use the same rules, hooks and `/学` `/作业` `/总控` commands. The bundled runtime calls the same hook scripts using Claude Code's hook protocol, expands the same command files, and maps tools (`AskUserQuestion` → `ask_user`, `SendUserFile` → `open_file`). Details in [docs/接入其他模型.md](docs/接入其他模型.md).
+
 ## 🧰 Commands
 
 | Command | What it does |
@@ -191,7 +207,7 @@ The ledger format contracts are in the [customization guide](docs/自定义指�
 
 | Required | For |
 |---|---|
-| [Claude Code](https://claude.com/claude-code) | — |
+| [Claude Code](https://claude.com/claude-code), **or** an API key for any OpenAI-compatible model | route A uses Claude Code; route B uses the bundled `./study` runtime |
 | macOS or Linux | on Windows, use WSL |
 | Python ≥ 3.9 | all scripts and hooks (stdlib only) |
 | `git` | end-of-turn snapshots and receipt locks (no `user.name` needed; snapshots fall back to a local identity) |

@@ -96,9 +96,24 @@ def brain_a(text: str):
     return hits
 
 
+def _ask_runtime_model(prompt: str):
+    """自带运行时（./study）调过来的：用 .env 里配置的模型当审计员（小模型档）。拿不到配置就返回 None。"""
+    try:
+        sys.path.insert(0, str(ROOT))
+        from runtime import config as rc
+        from runtime.llm import Client
+        cfg = rc.resolve()
+        c = Client(cfg["base_url"], cfg["api_key"], cfg["small_model"], stream=False, timeout=120)
+        msg, _ = c.chat([{"role": "user", "content": prompt}], max_tokens=400)
+        return (msg.get("content") or "").strip()
+    except Exception:
+        return None
+
+
 def brain_b(text: str, authority: str):
-    """LLM 脑：有登录态的 claude CLI 才生效。返回 None（跳过/通过）或 FAIL 原因字符串。"""
-    if not shutil.which("claude"):
+    """LLM 脑：自带运行时下用 .env 配置的模型；Claude Code 下用有登录态的 claude CLI。返回 None（跳过/通过）或 FAIL 原因字符串。"""
+    use_runtime = bool(os.environ.get("STUDY_RUNTIME"))
+    if not use_runtime and not shutil.which("claude"):
         return None
     prompt = (
         "你是审计员，只做一件事：检查下面「待审文本」里有没有把**已经完成的事**当成**新待办**报给用户。\n"
@@ -107,6 +122,10 @@ def brain_b(text: str, authority: str):
         "输出格式：第一行只写 PASS 或 FAIL；若 FAIL，第二行起用一两句中文指出哪一条、档案哪里说明它已完成。\n\n"
         f"【档案】\n{authority[:12000]}\n\n【待审文本】\n{text[-4000:]}\n"
     )
+    if use_runtime:
+        out = _ask_runtime_model(prompt) or ""
+        first = out.split("\n", 1)[0].strip().upper()
+        return out if re.match(r"FAIL\b", first) and not first.startswith("FAILED") else None
     try:
         env = dict(os.environ, CLAUDE_AUDIT="1")
         # 🔒 模型：注释说用哪个、代码就得用哪个。2026-09-01 体检发现过一次不一致

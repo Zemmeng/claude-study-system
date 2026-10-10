@@ -28,3 +28,7 @@
 # 本机权限设置
 .claude/settings.local.json
 .claude/worktrees/
+
+# 模型接入：key 只放本地
+.env
+.study/

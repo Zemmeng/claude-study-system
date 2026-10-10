@@ -1,0 +1,67 @@
+{
+  "_说明": "两条路共用的模型预设。openai_base_url 给自带运行时（./study）用；anthropic_base_url 给 Claude Code 直连用（切换模型.py）—— 没有这一项的厂商要走本地代理，见 docs/接入其他模型.md。模型名会随厂商更新，一律可以用 .env 里的 STUDY_MODEL / STUDY_SMALL_MODEL 覆盖。",
+
+  "deepseek": {
+    "name": "DeepSeek",
+    "openai_base_url": "https://api.deepseek.com/v1",
+    "anthropic_base_url": "https://api.deepseek.com/anthropic",
+    "model": "deepseek-v4-pro",
+    "small_model": "deepseek-flash",
+    "key_url": "https://platform.deepseek.com/api_keys",
+    "docs": "https://api-docs.deepseek.com/guides/anthropic_api"
+  },
+  "kimi": {
+    "name": "Kimi（Moonshot）",
+    "openai_base_url": "https://api.moonshot.ai/v1",
+    "anthropic_base_url": "https://api.moonshot.ai/anthropic",
+    "model": "kimi-k3",
+    "anthropic_model": "kimi-k3[1m]",
+    "small_model": "kimi-k2.6",
+    "key_url": "https://platform.kimi.ai",
+    "docs": "https://platform.kimi.ai/docs/guide/claude-code-kimi"
+  },
+  "glm": {
+    "name": "智谱 GLM",
+    "openai_base_url": "https://open.bigmodel.cn/api/paas/v4",
+    "anthropic_base_url": "https://open.bigmodel.cn/api/anthropic",
+    "model": "",
+    "key_url": "https://open.bigmodel.cn",
+    "docs": "https://open.bigmodel.cn"
+  },
+  "qwen": {
+    "name": "通义千问（阿里云百炼）",
+    "openai_base_url": "https://dashscope.aliyuncs.com/compatible-mode/v1",
+    "model": "",
+    "key_url": "https://bailian.console.aliyun.com",
+    "docs": "https://help.aliyun.com/zh/model-studio/"
+  },
+  "openai": {
+    "name": "OpenAI",
+    "openai_base_url": "https://api.openai.com/v1",
+    "model": "",
+    "key_url": "https://platform.openai.com/api-keys",
+    "docs": "https://platform.openai.com/docs"
+  },
+  "openrouter": {
+    "name": "OpenRouter（一个 key 用几百个模型）",
+    "openai_base_url": "https://openrouter.ai/api/v1",
+    "model": "",
+    "key_url": "https://openrouter.ai/keys",
+    "docs": "https://openrouter.ai/docs"
+  },
+  "anthropic": {
+    "name": "Anthropic（API key，不是订阅）",
+    "openai_base_url": "https://api.anthropic.com/v1",
+    "model": "claude-sonnet-5-5",
+    "small_model": "claude-haiku-5-5",
+    "key_url": "https://console.anthropic.com/settings/keys",
+    "docs": "https://docs.anthropic.com/en/api/openai-sdk"
+  },
+  "ollama": {
+    "name": "Ollama（本地模型，不需要 key）",
+    "openai_base_url": "http://localhost:11434/v1",
+    "model": "",
+    "no_key": true,
+    "docs": "https://ollama.com"
+  }
+}
