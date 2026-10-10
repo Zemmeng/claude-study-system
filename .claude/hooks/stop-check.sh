@@ -77,6 +77,9 @@ fi
 #   用 -e（存在即可，文件或目录都算）。
 if command -v git >/dev/null && [ -e "$ROOT/.git" ]; then
   (cd "$ROOT" && git add -A >/dev/null 2>&1
-   git diff --cached --quiet 2>/dev/null || git commit -q -m "turn: $(date '+%F %H:%M')" >/dev/null 2>&1)
+   # 新机器没配 git 身份时 commit 会静默失败，HEAD 停在旧快照、凭证锁跟着失准 —— 用一个兜底身份
+   ID=""
+   git config user.email >/dev/null 2>&1 || ID="-c user.name=study-snapshot -c user.email=study-snapshot@localhost"
+   git diff --cached --quiet 2>/dev/null || git $ID commit -q -m "turn: $(date '+%F %H:%M')" >/dev/null 2>&1)
 fi
 exit 0

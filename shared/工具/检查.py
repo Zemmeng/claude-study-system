@@ -259,7 +259,8 @@ def check_paths():
             tok = tok.strip()
             if any(c in tok for c in "<>*«…") or "NN" in tok or "://" in tok or " " in tok:
                 continue
-            if not (tok.startswith(TOP_DIRS) or tok.startswith("~/")):
+            # ~/ 开头的是本机环境路径（Downloads · Zotero · texlive …），换台电脑必然不存在，不归仓库管 —— 不查
+            if not tok.startswith(TOP_DIRS):
                 continue
             for t in expand_token(tok):
                 key = (rel, t)

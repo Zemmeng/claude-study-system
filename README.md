@@ -4,7 +4,7 @@
 
 <br>
 
-[![License: MIT](https://img.shields.io/badge/license-MIT-0969da.svg)](LICENSE) [![Claude Code](https://img.shields.io/badge/Claude_Code-hooks_%2B_slash_commands-cc785c.svg)](https://claude.com/claude-code) [![Python 3.9+](https://img.shields.io/badge/python-3.9%2B-3776AB.svg?logo=python&logoColor=white)](#-依赖) [![Checks](https://img.shields.io/badge/consistency_checks-14-1a7f37.svg)](#-一致性检查) [![Docs](https://img.shields.io/badge/docs-中文-8250df.svg)](docs/架构说明.md)
+[![License: MIT](https://img.shields.io/badge/license-MIT-0969da.svg)](LICENSE) [![Claude Code](https://img.shields.io/badge/Claude_Code-hooks_%2B_slash_commands-cc785c.svg)](https://claude.com/claude-code) [![Python 3.9+](https://img.shields.io/badge/python-3.9%2B-3776AB.svg?logo=python&logoColor=white)](#-依赖) [![Checks](https://img.shields.io/badge/consistency_checks-14-1a7f37.svg)](#-一致性检查) [![Docs](https://img.shields.io/badge/docs-中文-8250df.svg)](docs/架构说明.md) [![Smoke test](https://github.com/Zemmeng/claude-study-system/actions/workflows/smoke.yml/badge.svg)](https://github.com/Zemmeng/claude-study-system/actions/workflows/smoke.yml)
 
 **中文** · [English](README_en.md) · [架构说明](docs/架构说明.md) · [自定义指南](docs/自定义指南.md) · [规则档案](shared/规则档案.md)
 
@@ -149,13 +149,20 @@ claude                         # 在项目根目录启动 Claude Code
 
 **2. 换成你自己的学期**
 
-| 步骤 | 改什么 |
+```bash
+$EDITOR shared/配置.json                 # ① 学期日历 + 你的课
+mkdir -p cs101/课件 && cp ~/Downloads/lec1.pdf cs101/课件/w01-L1.pdf   # ② 可选：已经拿到的课件先放进去
+python3 shared/工具/初始化.py            # ③ 预演，看它要做什么
+python3 shared/工具/初始化.py --apply    #    执行
+```
+
+`初始化.py --apply` 一条命令做完五件事：删掉两门示例课 → 给每门课建目录和 `CLAUDE.md` 模板 → 生成空白账本（周次表按配置里的学期日历算）→ 已放进去的课件自动登记台账并预扫 → 跑一遍检查。
+
+| 之后 | 怎么做 |
 |---|---|
-| ① | `shared/配置.json`：课程 key（同时是目录名）、代码、中文名、别名、lecture / tute 时间 |
-| ② | 照示例建 `<课程>/课件/ 字幕/ 笔记/ …`，删掉 `algorithms/` `networks/`；课件命名 `wNN-LN.pdf` |
-| ③ | 清空 `shared/` 账本里的示例行（保留表头和顶部说明），`deadlines.md` 换成你的学期日历 |
-| ④ | `CLAUDE.md` 里带 ✏️ 的三节：「关于他」「他的作息」「他的课表」 |
-| ⑤ | `python3 shared/工具/检查.py` 跑到全绿，然后 `claude` |
+| 拿到新课件 / 加一门课 | 放进 `<课程>/课件/wNN-LN.pdf` 或改配置，再跑一次 `初始化.py --apply`，只补缺的，不覆盖已有内容 |
+| 个性化 | 改 `CLAUDE.md` 里带 ✏️ 的三节：「关于他」「他的作息」「他的课表」 |
+| 开始学 | `claude` |
 
 逐项说明和每份账本的格式契约见 **[自定义指南](docs/自定义指南.md)**。
 
@@ -226,14 +233,15 @@ shared/
 ├── 工具手册.md            杂活怎么做：转录 · 截图 · 归档 · 预扫 · 邮箱 · LaTeX
 ├── 规则档案.md            每条规则为什么存在
 ├── API笔记/               探过的工具 API（Canvas · Ed …）
-└── 工具/                  配置.py 导航.py 检查.py 预扫.py 对齐.py 转录.sh md2pdf.py …
+└── 工具/                  初始化.py 配置.py 导航.py 检查.py 预扫.py 对齐.py 转录.sh md2pdf.py …
 <课程>/                    示例：algorithms/ networks/
 ├── CLAUDE.md              这门课的考核、hurdle、考试形式
 ├── 课件/  课件/_预扫/      PDF + 每份 deck 的机械事实
 ├── 字幕/                  转录 + <deck>-对照.md（按课件页码切的转录索引）
 ├── 笔记/  收尾卷/  作业/  tute/  教材/  例卷/  录音/
 └── 答题表达套件.md         把概念写成得分英文句的句式库
-docs/                      架构说明 · 自定义指南 · 图
+docs/                      架构说明 · 自定义指南 · 图（tools/gen_diagrams.py 重新生成）
+tests/smoke.sh             冒烟测试：模拟新用户从 clone 到部署，CI 每次推送都跑
 ```
 
 </details>
@@ -243,9 +251,9 @@ docs/                      架构说明 · 自定义指南 · 图
 | 必需 | 用途 |
 |---|---|
 | [Claude Code](https://claude.com/claude-code) | 本体 |
-| Python ≥ 3.9 | 所有脚本，只用标准库 |
-| `jq` | 开场门拼 JSON |
-| `git` | 收尾门的快照和凭证锁 |
+| macOS 或 Linux | Windows 请用 WSL |
+| Python ≥ 3.9 | 所有脚本和 hook，只用标准库 |
+| `git` | 收尾门的快照和凭证锁（没配 `user.name` 也行，快照会用本地兜底身份）|
 | poppler（`pdfinfo` `pdftotext` `pdftoppm`）| 数页数、预扫、把 PDF 渲染成图检查 |
 
 | 可选 | 用途 |

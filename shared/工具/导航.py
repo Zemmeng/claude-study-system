@@ -71,17 +71,55 @@ def strip_md(s):
 
 # ---------- 学期第几周 ----------
 def week_table(dl):
-    """从 deadlines 的周表解析 {周次: (起, 止)}。"""
-    weeks = {}
+    """从 deadlines 的周表解析 {周次: (起, 止)}。
+
+    周表只写 MM-DD，年份从 配置.YEAR 起算。🔒 学期可能跨年（12 月开学、次年 1 月还在上）——
+    按周号排好序，月份一往回走就把年份 +1。不能按出现顺序判：原项目的周表一行并排两周（W1 和 W7 同一行）。
+    """
+    raw = {}
     for m in re.finditer(r'\|\s*\*{0,2}(W\d{1,2})\*{0,2}\s*\|\s*\*{0,2}(\d{2})-(\d{2})\s*~\s*(\d{2})-(\d{2})',
                          dl):
         w, m1, d1, m2, d2 = m.groups()
+        raw[w] = tuple(int(x) for x in (m1, d1, m2, d2))
+    weeks, year, prev = {}, YEAR, None
+    for w in sorted(raw, key=lambda k: int(k[1:])):
+        m1, d1, m2, d2 = raw[w]
+        if prev is not None and m1 < prev:
+            year += 1
+        prev = m1
         try:
-            weeks[w] = (datetime.date(YEAR, int(m1), int(d1)),
-                        datetime.date(YEAR, int(m2), int(d2)))
+            a = datetime.date(year, m1, d1)
+            b = datetime.date(year + (1 if m2 < m1 else 0), m2, d2)
+            weeks[w] = (a, b)
         except ValueError:
             pass
     return weeks
+
+
+_SPAN = None
+
+
+def md(month, day):
+    """MM-DD → 日期。年份取离学期最近的那一个（学期跨年时 1 月的 DDL 落在下一年）。"""
+    global _SPAN
+    if _SPAN is None:
+        wk = week_table(read('shared/deadlines.md') or '')
+        _SPAN = (min(a for a, _ in wk.values()), max(b for _, b in wk.values())) if wk else ()
+    cands = []
+    for y in (YEAR - 1, YEAR, YEAR + 1):
+        try:
+            cands.append(datetime.date(y, month, day))
+        except ValueError:
+            pass
+    if not cands:
+        raise ValueError(f'{month:02d}-{day:02d}')
+    if not _SPAN:
+        return datetime.date(YEAR, month, day)
+    lo, hi = _SPAN
+
+    def dist(d):
+        return 0 if lo <= d <= hi else min(abs((d - lo).days), abs((d - hi).days))
+    return min(cands, key=dist)
 
 
 def which_week(weeks, today):
@@ -110,7 +148,7 @@ def upcoming(dl, today):
         if not m:
             continue
         try:
-            d = datetime.date(YEAR, int(m.group(1)), int(m.group(2)))
+            d = md(int(m.group(1)), int(m.group(2)))
         except ValueError:
             continue
         delta = (d - today).days
@@ -338,7 +376,7 @@ def actions(dl, ledger, log, today):
         if not m:
             continue
         try:
-            d = datetime.date(YEAR, int(m.group(1)), int(m.group(2)))
+            d = md(int(m.group(1)), int(m.group(2)))
         except ValueError:
             continue
         delta = (d - today).days
@@ -377,7 +415,7 @@ def actions(dl, ledger, log, today):
         if not m:
             continue
         try:
-            d = datetime.date(YEAR, int(m.group(1)), int(m.group(2)))
+            d = md(int(m.group(1)), int(m.group(2)))
         except ValueError:
             continue
         if 0 <= (d - today).days <= 10:
@@ -428,7 +466,19 @@ def main():
     print(f'📅 {today:%Y-%m-%d %A}', end='')
     weeks = _safe('周次', lambda: week_table(dl), {})
     w, wend = which_week(weeks, today)
-    wk = f'{w}' if w else '（周次算不出来，去核 deadlines 的周表）'
+    if w:
+        wk = f'{w}'
+    elif not weeks:
+        wk = '（周次算不出来：deadlines.md 里没有周次表 —— 配好 shared/配置.json 的 semester 再跑 初始化.py --apply）'
+    else:
+        first = min(a for a, _ in weeks.values())
+        last = max(b for _, b in weeks.values())
+        if today < first:
+            wk = f'开学前（W1 从 {first:%m-%d} 开始，还有 {(first - today).days} 天）'
+        elif today > last:
+            wk = f'学期已结束（最后一周到 {last:%m-%d}）'
+        else:
+            wk = '非教学周'
     left = f'（这周还剩 {(wend - today).days} 天）' if wend else ''
     print(f' · 学期 {wk} {left}')
     print()

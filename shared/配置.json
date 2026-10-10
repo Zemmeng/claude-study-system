@@ -1,9 +1,13 @@
 {
   "_说明": "整套架构唯一需要按你自己的学期改的地方。脚本（导航.py · 检查.py · 对齐.py · 文字层索引.py …）全部从这里读课程列表，不再写死课程名。改完跑一次 python3 shared/工具/检查.py 看是否全绿。",
 
+  "_semester_说明": "start = 第 1 教学周的周一；teaching_weeks = 教学周数；breaks = 非教学周（可多段）。初始化.py 用它生成 deadlines.md 的周次表，导航.py 靠那张表算「今天第几周」。",
   "semester": {
     "name": "示例学期 2026 S2",
-    "year": 2026
+    "year": 2026,
+    "start": "2026-07-27",
+    "teaching_weeks": 12,
+    "breaks": [{"from": "2026-09-28", "to": "2026-10-04"}]
   },
 
   "courses": [

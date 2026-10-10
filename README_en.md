@@ -4,7 +4,7 @@
 
 <br>
 
-[![License: MIT](https://img.shields.io/badge/license-MIT-0969da.svg)](LICENSE) [![Claude Code](https://img.shields.io/badge/Claude_Code-hooks_%2B_slash_commands-cc785c.svg)](https://claude.com/claude-code) [![Python 3.9+](https://img.shields.io/badge/python-3.9%2B-3776AB.svg?logo=python&logoColor=white)](#-requirements) [![Checks](https://img.shields.io/badge/consistency_checks-14-1a7f37.svg)](#-consistency-checks)
+[![License: MIT](https://img.shields.io/badge/license-MIT-0969da.svg)](LICENSE) [![Claude Code](https://img.shields.io/badge/Claude_Code-hooks_%2B_slash_commands-cc785c.svg)](https://claude.com/claude-code) [![Python 3.9+](https://img.shields.io/badge/python-3.9%2B-3776AB.svg?logo=python&logoColor=white)](#-requirements) [![Checks](https://img.shields.io/badge/consistency_checks-14-1a7f37.svg)](#-consistency-checks) [![Smoke test](https://github.com/Zemmeng/claude-study-system/actions/workflows/smoke.yml/badge.svg)](https://github.com/Zemmeng/claude-study-system/actions/workflows/smoke.yml)
 
 [中文](README.md) · **English** · [Architecture (zh)](docs/架构说明.md) · [Customization guide (zh)](docs/自定义指南.md)
 
@@ -138,11 +138,14 @@ claude                         # start Claude Code in the project root
 
 **Adapting it to your semester:**
 
-1. Edit **`shared/配置.json`**: course key (also the directory name), code, name, aliases, lecture / tutorial times.
-2. Create `<course>/课件/ 字幕/ 笔记/ …` following the samples and delete `algorithms/` and `networks/`. Slides are named `wNN-LN.pdf`.
-3. Clear the sample rows in the `shared/` ledgers (keep headers), and replace the calendar in `deadlines.md`.
-4. Edit the three sections marked ✏️ in `CLAUDE.md` (about the student, daily rhythm, timetable).
-5. Run `python3 shared/工具/检查.py` until it's green, then `claude`.
+```bash
+$EDITOR shared/配置.json                 # ① semester calendar + your courses
+mkdir -p cs101/课件 && cp ~/Downloads/lec1.pdf cs101/课件/w01-L1.pdf   # ② optional: drop in slides you already have
+python3 shared/工具/初始化.py            # ③ dry run
+python3 shared/工具/初始化.py --apply    #    apply
+```
+
+`初始化.py --apply` (init) removes the two sample courses, creates a directory and `CLAUDE.md` template per course, generates blank ledgers (the week table is computed from the semester calendar in the config), registers and pre-scans any slides already in place, and runs the checker. Run it again whenever you get new slides or add a course: it only fills in what's missing and never overwrites existing content. Then edit the three ✏️ sections in `CLAUDE.md` and run `claude`.
 
 The ledger format contracts are in the [customization guide](docs/自定义指南.md#4-账本格式契约).
 
@@ -189,9 +192,9 @@ The ledger format contracts are in the [customization guide](docs/自定义指�
 | Required | For |
 |---|---|
 | [Claude Code](https://claude.com/claude-code) | — |
-| Python ≥ 3.9 | all scripts (stdlib only) |
-| `jq` | building the SessionStart JSON |
-| `git` | end-of-turn snapshots and receipt locks |
+| macOS or Linux | on Windows, use WSL |
+| Python ≥ 3.9 | all scripts and hooks (stdlib only) |
+| `git` | end-of-turn snapshots and receipt locks (no `user.name` needed; snapshots fall back to a local identity) |
 | poppler (`pdfinfo` `pdftotext` `pdftoppm`) | page counts, pre-scans, rendering PDFs for visual checks |
 
 | Optional | For |

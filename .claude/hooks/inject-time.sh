@@ -48,5 +48,5 @@ if [[ -n "$FAILS" ]]; then
 ${FAILS}"
 fi
 
-jq -n --arg c "$BODY" \
-  '{hookSpecificOutput:{hookEventName:"UserPromptSubmit",additionalContext:$c}}'
+# JSON 用 python3 拼（python3 本来就是必需依赖）—— 原来用 jq，新机器没装 jq 时整道门静默失效，什么都注入不进去
+BODY="$BODY" python3 -c 'import json,os; print(json.dumps({"hookSpecificOutput":{"hookEventName":"UserPromptSubmit","additionalContext":os.environ["BODY"]}}, ensure_ascii=False))'
