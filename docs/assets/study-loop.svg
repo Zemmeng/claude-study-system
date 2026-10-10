@@ -1,0 +1,132 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="470" viewBox="0 0 1200 470" role="img" aria-label="学一份课件">
+<title>学一份课件</title><desc>学一份课件的八步循环</desc>
+<style>
+text{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Hiragino Sans GB","Microsoft YaHei","Noto Sans CJK SC","Noto Sans SC",sans-serif}
+.mono{font-family:"SF Mono",SFMono-Regular,Menlo,Consolas,"Liberation Mono","PingFang SC","Microsoft YaHei",monospace}
+.bg{fill:#ffffff;stroke:#d1d9e0}
+.band{fill:#f6f8fa;stroke:#d1d9e0}
+.card{fill:#ffffff;stroke:#d1d9e0}
+.t{fill:#1f2328}.m{fill:#59636e}.w{fill:#ffffff}
+.ln{stroke:#8c959f;fill:none}.ahf{fill:#8c959f}
+.k-blue{stroke:#0969da}.f-blue{fill:#0969da}.s-blue{fill:#ddf4ff}.c-blue{fill:#0969da}
+.k-orange{stroke:#bc4c00}.f-orange{fill:#bc4c00}.s-orange{fill:#fff1e5}.c-orange{fill:#bc4c00}
+.k-green{stroke:#1a7f37}.f-green{fill:#1a7f37}.s-green{fill:#dafbe1}.c-green{fill:#1a7f37}
+.k-red{stroke:#cf222e}.f-red{fill:#cf222e}.s-red{fill:#ffebe9}.c-red{fill:#cf222e}
+.k-purple{stroke:#8250df}.f-purple{fill:#8250df}.s-purple{fill:#fbefff}.c-purple{fill:#8250df}
+.k-gray{stroke:#818b98}.f-gray{fill:#59636e}.s-gray{fill:#f6f8fa}.c-gray{fill:#59636e}
+.g0{stop-color:#f6f8fa}.g1{stop-color:#eaf2ff}
+.slide{fill:#ffffff;stroke:#d1d9e0}.ph{fill:#d1d9e0}
+@media (prefers-color-scheme: dark){
+.bg{fill:#0d1117;stroke:#3d444d}
+.band{fill:#151b23;stroke:#3d444d}
+.card{fill:#0d1117;stroke:#3d444d}
+.t{fill:#e6edf3}.m{fill:#9198a1}
+.ln{stroke:#656c76}.ahf{fill:#656c76}
+.k-blue{stroke:#4493f8}.f-blue{fill:#1f6feb}.s-blue{fill:rgba(56,139,253,.15)}.c-blue{fill:#4493f8}
+.k-orange{stroke:#f0883e}.f-orange{fill:#bd561d}.s-orange{fill:rgba(219,109,40,.15)}.c-orange{fill:#f0883e}
+.k-green{stroke:#3fb950}.f-green{fill:#238636}.s-green{fill:rgba(46,160,67,.15)}.c-green{fill:#3fb950}
+.k-red{stroke:#f85149}.f-red{fill:#da3633}.s-red{fill:rgba(248,81,73,.15)}.c-red{fill:#f85149}
+.k-purple{stroke:#ab7df8}.f-purple{fill:#8957e5}.s-purple{fill:rgba(171,125,248,.15)}.c-purple{fill:#ab7df8}
+.k-gray{stroke:#656c76}.f-gray{fill:#6e7681}.s-gray{fill:rgba(110,118,129,.12)}.c-gray{fill:#9198a1}
+.g0{stop-color:#0d1117}.g1{stop-color:#132039}
+.slide{fill:#151b23;stroke:#3d444d}.ph{fill:#3d444d}
+}
+</style>
+<defs><marker id="ah-blue" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="c-blue"/></marker><marker id="ah-orange" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="c-orange"/></marker><marker id="ah-green" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="c-green"/></marker><marker id="ah-red" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="c-red"/></marker><marker id="ah-purple" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="c-purple"/></marker><marker id="ah-gray" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="c-gray"/></marker><marker id="ah-n" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="ahf"/></marker><linearGradient id="hero" x1="0" y1="0" x2="1" y2="1"><stop offset="0" class="g0"/><stop offset="1" class="g1"/></linearGradient></defs>
+<rect x="0.5" y="0.5" width="1199" height="469" rx="16" class="bg" />
+<text x="40" y="52" class="t" font-size="24" font-weight="700" text-anchor="start">学一份课件</text>
+<text x="40" y="80" class="m" font-size="14" font-weight="400" text-anchor="start">讲 → 答 → 批，缺一件就重讲 —— 台账只记「三件都齐」的页码</text>
+<rect x="40" y="112" width="126" height="112" rx="10" class="card" stroke-width="1"/>
+<circle cx="64" cy="136" r="12" class="f-gray"/>
+<text x="64" y="141" class="w" font-size="13" font-weight="700" text-anchor="middle">1</text>
+<text x="56" y="176" class="t" font-size="15" font-weight="700" text-anchor="start">预扫摘要</text>
+<text x="56" y="198" class="m" font-size="12.5" font-weight="400" text-anchor="start">没有就先跑</text>
+<text x="56" y="216" class="m" font-size="12.5" font-weight="400" text-anchor="start">预扫.py</text>
+<path d="M168,168 L183,168" class="ln" fill="none" stroke-width="1.6"  marker-end="url(#ah-n)"/>
+<rect x="186" y="112" width="126" height="112" rx="10" class="card" stroke-width="1"/>
+<circle cx="210" cy="136" r="12" class="f-gray"/>
+<text x="210" y="141" class="w" font-size="13" font-weight="700" text-anchor="middle">2</text>
+<text x="202" y="176" class="t" font-size="15" font-weight="700" text-anchor="start">校对对照表</text>
+<text x="202" y="198" class="m" font-size="12.5" font-weight="400" text-anchor="start">没校对的页</text>
+<text x="202" y="216" class="m" font-size="12.5" font-weight="400" text-anchor="start">不许开讲</text>
+<path d="M314,168 L329,168" class="ln" fill="none" stroke-width="1.6"  marker-end="url(#ah-n)"/>
+<rect x="332" y="112" width="126" height="112" rx="10" class="card" stroke-width="1"/>
+<circle cx="356" cy="136" r="12" class="f-gray"/>
+<text x="356" y="141" class="w" font-size="13" font-weight="700" text-anchor="middle">3</text>
+<text x="348" y="176" class="t" font-size="15" font-weight="700" text-anchor="start">发课件 PDF</text>
+<text x="348" y="198" class="m" font-size="12.5" font-weight="400" text-anchor="start">右侧面板</text>
+<text x="348" y="216" class="m" font-size="12.5" font-weight="400" text-anchor="start">左右对照着看</text>
+<path d="M460,168 L475,168" class="ln" fill="none" stroke-width="1.6"  marker-end="url(#ah-n)"/>
+<rect x="478" y="112" width="126" height="112" rx="10" class="card" stroke-width="1"/>
+<rect x="479" y="124" width="4" height="88" rx="2" class="f-blue" />
+<circle cx="502" cy="136" r="12" class="f-blue"/>
+<text x="502" y="141" class="w" font-size="13" font-weight="700" text-anchor="middle">4</text>
+<text x="494" y="176" class="t" font-size="15" font-weight="700" text-anchor="start">讲一块</text>
+<text x="494" y="198" class="m" font-size="12.5" font-weight="400" text-anchor="start">≤ 5 页真内容</text>
+<text x="494" y="216" class="m" font-size="12.5" font-weight="400" text-anchor="start">讲完必停</text>
+<path d="M606,168 L621,168" class="ln" fill="none" stroke-width="1.6"  marker-end="url(#ah-n)"/>
+<rect x="624" y="112" width="126" height="112" rx="10" class="card" stroke-width="1"/>
+<rect x="625" y="124" width="4" height="88" rx="2" class="f-orange" />
+<circle cx="648" cy="136" r="12" class="f-orange"/>
+<text x="648" y="141" class="w" font-size="13" font-weight="700" text-anchor="middle">5</text>
+<text x="640" y="176" class="t" font-size="15" font-weight="700" text-anchor="start">块中快测</text>
+<text x="640" y="198" class="m" font-size="12.5" font-weight="400" text-anchor="start">判断 · 选择 · 填空</text>
+<text x="640" y="216" class="m" font-size="12.5" font-weight="400" text-anchor="start">不出简答</text>
+<path d="M752,168 L767,168" class="ln" fill="none" stroke-width="1.6"  marker-end="url(#ah-n)"/>
+<rect x="770" y="112" width="126" height="112" rx="10" class="card" stroke-width="1"/>
+<rect x="771" y="124" width="4" height="88" rx="2" class="f-orange" />
+<circle cx="794" cy="136" r="12" class="f-orange"/>
+<text x="794" y="141" class="w" font-size="13" font-weight="700" text-anchor="middle">6</text>
+<text x="786" y="176" class="t" font-size="15" font-weight="700" text-anchor="start">你答</text>
+<text x="786" y="198" class="m" font-size="12.5" font-weight="400" text-anchor="start">英文作答</text>
+<path d="M898,168 L913,168" class="ln" fill="none" stroke-width="1.6"  marker-end="url(#ah-n)"/>
+<rect x="916" y="112" width="126" height="112" rx="10" class="card" stroke-width="1"/>
+<rect x="917" y="124" width="4" height="88" rx="2" class="f-orange" />
+<circle cx="940" cy="136" r="12" class="f-orange"/>
+<text x="940" y="141" class="w" font-size="13" font-weight="700" text-anchor="middle">7</text>
+<text x="932" y="176" class="t" font-size="15" font-weight="700" text-anchor="start">批改</text>
+<text x="932" y="198" class="m" font-size="12.5" font-weight="400" text-anchor="start">先原样贴题干</text>
+<text x="932" y="216" class="m" font-size="12.5" font-weight="400" text-anchor="start">只展开错的</text>
+<path d="M1044,168 L1059,168" class="ln" fill="none" stroke-width="1.6"  marker-end="url(#ah-n)"/>
+<rect x="1062" y="112" width="126" height="112" rx="10" class="card" stroke-width="1"/>
+<rect x="1063" y="124" width="4" height="88" rx="2" class="f-green" />
+<circle cx="1086" cy="136" r="12" class="f-green"/>
+<text x="1086" y="141" class="w" font-size="13" font-weight="700" text-anchor="middle">8</text>
+<text x="1078" y="176" class="t" font-size="15" font-weight="700" text-anchor="start">记账</text>
+<text x="1078" y="198" class="m" font-size="12.5" font-weight="400" text-anchor="start">台账 + 学时</text>
+<text x="1078" y="216" class="m" font-size="12.5" font-weight="400" text-anchor="start">同一回合</text>
+<path d="M1105.0,224 L1105.0,258 L541.0,258 L541.0,228" class="k-blue" fill="none" stroke-width="1.6" stroke-dasharray="6 5" marker-end="url(#ah-blue)"/>
+<text x="833.0" y="252" class="c-blue" font-size="12.5" font-weight="600" text-anchor="middle">下一块（一个算法 / 机制讲完再出题）</text>
+<path d="M1147.0,224 L1147.0,302" class="k-purple" fill="none" stroke-width="1.6"  marker-end="url(#ah-purple)"/>
+<text x="1139.0" y="272" class="c-purple" font-size="12" font-weight="600" text-anchor="end">最后一块</text>
+<rect x="40" y="304" width="380" height="140" rx="10" class="card" stroke-width="1"/>
+<rect x="41" y="316" width="4" height="116" rx="2" class="f-green" />
+<text x="64" y="336" class="t" font-size="16" font-weight="700" text-anchor="start">完成的定义</text>
+<rect x="64" y="354" width="60.25" height="26" rx="13.0" class="f-blue" />
+<text x="94.125" y="371.68" class="w" font-size="13" font-weight="600" text-anchor="middle">① 讲了</text>
+<rect x="134.25" y="354" width="73.25" height="26" rx="13.0" class="f-orange" />
+<text x="170.875" y="371.68" class="w" font-size="13" font-weight="600" text-anchor="middle">② 你答了</text>
+<rect x="217.5" y="354" width="60.25" height="26" rx="13.0" class="f-orange" />
+<text x="247.625" y="371.68" class="w" font-size="13" font-weight="600" text-anchor="middle">③ 批了</text>
+<text x="64" y="408" class="t" font-size="13.5" font-weight="400" text-anchor="start">缺一件 → 那一块算没完成，下次从头重讲</text>
+<text x="64" y="430" class="m" font-size="12.5" font-weight="400" text-anchor="start">检查.py 的凭证锁：台账推进必须同回合有学时记录</text>
+<rect x="440" y="304" width="380" height="140" rx="10" class="card" stroke-width="1"/>
+<text x="462" y="336" class="t" font-size="16" font-weight="700" text-anchor="start">转录只是配料</text>
+<text x="462" y="360" class="m" font-size="13" font-weight="400" text-anchor="start">讲到第 N 页才去转录里定位那一段，当场标：</text>
+<circle cx="469" cy="388" r="7" class="f-red"/>
+<text x="482" y="393" class="t" font-size="13.5" font-weight="600" text-anchor="start">考点</text>
+<circle cx="551" cy="388" r="7" class="f-gray"/>
+<text x="564" y="393" class="t" font-size="13.5" font-weight="600" text-anchor="start">不考</text>
+<circle cx="633" cy="388" r="7" class="f-blue"/>
+<text x="646" y="393" class="t" font-size="13.5" font-weight="600" text-anchor="start">补充</text>
+<circle cx="715" cy="388" r="7" class="f-orange"/>
+<text x="728" y="393" class="t" font-size="13.5" font-weight="600" text-anchor="start">易错</text>
+<text x="462" y="424" class="m" font-size="12.5" font-weight="400" text-anchor="start">考点 / 不考 同时进 公告.md（考试范围总账）</text>
+<rect x="840" y="304" width="320" height="140" rx="10" class="card" stroke-width="1"/>
+<rect x="841" y="316" width="4" height="116" rx="2" class="f-purple" />
+<text x="864" y="336" class="t" font-size="16" font-weight="700" text-anchor="start">收尾卷</text>
+<text x="864" y="362" class="t" font-size="13.5" font-weight="400" text-anchor="start">一讲讲完出一份，像考卷一样</text>
+<text x="864" y="386" class="m" font-size="12.5" font-weight="400" text-anchor="start">含 justify · in about three sentences</text>
+<text x="864" y="408" class="m" font-size="12.5" font-weight="400" text-anchor="start">唯一测「英文写不写得出」的地方</text>
+<text x="864" y="430" class="c-purple mono" font-size="12.5" font-weight="600" text-anchor="start">→ &lt;课程&gt;/收尾卷/</text>
+</svg>

@@ -1,0 +1,161 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="822" viewBox="0 0 1200 822" role="img" aria-label="claude-study-system 架构总览">
+<title>claude-study-system 架构总览</title><desc>守护层、会话层、状态层三层架构</desc>
+<style>
+text{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Hiragino Sans GB","Microsoft YaHei","Noto Sans CJK SC","Noto Sans SC",sans-serif}
+.mono{font-family:"SF Mono",SFMono-Regular,Menlo,Consolas,"Liberation Mono","PingFang SC","Microsoft YaHei",monospace}
+.bg{fill:#ffffff;stroke:#d1d9e0}
+.band{fill:#f6f8fa;stroke:#d1d9e0}
+.card{fill:#ffffff;stroke:#d1d9e0}
+.t{fill:#1f2328}.m{fill:#59636e}.w{fill:#ffffff}
+.ln{stroke:#8c959f;fill:none}.ahf{fill:#8c959f}
+.k-blue{stroke:#0969da}.f-blue{fill:#0969da}.s-blue{fill:#ddf4ff}.c-blue{fill:#0969da}
+.k-orange{stroke:#bc4c00}.f-orange{fill:#bc4c00}.s-orange{fill:#fff1e5}.c-orange{fill:#bc4c00}
+.k-green{stroke:#1a7f37}.f-green{fill:#1a7f37}.s-green{fill:#dafbe1}.c-green{fill:#1a7f37}
+.k-red{stroke:#cf222e}.f-red{fill:#cf222e}.s-red{fill:#ffebe9}.c-red{fill:#cf222e}
+.k-purple{stroke:#8250df}.f-purple{fill:#8250df}.s-purple{fill:#fbefff}.c-purple{fill:#8250df}
+.k-gray{stroke:#818b98}.f-gray{fill:#59636e}.s-gray{fill:#f6f8fa}.c-gray{fill:#59636e}
+.g0{stop-color:#f6f8fa}.g1{stop-color:#eaf2ff}
+.slide{fill:#ffffff;stroke:#d1d9e0}.ph{fill:#d1d9e0}
+@media (prefers-color-scheme: dark){
+.bg{fill:#0d1117;stroke:#3d444d}
+.band{fill:#151b23;stroke:#3d444d}
+.card{fill:#0d1117;stroke:#3d444d}
+.t{fill:#e6edf3}.m{fill:#9198a1}
+.ln{stroke:#656c76}.ahf{fill:#656c76}
+.k-blue{stroke:#4493f8}.f-blue{fill:#1f6feb}.s-blue{fill:rgba(56,139,253,.15)}.c-blue{fill:#4493f8}
+.k-orange{stroke:#f0883e}.f-orange{fill:#bd561d}.s-orange{fill:rgba(219,109,40,.15)}.c-orange{fill:#f0883e}
+.k-green{stroke:#3fb950}.f-green{fill:#238636}.s-green{fill:rgba(46,160,67,.15)}.c-green{fill:#3fb950}
+.k-red{stroke:#f85149}.f-red{fill:#da3633}.s-red{fill:rgba(248,81,73,.15)}.c-red{fill:#f85149}
+.k-purple{stroke:#ab7df8}.f-purple{fill:#8957e5}.s-purple{fill:rgba(171,125,248,.15)}.c-purple{fill:#ab7df8}
+.k-gray{stroke:#656c76}.f-gray{fill:#6e7681}.s-gray{fill:rgba(110,118,129,.12)}.c-gray{fill:#9198a1}
+.g0{stop-color:#0d1117}.g1{stop-color:#132039}
+.slide{fill:#151b23;stroke:#3d444d}.ph{fill:#3d444d}
+}
+</style>
+<defs><marker id="ah-blue" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="c-blue"/></marker><marker id="ah-orange" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="c-orange"/></marker><marker id="ah-green" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="c-green"/></marker><marker id="ah-red" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="c-red"/></marker><marker id="ah-purple" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="c-purple"/></marker><marker id="ah-gray" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="c-gray"/></marker><marker id="ah-n" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="ahf"/></marker><linearGradient id="hero" x1="0" y1="0" x2="1" y2="1"><stop offset="0" class="g0"/><stop offset="1" class="g1"/></linearGradient></defs>
+<rect x="0.5" y="0.5" width="1199" height="821" rx="16" class="bg" />
+<text x="40" y="52" class="t" font-size="24" font-weight="700" text-anchor="start">架构总览</text>
+<text x="40" y="80" class="m" font-size="14" font-weight="400" text-anchor="start">三层：守护层（hooks）把规则机械化 · 会话层（slash commands）一个对话只做一件事 · 状态层（文件）是唯一事实来源</text>
+<rect x="24" y="104" width="1152" height="178" rx="14" class="band" />
+<text x="44" y="130" class="t" font-size="15" font-weight="700" text-anchor="start">守护层</text>
+<text x="100" y="130" class="m mono" font-size="13" font-weight="400" text-anchor="start">.claude/hooks/ · .claude/settings.json</text>
+<rect x="40" y="148" width="360" height="118" rx="10" class="card" stroke-width="1"/>
+<rect x="41" y="160" width="4" height="94" rx="2" class="f-blue" />
+<text x="62" y="180" class="t" font-size="18" font-weight="700" text-anchor="start">开场门</text>
+<text x="126.0" y="180" class="m mono" font-size="13" font-weight="400" text-anchor="start">SessionStart</text>
+<rect x="332.0" y="162" width="54.0" height="22" rx="11.0" class="f-gray" />
+<text x="359.0" y="177.32" class="w" font-size="12" font-weight="600" text-anchor="middle">只注入</text>
+<text x="62" y="206" class="c-blue mono" font-size="13" font-weight="500" text-anchor="start">inject-context.sh → 导航.py</text>
+<text x="62" y="230" class="t" font-size="13.5" font-weight="400" text-anchor="start">注入约 5 KB 导航层：周次 · 近期硬截止</text>
+<text x="62" y="251" class="t" font-size="13.5" font-weight="400" text-anchor="start">· 各课状态 · 断点 · 当天提醒 · 体检结果</text>
+<rect x="420" y="148" width="360" height="118" rx="10" class="card" stroke-width="1"/>
+<rect x="421" y="160" width="4" height="94" rx="2" class="f-blue" />
+<text x="442" y="180" class="t" font-size="18" font-weight="700" text-anchor="start">消息门</text>
+<text x="506.0" y="180" class="m mono" font-size="13" font-weight="400" text-anchor="start">UserPromptSubmit</text>
+<rect x="712.0" y="162" width="54.0" height="22" rx="11.0" class="f-gray" />
+<text x="739.0" y="177.32" class="w" font-size="12" font-weight="600" text-anchor="middle">只注入</text>
+<text x="442" y="206" class="c-blue mono" font-size="13" font-weight="500" text-anchor="start">inject-time.sh</text>
+<text x="442" y="230" class="t" font-size="13.5" font-weight="400" text-anchor="start">每条消息注入：当前时间 · 开讲前必查</text>
+<text x="442" y="251" class="t" font-size="13.5" font-weight="400" text-anchor="start">对照表 · 批改先贴题干 · 出题全英文</text>
+<rect x="800" y="148" width="360" height="118" rx="10" class="card" stroke-width="1"/>
+<rect x="801" y="160" width="4" height="94" rx="2" class="f-red" />
+<text x="822" y="180" class="t" font-size="18" font-weight="700" text-anchor="start">收尾门</text>
+<text x="886.0" y="180" class="m mono" font-size="13" font-weight="400" text-anchor="start">Stop</text>
+<rect x="1080.0" y="162" width="66.0" height="22" rx="11.0" class="f-red" />
+<text x="1113.0" y="177.32" class="w" font-size="12" font-weight="600" text-anchor="middle">能拦回合</text>
+<text x="822" y="206" class="c-red mono" font-size="13" font-weight="500" text-anchor="start">stop-check.sh → 检查.py</text>
+<text x="822" y="230" class="t" font-size="13.5" font-weight="400" text-anchor="start">有硬伤 → exit 2 拦回，先修再结束回合</text>
+<text x="822" y="251" class="t" font-size="13.5" font-weight="400" text-anchor="start">全绿 → 行动项审计 → git 快照</text>
+<path d="M330,282 L330,330" class="k-blue" fill="none" stroke-width="1.6"  marker-end="url(#ah-blue)"/>
+<text x="342" y="312" class="c-blue" font-size="12.5" font-weight="600" text-anchor="start">注入：导航层 · 时间 · 必做清单</text>
+<path d="M890,330 L890,282" class="k-red" fill="none" stroke-width="1.6"  marker-end="url(#ah-red)"/>
+<text x="878" y="312" class="c-red" font-size="12.5" font-weight="600" text-anchor="end">每个回合结束都要过门</text>
+<rect x="24" y="330" width="1152" height="214" rx="14" class="band" />
+<text x="44" y="356" class="t" font-size="15" font-weight="700" text-anchor="start">会话层</text>
+<text x="100" y="356" class="m" font-size="13" font-weight="400" text-anchor="start">.claude/commands/ —— 一个对话只做一件事</text>
+<rect x="40" y="374" width="160" height="154" rx="10" class="card" stroke-width="1"/>
+<text x="120" y="412" class="t" font-size="22" font-weight="700" text-anchor="middle">你</text>
+<text x="120" y="442" class="m" font-size="13" font-weight="400" text-anchor="middle">开新对话</text>
+<text x="120" y="466" class="m" font-size="13" font-weight="400" text-anchor="middle">没点名 → 摆菜单</text>
+<text x="120" y="490" class="m" font-size="13" font-weight="400" text-anchor="middle">点了名 → 直接开工</text>
+<path d="M200,440 L226,440" class="ln" fill="none" stroke-width="1.6"  marker-end="url(#ah-n)"/>
+<rect x="230" y="374" width="280" height="118" rx="10" class="card" stroke-width="1"/>
+<rect x="231" y="386" width="4" height="94" rx="2" class="f-blue" />
+<rect x="250" y="390" width="142.79999999999998" height="24" rx="12.0" class="f-blue" />
+<text x="321.4" y="406.68" class="w mono" font-size="13" font-weight="600" text-anchor="middle">/学 &lt;课程&gt; &lt;deck&gt;</text>
+<text x="250" y="442" class="t" font-size="13.5" font-weight="400" text-anchor="start">讲 → 出题 → 答 → 批 → 记账 → 收尾卷</text>
+<text x="250" y="468" class="m" font-size="13" font-weight="400" text-anchor="start">写：自己那门课的目录 · 交接单</text>
+<rect x="535" y="374" width="280" height="118" rx="10" class="card" stroke-width="1"/>
+<rect x="536" y="386" width="4" height="94" rx="2" class="f-orange" />
+<rect x="555" y="390" width="150.6" height="24" rx="12.0" class="f-orange" />
+<text x="630.3" y="406.68" class="w mono" font-size="13" font-weight="600" text-anchor="middle">/作业 &lt;课程&gt; &lt;代号&gt;</text>
+<text x="555" y="442" class="t" font-size="13.5" font-weight="400" text-anchor="start">读 spec → 指引 / 检查 / 排版 → 交</text>
+<text x="555" y="468" class="m" font-size="13" font-weight="400" text-anchor="start">写：自己那门课的目录 · 交接单</text>
+<rect x="880" y="374" width="280" height="118" rx="10" class="card" stroke-width="1"/>
+<rect x="881" y="386" width="4" height="94" rx="2" class="f-green" />
+<rect x="900" y="390" width="51.8" height="24" rx="12.0" class="f-green" />
+<text x="925.9" y="406.68" class="w mono" font-size="13" font-weight="600" text-anchor="middle">/总控</text>
+<text x="900" y="442" class="t" font-size="13.5" font-weight="400" text-anchor="start">邮箱 · 归档 · 预扫 · 转录 · 看板 · 体检</text>
+<text x="900" y="468" class="m" font-size="13" font-weight="400" text-anchor="start">写：shared/ 账本 · 脚本 · 规则</text>
+<rect x="230" y="502" width="585" height="30" rx="8" class="s-purple" />
+<rect x="230" y="502" width="585" height="30" rx="8" fill="none" class="k-purple" stroke-width="1.2"/>
+<text x="246" y="522" class="c-purple mono" font-size="13" font-weight="700" text-anchor="start">shared/交接/</text>
+<text x="350" y="522" class="c-purple" font-size="13" font-weight="400" text-anchor="start">学习会话改不了账本 → 把「该改哪张表哪一行」写成交接单</text>
+<path d="M370,492 L370,502" class="k-purple" fill="none" stroke-width="1.6"  />
+<path d="M675,492 L675,502" class="k-purple" fill="none" stroke-width="1.6"  />
+<path d="M815,517 L848,517 L848,450 L876,450" class="k-purple" fill="none" stroke-width="1.6" stroke-dasharray="6 5" marker-end="url(#ah-purple)"/>
+<text x="1020" y="522" class="c-green" font-size="12.5" font-weight="600" text-anchor="middle">开场第 0 步先清交接单</text>
+<path d="M600,544 L600,588" class="ln" fill="none" stroke-width="1.6"  marker-end="url(#ah-n)"/>
+<text x="612" y="572" class="m" font-size="12.5" font-weight="600" text-anchor="start">读写都按「写文件分区」</text>
+<rect x="24" y="588" width="1152" height="210" rx="14" class="band" />
+<text x="44" y="614" class="t" font-size="15" font-weight="700" text-anchor="start">状态层</text>
+<text x="100" y="614" class="m" font-size="13" font-weight="400" text-anchor="start">文件即状态 —— 新对话从文件取，不靠记忆</text>
+<rect x="40" y="630" width="265" height="154" rx="10" class="card" stroke-width="1"/>
+<rect x="54" y="640" width="103.25" height="22" rx="11.0" class="f-purple" />
+<text x="105.625" y="655.5" class="w" font-size="12.5" font-weight="600" text-anchor="middle">账本 · shared/</text>
+<text x="56" y="686" class="t mono" font-size="11.5" font-weight="500" text-anchor="start">lecture台账.md</text>
+<text x="291" y="686" class="m" font-size="11" font-weight="400" text-anchor="end">唯一数据源</text>
+<text x="56" y="703" class="t mono" font-size="11.5" font-weight="500" text-anchor="start">deadlines.md</text>
+<text x="291" y="703" class="m" font-size="11" font-weight="400" text-anchor="end">日历 + 截止</text>
+<text x="56" y="720" class="t mono" font-size="11.5" font-weight="500" text-anchor="start">学习日志.md</text>
+<text x="291" y="720" class="m" font-size="11" font-weight="400" text-anchor="end">状态 + 断点</text>
+<text x="56" y="737" class="t mono" font-size="11.5" font-weight="500" text-anchor="start">学时记录.md</text>
+<text x="291" y="737" class="m" font-size="11" font-weight="400" text-anchor="end">学时</text>
+<text x="56" y="754" class="t mono" font-size="11.5" font-weight="500" text-anchor="start">公告.md</text>
+<text x="291" y="754" class="m" font-size="11" font-weight="400" text-anchor="end">考点 / 不考</text>
+<text x="56" y="771" class="t mono" font-size="11.5" font-weight="500" text-anchor="start">提醒.tsv · 活动会话.tsv</text>
+<rect x="325" y="630" width="265" height="154" rx="10" class="card" stroke-width="1"/>
+<rect x="339" y="640" width="100.25" height="22" rx="11.0" class="f-blue" />
+<text x="389.125" y="655.5" class="w" font-size="12.5" font-weight="600" text-anchor="middle">课程 · &lt;课程&gt;/</text>
+<text x="341" y="686" class="t mono" font-size="11.5" font-weight="500" text-anchor="start">CLAUDE.md</text>
+<text x="576" y="686" class="m" font-size="11" font-weight="400" text-anchor="end">考核 · hurdle</text>
+<text x="341" y="703" class="t mono" font-size="11.5" font-weight="500" text-anchor="start">课件/ + _预扫/</text>
+<text x="576" y="703" class="m" font-size="11" font-weight="400" text-anchor="end">页数 · offset</text>
+<text x="341" y="720" class="t mono" font-size="11.5" font-weight="500" text-anchor="start">字幕/&lt;deck&gt;-对照.md</text>
+<text x="576" y="720" class="m" font-size="11" font-weight="400" text-anchor="end">转录索引</text>
+<text x="341" y="737" class="t mono" font-size="11.5" font-weight="500" text-anchor="start">笔记/ · 收尾卷/</text>
+<text x="341" y="754" class="t mono" font-size="11.5" font-weight="500" text-anchor="start">答题表达套件.md</text>
+<text x="576" y="754" class="m" font-size="11" font-weight="400" text-anchor="end">英文句式</text>
+<rect x="610" y="630" width="265" height="154" rx="10" class="card" stroke-width="1"/>
+<rect x="624" y="640" width="43.0" height="22" rx="11.0" class="f-orange" />
+<text x="645.5" y="655.5" class="w" font-size="12.5" font-weight="600" text-anchor="middle">规则</text>
+<text x="626" y="686" class="t mono" font-size="11.5" font-weight="500" text-anchor="start">CLAUDE.md</text>
+<text x="861" y="686" class="m" font-size="11" font-weight="400" text-anchor="end">常驻规则</text>
+<text x="626" y="703" class="t mono" font-size="11.5" font-weight="500" text-anchor="start">shared/规则档案.md</text>
+<text x="861" y="703" class="m" font-size="11" font-weight="400" text-anchor="end">为什么</text>
+<text x="626" y="720" class="t mono" font-size="11.5" font-weight="500" text-anchor="start">shared/工具手册.md</text>
+<text x="861" y="720" class="m" font-size="11" font-weight="400" text-anchor="end">怎么做</text>
+<text x="626" y="737" class="t mono" font-size="11.5" font-weight="500" text-anchor="start">工具/规则同步.tsv</text>
+<text x="861" y="737" class="m" font-size="11" font-weight="400" text-anchor="end">防副本走样</text>
+<rect x="895" y="630" width="265" height="154" rx="10" class="card" stroke-width="1"/>
+<rect x="909" y="640" width="135.25" height="22" rx="11.0" class="f-green" />
+<text x="976.625" y="655.5" class="w" font-size="12.5" font-weight="600" text-anchor="middle">工具 · shared/工具/</text>
+<text x="911" y="686" class="t mono" font-size="11.5" font-weight="500" text-anchor="start">shared/配置.json</text>
+<text x="1146" y="686" class="m" font-size="11" font-weight="400" text-anchor="end">唯一要改的</text>
+<text x="911" y="703" class="t mono" font-size="11.5" font-weight="500" text-anchor="start">导航.py</text>
+<text x="1146" y="703" class="m" font-size="11" font-weight="400" text-anchor="end">→ 开场门</text>
+<text x="911" y="720" class="t mono" font-size="11.5" font-weight="500" text-anchor="start">检查.py</text>
+<text x="1146" y="720" class="m" font-size="11" font-weight="400" text-anchor="end">→ 收尾门</text>
+<text x="911" y="737" class="t mono" font-size="11.5" font-weight="500" text-anchor="start">预扫.py · 文字层索引.py</text>
+<text x="911" y="754" class="t mono" font-size="11.5" font-weight="500" text-anchor="start">对齐.py · 转录.sh · md2pdf.py</text>
+</svg>

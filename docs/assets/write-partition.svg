@@ -1,0 +1,87 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="452" viewBox="0 0 1200 452" role="img" aria-label="写文件分区">
+<title>写文件分区</title><desc>学习类与总控类会话各自能写的文件，以及交接单通道</desc>
+<style>
+text{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Hiragino Sans GB","Microsoft YaHei","Noto Sans CJK SC","Noto Sans SC",sans-serif}
+.mono{font-family:"SF Mono",SFMono-Regular,Menlo,Consolas,"Liberation Mono","PingFang SC","Microsoft YaHei",monospace}
+.bg{fill:#ffffff;stroke:#d1d9e0}
+.band{fill:#f6f8fa;stroke:#d1d9e0}
+.card{fill:#ffffff;stroke:#d1d9e0}
+.t{fill:#1f2328}.m{fill:#59636e}.w{fill:#ffffff}
+.ln{stroke:#8c959f;fill:none}.ahf{fill:#8c959f}
+.k-blue{stroke:#0969da}.f-blue{fill:#0969da}.s-blue{fill:#ddf4ff}.c-blue{fill:#0969da}
+.k-orange{stroke:#bc4c00}.f-orange{fill:#bc4c00}.s-orange{fill:#fff1e5}.c-orange{fill:#bc4c00}
+.k-green{stroke:#1a7f37}.f-green{fill:#1a7f37}.s-green{fill:#dafbe1}.c-green{fill:#1a7f37}
+.k-red{stroke:#cf222e}.f-red{fill:#cf222e}.s-red{fill:#ffebe9}.c-red{fill:#cf222e}
+.k-purple{stroke:#8250df}.f-purple{fill:#8250df}.s-purple{fill:#fbefff}.c-purple{fill:#8250df}
+.k-gray{stroke:#818b98}.f-gray{fill:#59636e}.s-gray{fill:#f6f8fa}.c-gray{fill:#59636e}
+.g0{stop-color:#f6f8fa}.g1{stop-color:#eaf2ff}
+.slide{fill:#ffffff;stroke:#d1d9e0}.ph{fill:#d1d9e0}
+@media (prefers-color-scheme: dark){
+.bg{fill:#0d1117;stroke:#3d444d}
+.band{fill:#151b23;stroke:#3d444d}
+.card{fill:#0d1117;stroke:#3d444d}
+.t{fill:#e6edf3}.m{fill:#9198a1}
+.ln{stroke:#656c76}.ahf{fill:#656c76}
+.k-blue{stroke:#4493f8}.f-blue{fill:#1f6feb}.s-blue{fill:rgba(56,139,253,.15)}.c-blue{fill:#4493f8}
+.k-orange{stroke:#f0883e}.f-orange{fill:#bd561d}.s-orange{fill:rgba(219,109,40,.15)}.c-orange{fill:#f0883e}
+.k-green{stroke:#3fb950}.f-green{fill:#238636}.s-green{fill:rgba(46,160,67,.15)}.c-green{fill:#3fb950}
+.k-red{stroke:#f85149}.f-red{fill:#da3633}.s-red{fill:rgba(248,81,73,.15)}.c-red{fill:#f85149}
+.k-purple{stroke:#ab7df8}.f-purple{fill:#8957e5}.s-purple{fill:rgba(171,125,248,.15)}.c-purple{fill:#ab7df8}
+.k-gray{stroke:#656c76}.f-gray{fill:#6e7681}.s-gray{fill:rgba(110,118,129,.12)}.c-gray{fill:#9198a1}
+.g0{stop-color:#0d1117}.g1{stop-color:#132039}
+.slide{fill:#151b23;stroke:#3d444d}.ph{fill:#3d444d}
+}
+</style>
+<defs><marker id="ah-blue" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="c-blue"/></marker><marker id="ah-orange" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="c-orange"/></marker><marker id="ah-green" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="c-green"/></marker><marker id="ah-red" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="c-red"/></marker><marker id="ah-purple" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="c-purple"/></marker><marker id="ah-gray" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="c-gray"/></marker><marker id="ah-n" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="ahf"/></marker><linearGradient id="hero" x1="0" y1="0" x2="1" y2="1"><stop offset="0" class="g0"/><stop offset="1" class="g1"/></linearGradient></defs>
+<rect x="0.5" y="0.5" width="1199" height="451" rx="16" class="bg" />
+<text x="40" y="52" class="t" font-size="24" font-weight="700" text-anchor="start">写文件分区</text>
+<text x="40" y="80" class="m" font-size="14" font-weight="400" text-anchor="start">学习类和总控类可以同时开 —— 靠「谁能写什么」防互相覆盖，不靠串行</text>
+<rect x="40" y="108" width="440" height="316" rx="10" class="card" stroke-width="1"/>
+<rect x="41" y="120" width="4" height="292" rx="2" class="f-blue" />
+<text x="66" y="144" class="t" font-size="19" font-weight="700" text-anchor="start">学习类</text>
+<rect x="137.0" y="127" width="96.0" height="24" rx="12.0" class="f-blue" />
+<text x="185.0" y="143.68" class="w mono" font-size="13" font-weight="600" text-anchor="middle">/学 · /作业</text>
+<text x="66" y="180" class="c-green" font-size="13" font-weight="700" text-anchor="start">能写</text>
+<text x="66" y="206" class="c-green" font-size="14" font-weight="700" text-anchor="start">✓</text>
+<text x="88" y="206" class="t" font-size="13.5" font-weight="400" text-anchor="start">自己那门课的目录 &lt;课程&gt;/</text>
+<text x="66" y="230" class="c-green" font-size="14" font-weight="700" text-anchor="start">✓</text>
+<text x="88" y="230" class="t" font-size="13.5" font-weight="400" text-anchor="start">shared/学时记录.md（只追加明细行）</text>
+<text x="66" y="254" class="c-green" font-size="14" font-weight="700" text-anchor="start">✓</text>
+<text x="88" y="254" class="t" font-size="13.5" font-weight="400" text-anchor="start">shared/交接/（回写账本的唯一通道）</text>
+<text x="66" y="278" class="c-green" font-size="14" font-weight="700" text-anchor="start">✓</text>
+<text x="88" y="278" class="t" font-size="13.5" font-weight="400" text-anchor="start">shared/活动会话.tsv（自己那一行）</text>
+<text x="66" y="316" class="c-red" font-size="13" font-weight="700" text-anchor="start">不许写</text>
+<text x="66" y="342" class="c-red" font-size="14" font-weight="700" text-anchor="start">✗</text>
+<text x="88" y="342" class="t" font-size="13.5" font-weight="400" text-anchor="start">shared/ 的账本（台账 · 日志 · deadlines · 公告）</text>
+<text x="66" y="366" class="c-red" font-size="14" font-weight="700" text-anchor="start">✗</text>
+<text x="88" y="366" class="t" font-size="13.5" font-weight="400" text-anchor="start">脚本 · hooks · 规则文件</text>
+<rect x="720" y="108" width="440" height="316" rx="10" class="card" stroke-width="1"/>
+<rect x="721" y="120" width="4" height="292" rx="2" class="f-green" />
+<text x="746" y="144" class="t" font-size="19" font-weight="700" text-anchor="start">总控类</text>
+<rect x="817.0" y="127" width="51.8" height="24" rx="12.0" class="f-green" />
+<text x="842.9" y="143.68" class="w mono" font-size="13" font-weight="600" text-anchor="middle">/总控</text>
+<text x="746" y="180" class="c-green" font-size="13" font-weight="700" text-anchor="start">能写</text>
+<text x="746" y="206" class="c-green" font-size="14" font-weight="700" text-anchor="start">✓</text>
+<text x="768" y="206" class="t" font-size="13.5" font-weight="400" text-anchor="start">shared/ 的账本 —— 只有它能改</text>
+<text x="746" y="230" class="c-green" font-size="14" font-weight="700" text-anchor="start">✓</text>
+<text x="768" y="230" class="t" font-size="13.5" font-weight="400" text-anchor="start">.claude/ · shared/工具/（架构和脚本）</text>
+<text x="746" y="254" class="c-green" font-size="14" font-weight="700" text-anchor="start">✓</text>
+<text x="768" y="254" class="t" font-size="13.5" font-weight="400" text-anchor="start">各课目录（归档 · 预扫 · 转录）</text>
+<text x="746" y="278" class="c-green" font-size="14" font-weight="700" text-anchor="start">✓</text>
+<text x="768" y="278" class="t" font-size="13.5" font-weight="400" text-anchor="start">学时累计表重算 · 交接/已处理/</text>
+<text x="746" y="316" class="c-red" font-size="13" font-weight="700" text-anchor="start">不许写</text>
+<text x="746" y="342" class="c-red" font-size="14" font-weight="700" text-anchor="start">✗</text>
+<text x="768" y="342" class="t" font-size="13.5" font-weight="400" text-anchor="start">同时开第二个总控（两个都握账本写权）</text>
+<ellipse cx="600.0" cy="196" rx="70" ry="14" class="s-purple"/>
+<path d="M530,196 v120 a70,14 0 0 0 140,0 v-120" class="s-purple"/>
+<path d="M530,196 v120 a70,14 0 0 0 140,0 v-120" fill="none" class="k-purple" stroke-width="1.4"/>
+<ellipse cx="600.0" cy="196" rx="70" ry="14" fill="none" class="k-purple" stroke-width="1.4"/>
+<text x="600.0" y="252" class="c-purple mono" font-size="14" font-weight="700" text-anchor="middle">shared/交接/</text>
+<text x="600.0" y="276" class="t" font-size="13.5" font-weight="600" text-anchor="middle">交接单</text>
+<text x="600.0" y="298" class="m" font-size="12" font-weight="400" text-anchor="middle">该改哪张表哪一行</text>
+<path d="M480,238 L528,238" class="k-purple" fill="none" stroke-width="1.6"  marker-end="url(#ah-purple)"/>
+<path d="M672,238 L716,238" class="k-purple" fill="none" stroke-width="1.6"  marker-end="url(#ah-purple)"/>
+<text x="600.0" y="366" class="c-purple" font-size="12.5" font-weight="600" text-anchor="middle">学习会话收尾时写</text>
+<text x="600.0" y="388" class="c-green" font-size="12.5" font-weight="600" text-anchor="middle">总控开场第 0 步落账</text>
+<text x="600.0" y="410" class="m" font-size="12" font-weight="400" text-anchor="middle">→ 移进 已处理/</text>
+</svg>

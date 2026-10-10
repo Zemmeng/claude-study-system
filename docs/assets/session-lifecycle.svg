@@ -1,0 +1,94 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="500" viewBox="0 0 1200 500" role="img" aria-label="一个会话的生命周期">
+<title>一个会话的生命周期</title><desc>开场门、消息门、收尾门在一个会话里的位置</desc>
+<style>
+text{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Hiragino Sans GB","Microsoft YaHei","Noto Sans CJK SC","Noto Sans SC",sans-serif}
+.mono{font-family:"SF Mono",SFMono-Regular,Menlo,Consolas,"Liberation Mono","PingFang SC","Microsoft YaHei",monospace}
+.bg{fill:#ffffff;stroke:#d1d9e0}
+.band{fill:#f6f8fa;stroke:#d1d9e0}
+.card{fill:#ffffff;stroke:#d1d9e0}
+.t{fill:#1f2328}.m{fill:#59636e}.w{fill:#ffffff}
+.ln{stroke:#8c959f;fill:none}.ahf{fill:#8c959f}
+.k-blue{stroke:#0969da}.f-blue{fill:#0969da}.s-blue{fill:#ddf4ff}.c-blue{fill:#0969da}
+.k-orange{stroke:#bc4c00}.f-orange{fill:#bc4c00}.s-orange{fill:#fff1e5}.c-orange{fill:#bc4c00}
+.k-green{stroke:#1a7f37}.f-green{fill:#1a7f37}.s-green{fill:#dafbe1}.c-green{fill:#1a7f37}
+.k-red{stroke:#cf222e}.f-red{fill:#cf222e}.s-red{fill:#ffebe9}.c-red{fill:#cf222e}
+.k-purple{stroke:#8250df}.f-purple{fill:#8250df}.s-purple{fill:#fbefff}.c-purple{fill:#8250df}
+.k-gray{stroke:#818b98}.f-gray{fill:#59636e}.s-gray{fill:#f6f8fa}.c-gray{fill:#59636e}
+.g0{stop-color:#f6f8fa}.g1{stop-color:#eaf2ff}
+.slide{fill:#ffffff;stroke:#d1d9e0}.ph{fill:#d1d9e0}
+@media (prefers-color-scheme: dark){
+.bg{fill:#0d1117;stroke:#3d444d}
+.band{fill:#151b23;stroke:#3d444d}
+.card{fill:#0d1117;stroke:#3d444d}
+.t{fill:#e6edf3}.m{fill:#9198a1}
+.ln{stroke:#656c76}.ahf{fill:#656c76}
+.k-blue{stroke:#4493f8}.f-blue{fill:#1f6feb}.s-blue{fill:rgba(56,139,253,.15)}.c-blue{fill:#4493f8}
+.k-orange{stroke:#f0883e}.f-orange{fill:#bd561d}.s-orange{fill:rgba(219,109,40,.15)}.c-orange{fill:#f0883e}
+.k-green{stroke:#3fb950}.f-green{fill:#238636}.s-green{fill:rgba(46,160,67,.15)}.c-green{fill:#3fb950}
+.k-red{stroke:#f85149}.f-red{fill:#da3633}.s-red{fill:rgba(248,81,73,.15)}.c-red{fill:#f85149}
+.k-purple{stroke:#ab7df8}.f-purple{fill:#8957e5}.s-purple{fill:rgba(171,125,248,.15)}.c-purple{fill:#ab7df8}
+.k-gray{stroke:#656c76}.f-gray{fill:#6e7681}.s-gray{fill:rgba(110,118,129,.12)}.c-gray{fill:#9198a1}
+.g0{stop-color:#0d1117}.g1{stop-color:#132039}
+.slide{fill:#151b23;stroke:#3d444d}.ph{fill:#3d444d}
+}
+</style>
+<defs><marker id="ah-blue" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="c-blue"/></marker><marker id="ah-orange" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="c-orange"/></marker><marker id="ah-green" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="c-green"/></marker><marker id="ah-red" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="c-red"/></marker><marker id="ah-purple" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="c-purple"/></marker><marker id="ah-gray" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="c-gray"/></marker><marker id="ah-n" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="ahf"/></marker><linearGradient id="hero" x1="0" y1="0" x2="1" y2="1"><stop offset="0" class="g0"/><stop offset="1" class="g1"/></linearGradient></defs>
+<rect x="0.5" y="0.5" width="1199" height="499" rx="16" class="bg" />
+<text x="40" y="52" class="t" font-size="24" font-weight="700" text-anchor="start">一个会话的生命周期</text>
+<text x="40" y="80" class="m" font-size="14" font-weight="400" text-anchor="start">三道门：两道只往上下文里注入，只有收尾门能把回合拦回去</text>
+<rect x="40" y="112" width="140" height="70" rx="10" class="card" stroke-width="1"/>
+<text x="110.0" y="154" class="t" font-size="14.5" font-weight="700" text-anchor="middle">开新对话</text>
+<rect x="210" y="112" width="220" height="70" rx="10" class="card" stroke-width="1"/>
+<rect x="211" y="124" width="4" height="46" rx="2" class="f-blue" />
+<text x="320.0" y="144" class="t" font-size="14.5" font-weight="700" text-anchor="middle">开场门 · SessionStart</text>
+<text x="320.0" y="166" class="m" font-size="12.5" font-weight="400" text-anchor="middle">注入导航层（约 5 KB）</text>
+<rect x="460" y="112" width="210" height="70" rx="10" class="card" stroke-width="1"/>
+<text x="565.0" y="144" class="t" font-size="14.5" font-weight="700" text-anchor="middle">第一句点名了吗？</text>
+<text x="565.0" y="166" class="m" font-size="12.5" font-weight="400" text-anchor="middle">没有 → 摆菜单让你点</text>
+<rect x="700" y="112" width="220" height="70" rx="10" class="card" stroke-width="1"/>
+<rect x="701" y="124" width="4" height="46" rx="2" class="f-blue" />
+<text x="810.0" y="144" class="t" font-size="14.5" font-weight="700" text-anchor="middle">进入 /学 · /作业 · /总控</text>
+<text x="810.0" y="166" class="m" font-size="12.5" font-weight="400" text-anchor="middle">登记 活动会话.tsv</text>
+<rect x="950" y="112" width="210" height="70" rx="10" class="card" stroke-width="1"/>
+<rect x="951" y="124" width="4" height="46" rx="2" class="f-green" />
+<text x="1055.0" y="144" class="t" font-size="14.5" font-weight="700" text-anchor="middle">收尾</text>
+<text x="1055.0" y="166" class="m" font-size="12.5" font-weight="400" text-anchor="middle">交接单 → 登记表翻 done</text>
+<path d="M180,147 L208,147" class="ln" fill="none" stroke-width="1.6"  marker-end="url(#ah-n)"/>
+<path d="M430,147 L458,147" class="ln" fill="none" stroke-width="1.6"  marker-end="url(#ah-n)"/>
+<path d="M670,147 L698,147" class="ln" fill="none" stroke-width="1.6"  marker-end="url(#ah-n)"/>
+<rect x="40" y="222" width="1120" height="250" rx="14" class="band" />
+<text x="60" y="250" class="t" font-size="15" font-weight="700" text-anchor="start">每个回合（循环）</text>
+<path d="M810,182 L810,222" class="k-blue" fill="none" stroke-width="1.6"  marker-end="url(#ah-blue)"/>
+<path d="M1055,222 L1055,184" class="k-green" fill="none" stroke-width="1.6"  marker-end="url(#ah-green)"/>
+<text x="1066" y="208" class="c-green" font-size="12.5" font-weight="600" text-anchor="start">说要收尾</text>
+<rect x="64" y="298" width="128" height="76" rx="10" class="card" stroke-width="1"/>
+<text x="128.0" y="342" class="t" font-size="14" font-weight="700" text-anchor="middle">你发消息</text>
+<rect x="222" y="298" width="236" height="76" rx="10" class="card" stroke-width="1"/>
+<rect x="223" y="310" width="4" height="52" rx="2" class="f-blue" />
+<text x="340.0" y="330" class="t" font-size="14" font-weight="700" text-anchor="middle">消息门 · UserPromptSubmit</text>
+<text x="340.0" y="354" class="m" font-size="12.5" font-weight="400" text-anchor="middle">注入时间 · 必做清单 · 硬伤</text>
+<rect x="488" y="298" width="190" height="76" rx="10" class="card" stroke-width="1"/>
+<text x="583.0" y="330" class="t" font-size="14" font-weight="700" text-anchor="middle">Claude 干活</text>
+<text x="583.0" y="354" class="m" font-size="12.5" font-weight="400" text-anchor="middle">讲 · 批 · 改文件</text>
+<rect x="708" y="298" width="196" height="76" rx="10" class="card" stroke-width="1"/>
+<rect x="709" y="310" width="4" height="52" rx="2" class="f-red" />
+<text x="806.0" y="330" class="t" font-size="14" font-weight="700" text-anchor="middle">收尾门 · Stop</text>
+<text x="806.0" y="354" class="m" font-size="12.5" font-weight="400" text-anchor="middle">跑 检查.py（14 项）</text>
+<path d="M192,336 L220,336" class="ln" fill="none" stroke-width="1.6"  marker-end="url(#ah-n)"/>
+<path d="M458,336 L486,336" class="ln" fill="none" stroke-width="1.6"  marker-end="url(#ah-n)"/>
+<path d="M678,336 L706,336" class="ln" fill="none" stroke-width="1.6"  marker-end="url(#ah-n)"/>
+<rect x="940" y="276" width="200" height="54" rx="10" class="s-red" />
+<rect x="940" y="276" width="200" height="54" rx="10" fill="none" class="k-red" stroke-width="1.3"/>
+<text x="1040" y="298" class="c-red" font-size="14" font-weight="700" text-anchor="middle">有硬伤</text>
+<text x="1040" y="318" class="c-red" font-size="12.5" font-weight="400" text-anchor="middle">exit 2 拦回，修完再交</text>
+<rect x="940" y="344" width="200" height="54" rx="10" class="s-green" />
+<rect x="940" y="344" width="200" height="54" rx="10" fill="none" class="k-green" stroke-width="1.3"/>
+<text x="1040" y="366" class="c-green" font-size="14" font-weight="700" text-anchor="middle">全绿</text>
+<text x="1040" y="386" class="c-green" font-size="12.5" font-weight="400" text-anchor="middle">行动项审计 → git 快照</text>
+<path d="M904,328 L920,328 L920,303 L938,303" class="k-red" fill="none" stroke-width="1.6"  marker-end="url(#ah-red)"/>
+<path d="M920,328 L920,371 L938,371" class="k-green" fill="none" stroke-width="1.6"  marker-end="url(#ah-green)"/>
+<path d="M1040,276 L1040,260 L583,260 L583,296" class="k-red" fill="none" stroke-width="1.6" stroke-dasharray="6 5" marker-end="url(#ah-red)"/>
+<text x="760" y="254" class="c-red" font-size="12.5" font-weight="600" text-anchor="middle">拦回：同一回合里修</text>
+<path d="M1040,398 L1040,428 L128,428 L128,376" class="k-green" fill="none" stroke-width="1.6" stroke-dasharray="6 5" marker-end="url(#ah-green)"/>
+<text x="530" y="422" class="c-green" font-size="12.5" font-weight="600" text-anchor="middle">放行：等你的下一条消息</text>
+</svg>

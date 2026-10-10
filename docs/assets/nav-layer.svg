@@ -1,0 +1,43 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1100" height="794" viewBox="0 0 1100 794" role="img" aria-label="开场门注入的导航层（示例数据）">
+<title>开场门注入的导航层（示例数据）</title>
+<style>text{font-family:"SF Mono",SFMono-Regular,Menlo,Consolas,"Liberation Mono","PingFang SC","Microsoft YaHei",monospace;font-size:13px;white-space:pre}.n{fill:#c9d1d9}.h{fill:#f0f6fc;font-weight:700}.k{fill:#79c0ff;font-weight:600}.d{fill:#8b949e}.g{fill:#7ee787}.ti{fill:#8b949e;font-family:-apple-system,"PingFang SC","Segoe UI",sans-serif;font-size:12.5px}</style>
+<rect x="0.5" y="0.5" width="1099" height="793" rx="12" fill="#0d1117" stroke="#30363d"/>
+<path d="M0.5,12.5 a12,12 0 0 1 12,-12 h1075 a12,12 0 0 1 12,12 v24 h-1099 z" fill="#161b22"/>
+<line x1="0" y1="36.5" x2="1100" y2="36.5" stroke="#30363d"/>
+<circle cx="22" cy="18.5" r="6" fill="#ff5f57"/><circle cx="42" cy="18.5" r="6" fill="#febc2e"/><circle cx="62" cy="18.5" r="6" fill="#28c840"/>
+<text x="550" y="23" text-anchor="middle" class="ti">SessionStart · 开场门注入的导航层（示例数据 · python3 shared/工具/导航.py）</text>
+<text x="22" y="70" class="h" xml:space="preserve">📅 2026-10-10 Saturday · 学期 W10 （这周还剩 1 天）</text>
+<text x="22" y="91" class="n" xml:space="preserve"></text>
+<text x="22" y="112" class="h" xml:space="preserve">⏳ 未来 14 天的硬截止（只列 tute 和 due date）</text>
+<text x="22" y="133" class="n" xml:space="preserve">     10-14(三) 15:00（还有 4 天） · 算法 · tute：本周 tute 的题落在 w03-L1 insertion sort 的 trace 和复杂度上</text>
+<text x="22" y="154" class="n" xml:space="preserve">     10-15(四) 16:00（还有 5 天） · 网络 · tute：physical layer 的计算题（Nyquist / Shannon）—— 前置 w02-L1 还没讲</text>
+<text x="22" y="175" class="n" xml:space="preserve">     10-16(五) 23:59（还有 6 天） · 算法 · Week 10 Quiz due —— 范围 = 上一讲  [1%]</text>
+<text x="22" y="196" class="n" xml:space="preserve">     10-20(二) 23:59（还有 10 天） · 算法 · Written Assignment 2 due（示例：三题 · 只收 PDF · 迟交每天扣分）  [15%]</text>
+<text x="22" y="217" class="n" xml:space="preserve">     10-23(五) 23:59（还有 13 天） · 网络 · Project: Throughput Analysis due（示例：个人作业 · 正文 ≤ 10 页）  [15%]</text>
+<text x="22" y="238" class="n" xml:space="preserve"></text>
+<text x="22" y="259" class="h" xml:space="preserve">📚 2 门课（只写优先级和为什么；页数一律去 shared/lecture台账.md 查）</text>
+<text x="22" y="280" class="n" xml:space="preserve">  · algorithms DEMO101       [最高] w02-L1 讲到一半，最后一块的题他还没答（见断点）· w03-L1 还没动，但 10-14 的 tute 点名要用</text>
+<text x="22" y="301" class="n" xml:space="preserve">  · networks DEMO102         [次高] Assignment 1 已提交 · w02-L1 未开始，10-15 tute 的计算题要用它</text>
+<text x="22" y="322" class="n" xml:space="preserve"></text>
+<text x="22" y="343" class="h" xml:space="preserve">🖥️ 还开着的会话（登记表 shared/活动会话.tsv；同一时间只该有一个在写共享账本）</text>
+<text x="22" y="364" class="n" xml:space="preserve">  （没有登记在案的）</text>
+<text x="22" y="385" class="g" xml:space="preserve">  🎉 刚收尾的（30 h 内）—— 别再把这些当成没做完：</text>
+<text x="22" y="406" class="n" xml:space="preserve">    · [学] algorithms w02-L1 —— p.1–6 讲+答+批齐；p.7–9 讲了未答（进断点）；交接单已写</text>
+<text x="22" y="427" class="n" xml:space="preserve"></text>
+<text x="22" y="448" class="h" xml:space="preserve">⏸️ 断点：algorithms w02-L1 viewer p.7–9 讲了，Q6–Q8 出了、他没答 —— 按「完成 = 讲 + 答 + 批」，回来重讲这一块再出题 / Q6. (True/False) Binar…</text>
+<text x="22" y="469" class="g" xml:space="preserve">   ⏭️ 没做完的事（作业停在哪 / blocker）不在导航层里 —— 去 shared/学习日志.md 的「## ⏭️ 当前状态」节读</text>
+<text x="22" y="490" class="n" xml:space="preserve"></text>
+<text x="22" y="511" class="h" xml:space="preserve">🎯 现在可以做的（现算的，开场把这个摆给他选，别让他背命令）</text>
+<text x="22" y="532" class="k" xml:space="preserve">  1. 接着上次没讲完的那一块</text>
+<text x="22" y="553" class="d" xml:space="preserve">     algorithms w02-L1 viewer p.7–9 讲了，Q6–Q8 出了、他没答 —— 按「完成 = 讲 + 答 + 批」，回来   → /学</text>
+<text x="22" y="574" class="k" xml:space="preserve">  2. algorithms —— tute：本周 tute 的题落在 w03-L1 insertion so…</text>
+<text x="22" y="595" class="d" xml:space="preserve">     4 天后（10-14(三) 15:00）   → /学</text>
+<text x="22" y="616" class="k" xml:space="preserve">  3. networks —— tute：physical layer 的计算题（Nyquist / Sh…</text>
+<text x="22" y="637" class="d" xml:space="preserve">     5 天后（10-15(四) 16:00）   → /学</text>
+<text x="22" y="658" class="k" xml:space="preserve">  4. algorithms —— Week 10 Quiz due</text>
+<text x="22" y="679" class="d" xml:space="preserve">     6 天后（10-16(五) 23:59） · 1%   → /作业</text>
+<text x="22" y="700" class="k" xml:space="preserve">  5. algorithms —— Written Assignment 2 due（示例：三题 · 只收 P…</text>
+<text x="22" y="721" class="d" xml:space="preserve">     10 天后（10-20(二) 23:59） · 15%   → /作业</text>
+<text x="22" y="742" class="k" xml:space="preserve">  6. 总控：扫邮箱 · 归档新材料 · 预扫 · 出看板 · 跑体检</text>
+<text x="22" y="763" class="d" xml:space="preserve">     杂活攒着就一起清   → /总控</text>
+</svg>
