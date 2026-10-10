@@ -1,0 +1,120 @@
+\documentclass[aspectratio=169,11pt]{beamer}
+\newcommand{\footerlabel}{DEMO101 Algorithms \textbullet{} Lecture 2}
+\input{_style}
+\title{Algorithms}
+\subtitle{Lecture 2: Binary Search}
+\author{Demo Lecturer}
+\date{Semester 2, 2026}
+
+\begin{document}
+
+\begin{frame}
+  \titlepage
+\end{frame}
+
+\begin{frame}{Last Lecture}
+  \begin{itemize}
+    \item Cost is measured by counting the \textbf{basic operation}
+    \item $t(n) \in O(g(n))$ iff $t(n) \le c \cdot g(n)$ for all $n > n_0$
+    \item Linear search: worst case $\Theta(n)$ comparisons
+  \end{itemize}
+  \medskip
+  Today: can we do better if the array is \alert{sorted}?
+\end{frame}
+
+\begin{frame}{The Problem: Searching a Sorted Array}
+  \begin{description}
+    \item[Input] an array $A[0..n-1]$ sorted in increasing order, and a key $x$
+    \item[Output] an index $j$ with $A[j] = x$, or $-1$ if $x$ is not in $A$
+  \end{description}
+  \bigskip
+  Linear search ignores the order and may scan everything.\\
+  The order should let us \emph{rule out many positions with one comparison}.
+\end{frame}
+
+\begin{frame}{The Idea: Halve the Search Space}
+  Guess a number between 1 and 100; after each guess you are told ``higher'' or ``lower''.
+  \medskip
+  \begin{center}
+  \begin{tabular}{cc}
+    \hline
+    Guesses so far & Candidates left (at most) \\
+    \hline
+    0 & 100 \\
+    1 & 50 \\
+    2 & 25 \\
+    3 & 12 \\
+    $k$ & $\approx 100 / 2^k$ \\
+    \hline
+  \end{tabular}
+  \end{center}
+\end{frame}
+
+\begin{frame}[fragile]{Binary Search: Pseudocode}
+\begin{verbatim}
+function BinSearch(A, x, n)
+    lo <- 0
+    hi <- n - 1
+    while lo <= hi
+        mid <- floor((lo + hi) / 2)
+        if A[mid] = x
+            return mid
+        else if A[mid] < x
+            lo <- mid + 1
+        else
+            hi <- mid - 1
+    return -1
+\end{verbatim}
+\end{frame}
+
+\begin{frame}{Trace: Search for 23}
+  $A = [2, 5, 8, 12, 16, 23, 38, 56, 72, 91]$, \quad $x = 23$
+  \medskip
+  \begin{center}
+  \begin{tabular}{cccccl}
+    \hline
+    Round & lo & hi & mid & $A[\text{mid}]$ & Action \\
+    \hline
+    1 & 0 & 9 & 4 & 16 & $16 < 23$, so $\text{lo} \leftarrow 5$ \\
+    2 & 5 & 9 & 7 & 56 & $56 > 23$, so $\text{hi} \leftarrow 6$ \\
+    3 & 5 & 6 & 5 & 23 & found, return 5 \\
+    \hline
+  \end{tabular}
+  \end{center}
+\end{frame}
+
+\begin{frame}{Why Must $A$ Be Sorted?}
+  The loop maintains an \textbf{invariant}:
+  \begin{block}{Invariant}
+    If $x$ occurs in $A$, then it occurs in $A[\text{lo}..\text{hi}]$.
+  \end{block}
+  \begin{itemize}
+    \item $A[\text{mid}] < x$: sortedness means everything at or left of mid is $< x$, so discarding it is safe
+    \item On an unsorted array the same discard can throw away $x$
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{Analysis}
+  Basic operation: the comparison $A[\text{mid}]$ against $x$.
+  \medskip
+  \begin{itemize}
+    \item \textbf{Best case:} $x$ is at the first midpoint, so 1 comparison
+    \item \textbf{Worst case:} the range halves every round; let $C(n)$ be the comparisons:
+  \end{itemize}
+  \[
+    C(n) = C(\lfloor n/2 \rfloor) + 1, \quad C(1) = 1
+    \quad\Longrightarrow\quad C(n) = \lfloor \log_2 n \rfloor + 1 \in \Theta(\log n)
+  \]
+\end{frame}
+
+\begin{frame}{Summary and Homework}
+  \begin{itemize}
+    \item Binary search needs \textbf{sorted} input and runs in $\Theta(\log n)$ in the worst case
+    \item Common bugs: wrong loop condition ($<$ vs $\le$), and forgetting the $\pm 1$ when updating lo / hi
+  \end{itemize}
+  \bigskip
+  \textbf{Homework.} Explain why binary search fails on an unsorted array, with a
+  concrete array of length 5 where it returns $-1$ although $x$ is present.
+\end{frame}
+
+\end{document}

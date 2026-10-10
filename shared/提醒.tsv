@@ -1,0 +1,4 @@
+# 到点提醒 —— 一行一条：类型<TAB>规则<TAB>文字。改提醒改这里，不用动 提醒.py。过期条目定期删。
+# 类型：RANGE 起..止 · WEEKLY 周几;from=;until= · EVERY 间隔天数;from=;days=响几天
+RANGE	2026-10-10..2026-10-20	🔴 algorithms Written Assignment 2（15%）10-20(二) 23:59 due —— spec 禁止 AI：最终产出他自己写，我只指引 / 挑错 / 排版
+WEEKLY	TUE;from=2026-10-06;until=2026-10-20	今天(二) 是 algorithms tute 前最后一个整块窗口 —— 周三 tute 要用的东西今天做完

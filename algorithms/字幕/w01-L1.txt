@@ -1,0 +1,10 @@
+ Okay, let's get started. Welcome to the first lecture of algorithms.
+ Quick housekeeping first. The weekly quiz opens after this Friday lecture and is due the next Friday.
+ Here is the question I want you to keep in mind all semester: how does the cost grow when the input gets bigger?
+ Look at the two ways to add one to n. The loop does n additions. The formula does a constant number of operations, no matter what n is.
+ When we count cost, we count the basic operation. Students often count every line of code. Don't do that. Pick the operation in the innermost loop.
+ For linear search, the worst case is when the key is not there at all, so we compare with every element.
+ Now the definition of Big-O. You need two constants, c and n zero. Write them down explicitly in the exam, otherwise you lose marks.
+ A common mistake: people think Big-O means the exact growth rate. It is only an upper bound. n is in O of n squared, that's true.
+ Big-Omega is the lower bound. You won't be asked to prove a lower bound formally, but you should be able to use the notation.
+ Finally, memorise this chain of growth rates. Log n, n, n log n, n squared, two to the n. That ordering comes back in every lecture.

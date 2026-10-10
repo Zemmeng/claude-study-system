@@ -1,0 +1,107 @@
+\documentclass[aspectratio=169,11pt]{beamer}
+\newcommand{\footerlabel}{DEMO101 Algorithms \textbullet{} Lecture 1}
+\input{_style}
+\title{Algorithms}
+\subtitle{Lecture 1: Growth of Functions and Big-O}
+\author{Demo Lecturer}
+\date{Semester 2, 2026}
+
+\begin{document}
+
+\begin{frame}
+  \titlepage
+\end{frame}
+
+\begin{frame}{Housekeeping}
+  \begin{itemize}
+    \item Weekly quiz: released after the Friday lecture, due the following Friday
+    \item Tutorial: Wednesday 15:00 -- bring your attempts at the tute questions
+    \item Discussion board and consultation hours: see the course page
+    \item Textbook: any standard algorithms textbook (readings are listed per lecture)
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{Why Do We Care About Efficiency?}
+  Two ways to compute $1 + 2 + \dots + n$:
+  \medskip
+  \begin{columns}[T]
+    \column{0.48\textwidth}
+    \textbf{Loop}\\[2pt]
+    add $1, 2, \dots, n$ one by one\\
+    about $n$ additions
+    \column{0.48\textwidth}
+    \textbf{Formula}\\[2pt]
+    compute $n(n+1)/2$\\
+    one multiplication, one division
+  \end{columns}
+  \bigskip
+  Both are correct. For $n = 10^9$ only one of them is practical.\\[4pt]
+  \alert{Question:} how do we compare algorithms \emph{without} running them?
+\end{frame}
+
+\begin{frame}{Input Size and Basic Operation}
+  We measure cost as a function of the \textbf{input size} $n$, counting the
+  \textbf{basic operation} -- the operation executed most often in the innermost loop.
+  \medskip
+  \begin{center}
+  \begin{tabular}{lll}
+    \hline
+    Problem & Input size & Basic operation \\
+    \hline
+    Search a list & number of items $n$ & key comparison \\
+    Multiply two matrices & matrix dimension $n$ & scalar multiplication \\
+    Test if $n$ is prime & number of bits of $n$ & division \\
+    \hline
+  \end{tabular}
+  \end{center}
+\end{frame}
+
+\begin{frame}[fragile]{Worst, Best and Average Case}
+\begin{verbatim}
+function find(A, x, n)
+    j <- 0
+    while j < n
+        if A[j] = x
+            return j
+        j <- j + 1
+    return -1
+\end{verbatim}
+  \begin{itemize}
+    \item Basic operation: the comparison \verb|A[j] = x|
+    \item \textbf{Worst case}: $x$ is absent, so $n$ comparisons
+    \item \textbf{Best case}: $x$ is in the first position, so 1 comparison
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{Big-O: The Definition}
+  $O(g(n))$ is the \emph{set} of functions that grow no faster than $g$.
+  \begin{block}{Definition}
+    $t(n) \in O(g(n))$ iff there exist constants $c > 0$ and $n_0$ such that
+    $t(n) \le c \cdot g(n)$ for all $n > n_0$.
+  \end{block}
+  \textbf{Example.} $3n + 10 \in O(n)$.\\
+  For $n > 10$ we have $3n + 10 < 3n + n = 4n$, so choose $c = 4$ and $n_0 = 10$.
+\end{frame}
+
+\begin{frame}{Big-Omega and Big-Theta}
+  \begin{itemize}
+    \item $t(n) \in \Omega(g(n))$: $t(n) \ge c \cdot g(n)$ for all $n > n_0$ -- a \textbf{lower} bound
+    \item $t(n) \in \Theta(g(n))$: both $O(g)$ and $\Omega(g)$ -- the \textbf{exact} order of growth
+  \end{itemize}
+  \bigskip
+  \textbf{Caution.} Writing $3n \in O(n^2)$ is true but loose.
+  Use $\Theta$ when you can show both bounds.
+\end{frame}
+
+\begin{frame}{Common Growth Rates and Summary}
+  \[
+    1 \;\prec\; \log n \;\prec\; n \;\prec\; n\log n \;\prec\; n^2 \;\prec\; n^3 \;\prec\; 2^n \;\prec\; n!
+  \]
+  \begin{itemize}
+    \item Count the basic operation as a function of input size
+    \item Ignore constant factors and small inputs
+    \item Next lecture: binary search -- an algorithm with $\Theta(\log n)$ worst case
+  \end{itemize}
+\end{frame}
+
+\end{document}

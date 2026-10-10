@@ -1,0 +1,30 @@
+{
+  "_说明": "整套架构唯一需要按你自己的学期改的地方。脚本（导航.py · 检查.py · 对齐.py · 文字层索引.py …）全部从这里读课程列表，不再写死课程名。改完跑一次 python3 shared/工具/检查.py 看是否全绿。",
+
+  "semester": {
+    "name": "示例学期 2026 S2",
+    "year": 2026
+  },
+
+  "courses": [
+    {
+      "key": "algorithms",
+      "code": "DEMO101",
+      "name": "算法",
+      "aliases": ["算法", "algo"],
+      "lecture": "周五 09:00–11:00",
+      "tute": "周三 15:00"
+    },
+    {
+      "key": "networks",
+      "code": "DEMO102",
+      "name": "网络",
+      "aliases": ["网络", "net"],
+      "lecture": "周二 13:00–15:00",
+      "tute": "周四 16:00"
+    }
+  ],
+
+  "_extra_core_files_说明": "检查.py 的 [路径] 检查之外，额外要求必须存在且可读的文件（相对项目根）。某门课有自己的唯一数据源时登记在这里，例如 \"programming/Ed/README.md\"。",
+  "extra_core_files": []
+}

@@ -1,0 +1,71 @@
+# w02-L1 文字层（pdftotext -layout，8 页；图片页读不出是正常的，别据此判空页）
+
+===== w02-L1 viewer p.1 =====
+                                      Computer Networks
+                                    Lecture 2: The Physical Layer
+                                            Demo Lecturer
+                                           Semester 2, 2026
+DEMO102 Networks • Lecture 2 (slides continue from Lecture 1)       1
+
+===== w02-L1 viewer p.2 =====
+Recap: Where We Are
+       • Five layers: application, transport, network, link, physical
+       • The physical layer moves raw bits across a medium
+       • Today: how fast can a link carry bits?
+DEMO102 Networks • Lecture 2 (slides continue from Lecture 1)           8
+
+===== w02-L1 viewer p.3 =====
+Signals and Bandwidth
+       • A signal varies over time; its content spans a range of frequencies
+       • Bandwidth B = the width of the usable frequency range, in hertz (Hz)
+       • A channel passes frequencies from f1 to f2 , so B = f2 − f1
+     Example: a telephone line passing 300 Hz to 3300 Hz has B = 3000 Hz.
+DEMO102 Networks • Lecture 2 (slides continue from Lecture 1)                   9
+
+===== w02-L1 viewer p.4 =====
+Bandwidth, Data Rate, Latency
+                    Quantity         Unit     Meaning
+                    Bandwidth B      Hz       width of the frequency range
+                    Data rate        bits/s   how many bits per second we send
+                    Latency          s        time for one bit to get across
+     Careful: in everyday speech “bandwidth” is often used for the data rate. In this subject
+     they are different quantities.
+DEMO102 Networks • Lecture 2 (slides continue from Lecture 1)                                   10
+
+===== w02-L1 viewer p.5 =====
+Nyquist: A Noiseless Channel
+     For a noiseless channel of bandwidth B Hz and signals with V distinct levels:
+                                  max data rate = 2B log2 V bits/s
+     Example. B = 3000 Hz, binary signal (V = 2):
+                                   2 × 3000 × log2 2 = 6000 bits/s
+     More signal levels give more bits per symbol – but noise limits how many levels we can
+     tell apart.
+DEMO102 Networks • Lecture 2 (slides continue from Lecture 1)                                 11
+
+===== w02-L1 viewer p.6 =====
+Shannon: A Noisy Channel
+     With signal-to-noise ratio S/N (a plain ratio, not decibels):
+                                                        S
+                                                 (︃         )︃
+                                     C = B log2 1 +              bits/s
+                                                        N
+     Example. B = 3000 Hz and 30 dB: S/N = 1030/10 = 1000, so
+                               C = 3000 × log2 (1001) ≈ 29 900 bits/s
+     No coding scheme can beat C , however many signal levels are used.
+DEMO102 Networks • Lecture 2 (slides continue from Lecture 1)             12
+
+===== w02-L1 viewer p.7 =====
+Transmission Media
+               Medium           Typical use              Main limit
+               Twisted pair     office LAN, last mile    attenuation over distance
+               Optical fibre    backbone links           cost of installation
+               Radio            Wi-Fi, mobile            shared spectrum, interference
+DEMO102 Networks • Lecture 2 (slides continue from Lecture 1)                            13
+
+===== w02-L1 viewer p.8 =====
+Summary
+       • Bandwidth (B, Hz) and data rate (bits/s) are different quantities
+       • Nyquist: 2B log2 V for a noiseless channel
+       • Shannon: B log2 (1 + S/N) for a noisy channel – an upper limit
+       • Next: the link layer and how a shared medium is accessed
+DEMO102 Networks • Lecture 2 (slides continue from Lecture 1)                14

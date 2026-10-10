@@ -1,0 +1,199 @@
+% 📌 示例看板 —— /总控 照 .claude/commands/next.md 现算重写这一份，别另起文件。
+% 字体用的是 macOS 自带的 PingFang SC / Helvetica Neue / Menlo；Linux 上换成 Noto Sans CJK SC / Noto Sans / DejaVu Sans Mono。
+\documentclass[10pt,a4paper]{article}
+
+\usepackage[margin=1.5cm,top=1.9cm,bottom=1.6cm]{geometry}
+\usepackage{xeCJK}
+\usepackage{fancyhdr}
+\usepackage{xcolor}
+\usepackage{colortbl}
+\usepackage{enumitem}
+\usepackage{array}
+\usepackage{longtable}
+\usepackage{ragged2e}
+\usepackage{pifont}
+\usepackage{tikz}
+\usepackage{tcolorbox}
+\usepackage[hidelinks]{hyperref}
+\tcbuselibrary{skins,breakable}
+
+\hypersetup{pdftitle={学习看板（示例）}}
+
+% ---- 字体 ----
+% 🔒 2026-08-11 他说「字体大大小小的，感觉有些奇怪」。三条原因，都在这里治：
+%   ① 原来只设了 Latin 和 CJK，没设 mono → \texttt{} 掉进 Latin Modern Mono，
+%      那个字体在 10pt 下比 Helvetica 大一圈也宽一截，夹在中文里一跳一跳
+%   ② Songti SC 是宋体（衬线），Helvetica 是无衬线，混排本身就别扭 → 改成 PingFang（黑体）
+%   ③ Scale=MatchLowercase 让三套字体的 x-height 对齐，这才是「看起来一样大」的关键
+\setCJKmainfont{PingFang SC}
+\setCJKsansfont{PingFang SC}
+\setCJKmonofont{PingFang SC}
+\setmainfont{Helvetica Neue}
+\setmonofont{Menlo}[Scale=MatchLowercase]
+
+% ---- 颜色 ----
+\definecolor{ink}{HTML}{1A1A1A}
+\definecolor{hot}{HTML}{C0281C}      % 红：紧急
+\definecolor{warm}{HTML}{B54708}     % 橙：次紧急
+\definecolor{cool}{HTML}{0B4C8C}     % 蓝：标题
+\definecolor{ok}{HTML}{1A7F37}       % 绿：完成
+\definecolor{mute}{HTML}{6B6B6B}     % 灰：次要
+\definecolor{band}{HTML}{F0F0F0}
+\definecolor{hotbg}{HTML}{FDEDEC}
+\definecolor{warmbg}{HTML}{FDF3E7}
+\definecolor{okbg}{HTML}{EDF7EF}
+\definecolor{fullbg}{HTML}{E8F1FB}   % 淡蓝：全部完成
+\definecolor{greybg}{HTML}{F7F7F7}  % 浅灰：娱乐/非学习档期
+
+% ---- 进度条：每门课一对主色（深/浅）+ 未放出灰 ----
+%    「分段条」样式，「做一半」按做了几成折算
+\definecolor{algD}{HTML}{0B4C8C}\definecolor{algL}{HTML}{A9C7E4}
+\definecolor{netD}{HTML}{B54708}\definecolor{netL}{HTML}{F3CBA4}
+\definecolor{future}{HTML}{E8E8E8}
+
+% ---- 页眉页脚 ----
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\small\sffamily\color{mute} 示例学期 2026 S2 · 学习看板}
+\fancyhead[R]{\small\sffamily\color{mute} \thepage}
+\renewcommand{\headrulewidth}{0.4pt}
+
+\setlength{\parindent}{0pt}
+\setlength{\tabcolsep}{4pt}
+\renewcommand{\arraystretch}{1.25}
+
+% ---- 符号 ----
+% 🔒 四个符号宏开头必须 \leavevmode —— 表格 p 列的第一个东西若是 \color 的 special，
+%    \vtop 取不到首行高度，整格内容会掉下一行（09-27 看板踩过：以 \bang / \done 开头的格子全部错位一行）
+\newcommand{\done}{\leavevmode{\color{ok}\ding{51}}}
+\newcommand{\todoo}{\leavevmode{\color{mute}\ding{113}}}
+\newcommand{\bang}{\leavevmode{\color{hot}\ding{115}}}
+\newcommand{\warnn}{\leavevmode{\color{warm}\ding{115}}}
+% 🔒 箭头必须用这个宏，不许直接打 U+2192 的 → ——
+%    Songti SC 和 Helvetica Neue 都没有那个字形，会渲成豆腐块 □（2026-08-11 踩过）
+\newcommand{\arr}{\,$\rightarrow$\,}
+
+% 🔒 所有表格列一律用 L{} 而不是 p{} —— 左对齐、不两端拉伸。
+%    2026-08-11 踩过：p{} 默认两端对齐，遇到 Integer.parseInt 这种长等宽词
+%    会把同一行的中文拉成「6 个 命 令 行 参 数」
+\newcolumntype{L}[1]{>{\raggedright\arraybackslash}p{#1}}
+
+% 🔒 进度条 \pbarA{宽cm}{已完成比例}{已放出比例}{深色}{浅色}
+%    三段：深 = 已完成 · 浅 = 已放出还欠着 · 灰 = 本学期还没放出
+%    ⚠️ \path[use as bounding box] 必须留着 —— 没有它，比例为 0 的空条会把同行标注挤到下一行
+\newcommand{\pbarA}[5]{%
+\begin{tikzpicture}[baseline=-0.9ex]
+  \def\w{#1}\def\h{0.30}
+  \path[use as bounding box] (0,0) rectangle (\w,\h);
+  \fill[future,rounded corners=1.5pt] (0,0) rectangle (\w,\h);
+  \fill[#5] (0,0) rectangle ({\w*#3},\h);
+  \fill[#4,rounded corners=1.5pt] (0,0) rectangle ({\w*#2},\h);
+  \draw[white,line width=0.4pt] ({\w*#2},0) -- ({\w*#2},\h);
+  \draw[mute!45,rounded corners=1.5pt,line width=0.35pt] (0,0) rectangle (\w,\h);
+\end{tikzpicture}}
+
+% ---- 小节标题 ----
+\newcommand{\sect}[1]{%
+  \vspace{6pt}%
+  {\sffamily\bfseries\large\color{cool}#1}%
+  \vspace{2pt}\hrule height 1pt\vspace{6pt}%
+}
+
+\begin{document}
+
+% ============ 抬头 ============
+\begin{tcolorbox}[colback=cool!8,colframe=cool,boxrule=1pt,arc=2pt,left=8pt,right=8pt,top=5pt,bottom=5pt]
+{\sffamily\bfseries\LARGE\color{cool} 学习看板}\hfill
+{\sffamily\small 生成于 \textbf{2026-10-10 15:10（周六）} · \textbf{W10} · \textcolor{hot}{\textbf{两场 tute 前要清三份 deck}}}\\[3pt]
+{\sffamily\small 学期累计 \textbf{3 h 05 min} · algorithms \textbf{2:10} · networks \textbf{0:55}}
+\end{tcolorbox}
+
+% ============ 接下来怎么排 ============
+\begin{tcolorbox}[breakable,colback=hotbg,colframe=hot,boxrule=1.2pt,arc=2pt,left=8pt,right=8pt,top=6pt,bottom=6pt]
+{\sffamily\bfseries\color{hot} \ding{115} 接下来怎么排 —— 10-14 / 10-15 两场 tute 点名的三份 deck 还没清}\\[5pt]
+\bang\ algorithms \texttt{w02-L1} 最后一块的题\textbf{他没答} \arr\ 按「讲 + 答 + 批」要\textbf{重讲那一块}（断点里有题目全文）。\\[4pt]
+\bang\ 周三 15:00 的 algorithms tute 用 \texttt{w03-L1} \arr\ \textbf{周二之前必须讲完}（周三 tute 前没有整块窗口）。
+\end{tcolorbox}
+
+\vspace{4pt}
+\begin{longtable}{@{}L{2.9cm}L{10.7cm}L{2.5cm}@{}}
+\rowcolor{band}
+\textbf{何时} & \textbf{做什么（一天从 12:00 算）} & \textbf{估时} \\
+\endhead
+\rowcolor{warmbg}
+\textbf{10-10(六) 今天} & algorithms \texttt{w02-L1} 重讲 p.7--9 + 出题批改 & 0.7 h \\
+\rowcolor{warmbg}
+\textbf{10-11(日)} & algorithms \texttt{w03-L1} 全 8 页 & 1.5 h \\
+\rowcolor{hotbg}
+\textbf{10-13(二)} & networks \texttt{w02-L1} 全 8 页（续篇，前置 \texttt{w01-L1} 已清）& 1.5 h \\
+\rowcolor{hotbg}
+\textbf{10-14(三)} & \textbf{15:00 algorithms tute} & --- \\
+\rowcolor{hotbg}
+\textbf{10-15(四)} & \textbf{16:00 networks tute} \arr\ 晚上开 algorithms Written Assignment 2（他自己写，我指引 / 挑错 / 排版）& 3 h \\
+\end{longtable}
+
+% ============ 完成进度 ============
+\sect{完成进度}
+\begin{tabular}{@{}L{2.4cm}L{1.3cm}l@{}}
+\multicolumn{3}{@{}l}{\textbf{algorithms}}\\
+& 课件 & \pbarA{6}{0.56}{1.0}{algD}{algL}\ \ \small 1 + 0.67 / 3 份 \\
+& tute & \pbarA{6}{0.5}{1.0}{algD}{algL}\ \ \small 1 / 2 份 \\
+& quiz & \pbarA{6}{1.0}{1.0}{algD}{algL}\ \ \small 已放出的全交了 \\
+& 作业 & \pbarA{6}{0.5}{1.0}{algD}{algL}\ \ \small A1 已交 · A2 未开工 \\[4pt]
+\multicolumn{3}{@{}l}{\textbf{networks}}\\
+& 课件 & \pbarA{6}{0.5}{1.0}{netD}{netL}\ \ \small 1 / 2 份 \\
+& tute & \pbarA{6}{1.0}{1.0}{netD}{netL}\ \ \small 1 / 1 份 \\
+& quiz & \pbarA{6}{0.0}{0.0}{netD}{netL}\ \ \small 无 quiz \\
+& 作业 & \pbarA{6}{0.5}{1.0}{netD}{netL}\ \ \small A1 已交 · Project 未开工 \\
+\end{tabular}
+
+% ============ 本周硬截止 ============
+\sect{本周硬截止（只列 tute 和 due date）}
+\begin{longtable}{@{}L{2.9cm}L{2.4cm}L{10.8cm}@{}}
+\rowcolor{band}\textbf{时间} & \textbf{课} & \textbf{事项} \\ \endhead
+10-14(三) 15:00 & algorithms & tute：insertion sort 的 trace 和复杂度（用 \texttt{w03-L1}）\\
+10-15(四) 16:00 & networks & tute：Nyquist / Shannon 计算（用 \texttt{w02-L1}）\\
+10-16(五) 23:59 & algorithms & Week 10 Quiz（1\%）\\
+\end{longtable}
+
+% ============ 还欠什么 ============
+\sect{还欠什么}
+\begin{longtable}{@{}L{2.4cm}L{2.2cm}L{1.6cm}L{5.6cm}L{1.4cm}L{2.6cm}@{}}
+\rowcolor{band}\textbf{课} & \textbf{项目} & \textbf{类型} & \textbf{内容} & \textbf{估时} & \textbf{硬截止} \\ \endhead
+algorithms & \texttt{w02-L1} & lecture & p.7--9（3 页，重讲 + 出题批改）& 0.7 h & 10-14 tute \\
+algorithms & \texttt{w03-L1} & lecture & p.1--8（8 页）& 1.5 h & 10-14 tute \\
+networks & \texttt{w02-L1} & lecture & p.1--8（8 页）& 1.5 h & 10-15 tute \\
+algorithms & \textbf{Written A2} & 作业 & 三题，只收 PDF & $\approx$8 h & 10-20 due \\
+networks & \textbf{Project} & 作业 & 个人，正文 $\leq$ 10 页 & $\approx$12 h & 10-23 due \\
+\end{longtable}
+
+% ============ 已经完成的 ============
+\newpage
+\sect{已经完成的}
+\begin{longtable}{@{}L{0.5cm}L{2.4cm}L{1.6cm}L{11.6cm}@{}}
+\rowcolor{band}& \textbf{项目} & \textbf{类型} & \textbf{备注} \\ \endhead
+\rowcolor{okbg}\multicolumn{4}{@{}l}{\textbf{algorithms}（2:10）}\\
+\rowcolor{fullbg}& \texttt{w01-L1} & lecture & \textbf{全部完成}（8 页）\\
+& \texttt{w02-L1} & lecture & \textbf{部分} —— 完成了 p.1--6，\textcolor{hot}{还欠 3 页} \\
+& \textbf{Written A1} & 作业 & 已提交 \\
+\rowcolor{okbg}\multicolumn{4}{@{}l}{\textbf{networks}（0:55）}\\
+\rowcolor{fullbg}& \texttt{w01-L1} & lecture & \textbf{全部完成}（7 页）\\
+& \textbf{Assignment 1} & 作业 & 已提交 \\
+\end{longtable}
+\vspace{-6pt}{\small \colorbox{fullbg}{\ \ }\ = 全部完成}
+
+% ============ 卡住的 ============
+\sect{卡住的}
+\warnn\ algorithms \texttt{w03-L1} 的字幕还是「待发」—— 开讲前问他要。
+
+% ============ 学期大 DDL ============
+\sect{学期大 DDL + hurdle}
+\begin{longtable}{@{}L{2.9cm}L{2.4cm}L{8.2cm}L{2.5cm}@{}}
+\rowcolor{band}\textbf{日期} & \textbf{课} & \textbf{事项} & \textbf{权重} \\ \endhead
+10-20(二) 23:59 & algorithms & Written Assignment 2 & 15\% \\
+10-23(五) 23:59 & networks & Project & 15\% \\
+11-02(一) & networks & \textbf{期末}（hurdle：$\geq$ 40\%）& \textbf{60\%} \\
+11-12(四) & algorithms & \textbf{期末}（hurdle：$\geq$ 50\%）& \textbf{60\%} \\
+\end{longtable}
+
+\end{document}

@@ -1,0 +1,76 @@
+% 📌 示例 —— 全学期的账：只放 quiz · assignment · project · 考试，不放 tute；已提交且截止已过的行去掉。
+\documentclass[10pt,a4paper]{article}
+
+\usepackage[margin=1.5cm,top=1.9cm,bottom=1.6cm]{geometry}
+\usepackage{xeCJK}
+\usepackage{fancyhdr}
+\usepackage{xcolor}
+\usepackage{colortbl}
+\usepackage{array}
+\usepackage{longtable}
+\usepackage{ragged2e}
+\usepackage{pifont}
+\usepackage{tcolorbox}
+\usepackage[hidelinks]{hyperref}
+
+\hypersetup{pdftitle={学期 DDL 总表（示例）}}
+
+\setCJKmainfont{PingFang SC}
+\setCJKsansfont{PingFang SC}
+\setCJKmonofont{PingFang SC}
+\setmainfont{Helvetica Neue}
+\setmonofont{Menlo}[Scale=MatchLowercase]
+
+\definecolor{hot}{HTML}{C0281C}
+\definecolor{warm}{HTML}{B54708}
+\definecolor{cool}{HTML}{0B4C8C}
+\definecolor{ok}{HTML}{1A7F37}
+\definecolor{mute}{HTML}{6B6B6B}
+\definecolor{band}{HTML}{F0F0F0}
+\definecolor{hotbg}{HTML}{FDEDEC}
+\definecolor{warmbg}{HTML}{FDF3E7}
+\definecolor{okbg}{HTML}{EDF7EF}
+\definecolor{fullbg}{HTML}{E8F1FB}
+
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\small\sffamily\color{mute} 示例学期 2026 S2 · 学期 DDL 总表}
+\fancyhead[R]{\small\sffamily\color{mute} \thepage}
+\renewcommand{\headrulewidth}{0.4pt}
+
+\setlength{\parindent}{0pt}
+\setlength{\tabcolsep}{4pt}
+\renewcommand{\arraystretch}{1.25}
+
+% 🔒 开头必须 \leavevmode —— 表格 p 列首个元素若是 \color 的 special，整格会掉一行（09-27 看板踩过）
+\newcommand{\done}{\leavevmode{\color{ok}\ding{51}}}
+\newcommand{\bang}{\leavevmode{\color{hot}\ding{115}}}
+\newcommand{\warnn}{\leavevmode{\color{warm}\ding{115}}}
+\newcommand{\arr}{\,$\rightarrow$\,}
+\newcolumntype{L}[1]{>{\raggedright\arraybackslash}p{#1}}
+
+\newcommand{\sect}[1]{%
+  \vspace{6pt}%
+  {\sffamily\bfseries\large\color{cool}#1}%
+  \vspace{2pt}\hrule height 1pt\vspace{6pt}%
+}
+
+\begin{document}
+{\sffamily\bfseries\LARGE\color{cool} 学期 DDL 总表}\hfill{\sffamily\small 更新于 2026-10-10}\par\vspace{8pt}
+
+\begin{longtable}{@{}L{2.9cm}L{3.6cm}L{6.6cm}L{1.6cm}L{2.0cm}@{}}
+\rowcolor{band}\textbf{截止} & \textbf{课} & \textbf{项目} & \textbf{权重} & \textbf{状态} \\ \endhead
+10-16(五) 23:59 & {\small algorithms} & \textbf{Week 10 Quiz} & 1\% & \\
+10-20(二) 23:59 & {\small algorithms} & \textbf{Written Assignment 2} & 15\% & \bang\ 未开工 \\
+10-23(五) 23:59 & {\small networks} & \textbf{Project: Throughput Analysis} & 15\% & \bang\ 未开工 \\
+11-02(一) 13:30 & {\small networks} & \textbf{期末}（hurdle $\geq$ 40\%）& \textbf{60\%} & \\
+11-12(四) 13:30 & {\small algorithms} & \textbf{期末}（hurdle $\geq$ 50\%）& \textbf{60\%} & \\
+\end{longtable}
+
+\vspace{6pt}
+\begin{tcolorbox}[colback=fullbg,colframe=cool,boxrule=0.8pt,arc=2pt]
+\textbf{权重构成}\\[3pt]
+\textbf{algorithms}：weekly quiz 10\% · A1 15\% · A2 15\% · 期末 60\%（hurdle）\\
+\textbf{networks}：A1 5\% · Project 15\% · tute 20\% · 期末 60\%（hurdle）
+\end{tcolorbox}
+\end{document}

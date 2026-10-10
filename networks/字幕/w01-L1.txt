@@ -1,0 +1,7 @@
+ Hi everyone, welcome to computer networks.
+ A network is hosts, links, and switches or routers. Keep those three words, they come back all semester.
+ Why layers? Think about posting a letter overseas. You don't care whether it goes by plane or ship.
+ Here's the five-layer model. Application, transport, network, link, physical. You need to know the unit of data at each layer. That's a classic exam question.
+ Encapsulation: each layer adds its own header. On the way up, each layer strips its header off.
+ Students mix up service and protocol. A service is what a layer offers upward. A protocol is the rules between peers on the same layer.
+ Next week we go down to the physical layer, so make sure the five-layer table is clear.

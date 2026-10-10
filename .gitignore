@@ -1,0 +1,30 @@
+# git 只为盯住文本状态（md / 脚本 / 配置）。大二进制不进来，保证每回合 git 操作毫秒级。
+.DS_Store
+
+# 录音：转录产物（字幕/）入库，原始音频不需要版本化
+*.mp3
+*.m4a
+*.wav
+*.mov
+录音/*
+!录音/.gitkeep
+
+# LaTeX 编译中间物
+*.aux
+*.log
+*.out
+*.nav
+*.snm
+*.toc
+*.synctex.gz
+
+# 收件箱是中转站，内容本来就该被合并后删掉（检查.py [10] 盯它清空）
+收件箱/*
+!收件箱/.gitkeep
+
+# Office 临时锁文件
+~$*
+
+# 本机权限设置
+.claude/settings.local.json
+.claude/worktrees/

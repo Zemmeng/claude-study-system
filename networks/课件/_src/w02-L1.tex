@@ -1,0 +1,99 @@
+\documentclass[aspectratio=169,11pt]{beamer}
+\newcommand{\footerlabel}{DEMO102 Networks \textbullet{} Lecture 2 (slides continue from Lecture 1)}
+\input{_style}
+\title{Computer Networks}
+\subtitle{Lecture 2: The Physical Layer}
+\author{Demo Lecturer}
+\date{Semester 2, 2026}
+
+\begin{document}
+
+\begin{frame}
+  \titlepage
+\end{frame}
+% 续篇：本讲的页脚号接着 Lecture 1 的 7 页往下编（示例：封面印 1，正文从 8 起 —— 判续篇要看 p.2 不看 p.1）
+\setcounter{framenumber}{7}
+
+\begin{frame}{Recap: Where We Are}
+  \begin{itemize}
+    \item Five layers: application, transport, network, link, \textbf{physical}
+    \item The physical layer moves raw \textbf{bits} across a medium
+    \item Today: how fast can a link carry bits?
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{Signals and Bandwidth}
+  \begin{itemize}
+    \item A signal varies over time; its content spans a range of frequencies
+    \item \textbf{Bandwidth} $B$ = the width of the usable frequency range, in hertz (Hz)
+    \item A channel passes frequencies from $f_1$ to $f_2$, so $B = f_2 - f_1$
+  \end{itemize}
+  \medskip
+  Example: a telephone line passing 300 Hz to 3300 Hz has $B = 3000$ Hz.
+\end{frame}
+
+\begin{frame}{Bandwidth, Data Rate, Latency}
+  \begin{center}
+  \begin{tabular}{lll}
+    \hline
+    Quantity & Unit & Meaning \\
+    \hline
+    Bandwidth $B$ & Hz & width of the frequency range \\
+    Data rate & bits/s & how many bits per second we send \\
+    Latency & s & time for one bit to get across \\
+    \hline
+  \end{tabular}
+  \end{center}
+  \medskip
+  Careful: in everyday speech ``bandwidth'' is often used for the data rate. In this subject
+  they are different quantities.
+\end{frame}
+
+\begin{frame}{Nyquist: A Noiseless Channel}
+  For a noiseless channel of bandwidth $B$ Hz and signals with $V$ distinct levels:
+  \[
+    \text{max data rate} = 2B\log_2 V \text{ bits/s}
+  \]
+  \textbf{Example.} $B = 3000$ Hz, binary signal ($V = 2$):
+  \[
+    2 \times 3000 \times \log_2 2 = 6000 \text{ bits/s}
+  \]
+  More signal levels give more bits per symbol -- but noise limits how many levels we can tell apart.
+\end{frame}
+
+\begin{frame}{Shannon: A Noisy Channel}
+  With signal-to-noise ratio $S/N$ (a plain ratio, not decibels):
+  \[
+    C = B\log_2\!\left(1 + \frac{S}{N}\right) \text{ bits/s}
+  \]
+  \textbf{Example.} $B = 3000$ Hz and $30$ dB: $S/N = 10^{30/10} = 1000$, so
+  \[
+    C = 3000 \times \log_2(1001) \approx 29\,900 \text{ bits/s}
+  \]
+  No coding scheme can beat $C$, however many signal levels are used.
+\end{frame}
+
+\begin{frame}{Transmission Media}
+  \begin{center}
+  \begin{tabular}{lll}
+    \hline
+    Medium & Typical use & Main limit \\
+    \hline
+    Twisted pair & office LAN, last mile & attenuation over distance \\
+    Optical fibre & backbone links & cost of installation \\
+    Radio & Wi-Fi, mobile & shared spectrum, interference \\
+    \hline
+  \end{tabular}
+  \end{center}
+\end{frame}
+
+\begin{frame}{Summary}
+  \begin{itemize}
+    \item Bandwidth ($B$, Hz) and data rate (bits/s) are different quantities
+    \item Nyquist: $2B\log_2 V$ for a noiseless channel
+    \item Shannon: $B\log_2(1 + S/N)$ for a noisy channel -- an upper limit
+    \item Next: the link layer and how a shared medium is accessed
+  \end{itemize}
+\end{frame}
+
+\end{document}

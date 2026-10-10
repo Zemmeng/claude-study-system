@@ -1,0 +1,21 @@
+# 规则同步表 —— 治「同一条规则在 N 个文件里各有一份副本，副本之间没有机械联系」
+# 建于 2026-09-03，起因：一夜之间栽了两次（拿过期状态排了一周计划 · 该发两份 PDF 只发一份），
+# 审计又挖出第三次（SessionStart hook 里注入的还是 1.x 的「同一时间只开一个会话」）。
+#
+# 怎么用：主 CLAUDE.md 里每条「下游流程文件必须落实」的规则，在这里登记一行。
+#   检查.py [13] 每回合做两件事：
+#     ① 主文件里那条规则还在不在（正则找不到 = 被删/改名了，下游全在引用幽灵）
+#     ② 每个依赖文件里，那条规则的落地痕迹在不在（正则找不到 = 那个文件没跟上）
+#     ③ 主文件那段的内容 hash 变了 = 规则改过 → 报警要求人工核对下游，核完把新 hash 写回本表
+#
+# 字段(tab 分隔)：锚点ID	主文件定位(python 正则)	依赖文件(;分隔)	依赖文件里必须出现的正则	段落hash	说明
+SESS-PARTITION	两类会话可以并行	.claude/commands/学.md;.claude/commands/作业.md;.claude/commands/总控.md;README.md	只许写|写文件分区|分区	16dea843	会话写文件分区
+HANDOVER	shared/交接/	.claude/commands/学.md;.claude/commands/作业.md;.claude/commands/总控.md;.claude/commands/next.md	交接	3b83c64b	学习会话回写账本的唯一通道
+SESSION-REG	活动会话\.tsv	.claude/commands/学.md;.claude/commands/作业.md;.claude/commands/总控.md	活动会话\.tsv	7beca0c9	会话开场登记 + 收尾翻 done
+DASH-2PDF	两份\*\*现算、现编译、一起发	.claude/commands/next.md	两份一起发|两份 PDF 一起	e06cad4c	看板和 DDL 总表两份一起发
+AI-POLICY	但这条\*\*按课分级\*\*	.claude/commands/作业.md	唯一出处	98153658	AI 政策唯一出处是主文件那张表
+PRESCAN-SAVE	\*\*预扫\*\*有两条路	.claude/commands/学.md;.claude/commands/总控.md;.claude/commands/预扫.md	--save	7125db96	预扫落盘用 --save，不手抄
+NO-MORNING	不许出现「上午」	.claude/commands/next.md	上午	98cb3017	排时段不许出现「上午」（他 12 点起床）
+ALIGN	对齐\.py	.claude/commands/总控.md;.claude/commands/next.md;.claude/commands/week.md	对齐\.py	b92524ba	总控每次发言都跑对齐.py
+QUIZ-EN	题目一律全英文	.claude/commands/学.md;.claude/hooks/inject-time.sh	全英文	4b370478	出题全英文（题干/选项/指令），hook 每条消息注入
+TEACH-VIVID	不许照搬课件和老师的抽象措辞	.claude/commands/学.md	抽象措辞|生动形象	e41ecbd1	讲课先给能「看见」的场景再上术语（09-14 他定）

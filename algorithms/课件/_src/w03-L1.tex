@@ -1,0 +1,108 @@
+\documentclass[aspectratio=169,11pt]{beamer}
+\newcommand{\footerlabel}{DEMO101 Algorithms \textbullet{} Lecture 3}
+\input{_style}
+\title{Algorithms}
+\subtitle{Lecture 3: Insertion Sort}
+\author{Demo Lecturer}
+\date{Semester 2, 2026}
+
+\begin{document}
+
+\begin{frame}
+  \titlepage
+\end{frame}
+% 封面占了两个编号 —— 之后每页的页脚号 = 物理页 + 1（示例：offset 不一定是 0）
+\setcounter{framenumber}{2}
+
+\begin{frame}{The Sorting Problem}
+  \begin{description}
+    \item[Input] a sequence of $n$ items $A[0..n-1]$
+    \item[Output] the same items rearranged so that $A[0] \le A[1] \le \dots \le A[n-1]$
+  \end{description}
+  \bigskip
+  Two properties we will ask about every sorting algorithm:
+  \begin{itemize}
+    \item \textbf{in-place}: uses only $O(1)$ extra memory beyond the array
+    \item \textbf{stable}: equal keys keep their original relative order
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{The Idea: Sort a Hand of Cards}
+  Pick up cards one at a time. The cards already in your hand are always sorted.
+  \medskip
+  \begin{itemize}
+    \item Take the next card
+    \item Slide it left past every card that is larger
+    \item Drop it into the gap
+  \end{itemize}
+  \bigskip
+  In an array: $A[0..i-1]$ is the sorted ``hand''; $A[i]$ is the next card.
+\end{frame}
+
+\begin{frame}[fragile]{Insertion Sort: Pseudocode}
+\begin{verbatim}
+function InsertionSort(A, n)
+    for i <- 1 to n - 1
+        v <- A[i]
+        j <- i - 1
+        while j >= 0 and A[j] > v
+            A[j + 1] <- A[j]
+            j <- j - 1
+        A[j + 1] <- v
+\end{verbatim}
+  \small The basic operation is the comparison \verb|A[j] > v|.
+\end{frame}
+
+\begin{frame}{Trace on $[5, 2, 4, 6, 1, 3]$}
+  \begin{center}
+  \begin{tabular}{cl}
+    \hline
+    After round $i$ & Array (sorted prefix before the bar) \\
+    \hline
+    start & $5 \mid 2\; 4\; 6\; 1\; 3$ \\
+    $i=1$ & $2\; 5 \mid 4\; 6\; 1\; 3$ \\
+    $i=2$ & $2\; 4\; 5 \mid 6\; 1\; 3$ \\
+    $i=3$ & $2\; 4\; 5\; 6 \mid 1\; 3$ \\
+    $i=4$ & $1\; 2\; 4\; 5\; 6 \mid 3$ \\
+    $i=5$ & $1\; 2\; 3\; 4\; 5\; 6$ \\
+    \hline
+  \end{tabular}
+  \end{center}
+\end{frame}
+
+\begin{frame}{Why It Is Correct}
+  \begin{block}{Loop invariant}
+    At the start of the round for index $i$, $A[0..i-1]$ contains the original first $i$
+    items in sorted order.
+  \end{block}
+  \begin{itemize}
+    \item \textbf{Initially} ($i = 1$): a single item is sorted
+    \item \textbf{Each round}: the inner loop shifts larger items right and inserts $v$, so $A[0..i]$ is sorted
+    \item \textbf{At the end} ($i = n$): the whole array is sorted
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{Complexity and Properties}
+  \begin{center}
+  \begin{tabular}{ll}
+    \hline
+    Case & Comparisons \\
+    \hline
+    Best (already sorted) & $n - 1 \in \Theta(n)$ \\
+    Worst (reverse sorted) & $\frac{n(n-1)}{2} \in \Theta(n^2)$ \\
+    \hline
+  \end{tabular}
+  \end{center}
+  \medskip
+  In-place: yes. Stable: yes (we stop shifting at $A[j] \le v$, never at equal keys).
+\end{frame}
+
+\begin{frame}{Summary and Next Time}
+  \begin{itemize}
+    \item Insertion sort grows a sorted prefix; $\Theta(n^2)$ worst case, $\Theta(n)$ best case
+    \item Good on small or nearly sorted inputs
+    \item Next lecture: divide-and-conquer and mergesort
+  \end{itemize}
+\end{frame}
+
+\end{document}

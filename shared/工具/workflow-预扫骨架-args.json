@@ -1,0 +1,7 @@
+{
+ "root": "<项目根绝对路径>",
+ "scratch": "/tmp",
+ "decks": [
+ {"course":"algorithms","deck":"w05-L2","line":12,"hasHuman":false,"tableExists":false,"title":"Lecture 10: Example Topic（lecturer，55 页，28 页动画重复帧，offset +1）"}
+ ]
+}

@@ -1,0 +1,8 @@
+ Morning everyone. Last time we defined Big-O. Today we use it on a real algorithm: binary search.
+ The input has to be sorted. If it's not sorted, nothing I say today works.
+ Think of the guessing game. Every guess cuts the candidates in half.
+ Here's the pseudocode. Notice it's lo less than or equal to hi. If you write strictly less than, you miss the last element. That's the bug I see every year.
+ Let's trace it for twenty-three. Round one, mid is index four, value sixteen, too small, so lo becomes five.
+ Why is it correct? The loop invariant: if x is in the array, it's in A from lo to hi. You will be asked to state this invariant in the exam and explain why lo becomes mid plus one.
+ The worst case recurrence is C of n equals C of n over two plus one. That solves to floor log two n plus one.
+ For homework, find an unsorted array of length five where binary search returns minus one even though the key is there.

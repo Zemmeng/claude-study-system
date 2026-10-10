@@ -1,0 +1,27 @@
+1
+00:00:06,000 --> 00:00:12,000
+ Hi everyone, welcome to computer networks.
+
+2
+00:05:30,000 --> 00:05:36,000
+ A network is hosts, links, and switches or routers. Keep those three words, they come back all semester.
+
+3
+00:11:20,000 --> 00:11:26,000
+ Why layers? Think about posting a letter overseas. You don't care whether it goes by plane or ship.
+
+4
+00:18:45,000 --> 00:18:51,000
+ Here's the five-layer model. Application, transport, network, link, physical. You need to know the unit of data at each layer. That's a classic exam question.
+
+5
+00:26:10,000 --> 00:26:16,000
+ Encapsulation: each layer adds its own header. On the way up, each layer strips its header off.
+
+6
+00:33:40,000 --> 00:33:46,000
+ Students mix up service and protocol. A service is what a layer offers upward. A protocol is the rules between peers on the same layer.
+
+7
+00:41:00,000 --> 00:41:06,000
+ Next week we go down to the physical layer, so make sure the five-layer table is clear.
