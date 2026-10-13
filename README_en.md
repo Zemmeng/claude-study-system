@@ -6,7 +6,7 @@
 
 [![License: MIT](https://img.shields.io/badge/license-MIT-0969da.svg)](LICENSE) [![Claude Code](https://img.shields.io/badge/Claude_Code-hooks_%2B_slash_commands-cc785c.svg)](https://claude.com/claude-code) [![Python 3.9+](https://img.shields.io/badge/python-3.9%2B-3776AB.svg?logo=python&logoColor=white)](#-requirements) [![Checks](https://img.shields.io/badge/consistency_checks-14-1a7f37.svg)](#-consistency-checks) [![LLM](https://img.shields.io/badge/LLM-Claude_%7C_DeepSeek_%7C_Kimi_%7C_OpenAI--compatible-6e7781.svg)](docs/接入其他模型.md) [![Smoke test](https://github.com/Zemmeng/claude-study-system/actions/workflows/smoke.yml/badge.svg)](https://github.com/Zemmeng/claude-study-system/actions/workflows/smoke.yml)
 
-[中文](README.md) · **English** · [Architecture (zh)](docs/架构说明.md) · [Customization guide (zh)](docs/自定义指南.md) · [Other LLMs (zh)](docs/接入其他模型.md)
+[中文](README.md) · **English** · [Architecture (zh)](docs/架构说明.md) · [Customization guide (zh)](docs/自定义指南.md) · [Other LLMs (zh)](docs/接入其他模型.md) · [Review (zh)](docs/作业审查.md)
 
 </div>
 
@@ -115,6 +115,22 @@ During a chunk Claude sets only true/false, multiple choice and fill-in question
 
 Study and control sessions can run at the same time. Study sessions can't touch the shared ledgers, so they leave a handover note (`shared/交接/`), and `/总控` processes it first thing. No two sessions overwrite each other.
 
+## 🔍 Pre-submission review
+
+<p align="center"><img src="docs/assets/review-flow.svg" alt="Pre-submission review: three policy tiers and seven steps" width="100%"></p>
+
+Say "review it" before submitting (or `/审查 <course> <id>`). Distilled from five real multi-agent reviews the author ran during the semester; 40 lessons became rules.
+
+| | How |
+|---|---|
+| **Tier** | Taken from that assignment's own row in the AI-policy table in `CLAUDE.md`, never looser. `allowed` gives OLD → NEW fixes; `guided` (AI may not produce the final work) only points out what is wrong and why, with no answers; `forbidden` runs no AI at all and produces a self-check list |
+| **Lenses** | 30 lenses chosen by assignment type (report · SQL · code · calculation · short answer · modelling) from `shared/工具/审查镜头库.json` |
+| **Verification** | A facts verifier checks every finding against the source (default: not confirmed); a marker judges whether it actually costs marks; the judge reproduces every must-fix |
+| **Scale** | ≤ 10 agents by default, Sonnet for fan-out, main model only for the judge; asks once before starting; every agent writes to disk before returning |
+| **Without Claude Code** | `python3 shared/工具/作业审查.py run …` runs a simplified version on any model from `.env` (no code execution, no images — stated in the report) |
+
+Design, schemas and the 40 lessons: [docs/作业审查.md](docs/作业审查.md) (Chinese).
+
 ## 📸 What it looks like
 
 <p align="center"><img src="docs/assets/nav-layer.svg" alt="Nav layer injected at session start" width="100%"></p>
@@ -178,6 +194,7 @@ Both routes use the same rules, hooks and `/学` `/作业` `/总控` commands. T
 | `/next` | Build the study dashboard PDF (sub-flow of `/总控`) |
 | `/week` | Weekly review and next week's plan |
 | `/drill <course> <topic>` | Exam-style drilling for revision |
+| `/审查 <course> <id>` | Pre-submission multi-agent review (a sub-flow of `/作业`), tiered by the assignment's AI policy |
 | `/预扫` | Pre-scan new slides: page count · footer offset · continuation deck? · animation frames · prerequisites |
 
 ## 🚦 Consistency checks

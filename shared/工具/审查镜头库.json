@@ -1,0 +1,799 @@
+{
+  "_说明": "作业交前审查的镜头库 —— /审查（Claude Code workflow）和 作业审查.py（任意模型的简化版）共用这一份。字段：key · title · types（适用作业类型，* = 全部）· tiers（允许在哪些政策档跑：allowed / guided）· rounds（first / all / followup）· needs（read / run / db / images / raw-data；Python 简化版做不到 run/db/images，会降为静态推理并在报告里标出）· core（这类作业的核心镜头，默认就开，每类 ≤ 5 个，保证默认不超过 10 个 agent）· optional_for（可选，用 --add 加）· auto（true = 满足 requires 就自动开，受 agent 预算约束，排在核心镜头之后）· requires（{\"roles\":[…]} 材料里要有这些角色才开；{\"spec_regex\":\"…\"} spec 里匹配到才开）· limits（{\"render_pages\",\"tool_calls\"} 覆盖默认额度）· max_findings · prompt（本镜头的任务）· self_check（forbidden 档的自查清单从这里取，零 AI）。加镜头：照格式加一项；或在 <课程>/作业/_审查/<代号>/镜头.json 里放只属于这份作业的。 自定义镜头文件 <D>/镜头.json 的格式：{\"lenses\": [ {同字段} ]}（也接受直接一个数组）；和库里同 key 的视为覆盖（没写的字段沿用库里的）；新镜头必须有 key / title / types / tiers / prompt，要默认开就写 core（只写 optional_for 不会默认开）；JSON 写错会直接报错。rounds 对 core 和 auto 都生效，--add 显式点名的不受限。shard 不写在库里：用 作业审查.py lenses --shard <key>=a,b 把一个镜头切成几片并行跑。",
+  "types": {
+    "report": "长报告 / 实验报告 / essay",
+    "sql": "SQL 查询 / 数据库作业",
+    "code": "编程作业（Java / Python / C …）",
+    "calc": "计算题 / 推导题 / 证明",
+    "short": "简答题 / justify / 解释题",
+    "model": "建模 / ER 图 / UML / 设计图"
+  },
+  "lenses": [
+    {
+      "key": "spec-compliance",
+      "title": "spec / 提交规则合规",
+      "types": [
+        "*"
+      ],
+      "tiers": [
+        "allowed",
+        "guided"
+      ],
+      "rounds": "first",
+      "needs": [
+        "read"
+      ],
+      "max_findings": 6,
+      "prompt": "只查非内容规则：文件名和格式、页数 / 字数上限、字号行距页边距、署名和学号位置、必交的附件和声明、提交方式（PDF / 平台 / 文件数）、迟交规则。步骤：① 把 spec / 要点里每一条可检查的硬性要求逐条列出来；② 逐条对照交付物（数页数、数字数、看文件名）；③ 只报确实违反或证据不足的。不评内容质量。",
+      "self_check": [
+        "文件名、格式和提交方式符合 spec 吗？",
+        "页数 / 字数在上限内吗（含不含参考文献、附录）？",
+        "spec 要求的署名、声明、附件都在吗？",
+        "迟交规则和截止时间核过吗？"
+      ],
+      "core": [
+        "report",
+        "sql",
+        "code",
+        "calc",
+        "short",
+        "model"
+      ],
+      "optional_for": []
+    },
+    {
+      "key": "rubric-marker",
+      "title": "按 rubric 逐个得分点给分",
+      "types": [
+        "*"
+      ],
+      "tiers": [
+        "allowed",
+        "guided"
+      ],
+      "rounds": "all",
+      "needs": [
+        "read"
+      ],
+      "max_findings": 6,
+      "prompt": "扮阅卷人。把 rubric（没有 rubric 就用题面）每一句拆成独立的得分点，逐点判：显式回答了吗？答对了吗？有证据 / 推导支撑吗？深度够吗？有没有注水？只把「会丢分」的点作为 finding 报，满分的点写进 checked_ok。",
+      "self_check": [
+        "rubric 每一条我都能指出答在哪一页 / 哪一行吗？",
+        "有没有只答了一半的得分点？",
+        "每个结论都有证据或推导支撑吗？"
+      ],
+      "core": [
+        "report",
+        "sql",
+        "calc",
+        "short"
+      ],
+      "optional_for": [
+        "code",
+        "model"
+      ]
+    },
+    {
+      "key": "faq-compliance",
+      "title": "官方答疑 / 教职员帖",
+      "types": [
+        "*"
+      ],
+      "tiers": [
+        "allowed",
+        "guided"
+      ],
+      "rounds": "first",
+      "needs": [
+        "read"
+      ],
+      "max_findings": 5,
+      "prompt": "只在材料里有官方答疑存档（论坛帖、FAQ、公告）时有意义；没有就返回零条并在 not_checked 写明。逐条读教职员的回复（只认教职员，不认同学的说法）：每一条要求、澄清、许可、禁止，作答是否遵守了？特别留意答疑里改变或收紧了 spec 的地方。",
+      "self_check": [
+        "课程论坛 / FAQ 里老师对这份作业的澄清，我都看过并照做了吗？"
+      ],
+      "core": [],
+      "optional_for": [],
+      "requires": {
+        "roles": [
+          "faq"
+        ]
+      },
+      "auto": true
+    },
+    {
+      "key": "minimal-form",
+      "title": "过度书写 / 超出要求的构造",
+      "types": [
+        "sql",
+        "code",
+        "calc",
+        "model",
+        "short"
+      ],
+      "tiers": [
+        "allowed",
+        "guided"
+      ],
+      "rounds": "all",
+      "needs": [
+        "read"
+      ],
+      "max_findings": 6,
+      "prompt": "先看 README：如果没有列出课上示范 / 官方解答（slides、reference），相关的判断写进 not_checked，不凭常识下结论。这是最容易被忽略、又最常真实扣分的一类。对作答里每一个题面没有要求的构造（多余的条件、多余的连接 / 表 / 实体 / 分支、防御性冗余、超出课程范围的写法或特性、多写的步骤）问：课上示范或官方解答里有这样写吗？没有的话默认它是成本（阅卷人可能按「不简洁 / 超纲 / 不符合课程惯例」扣分），除非你能说出它防住的一个具体失败场景。",
+      "self_check": [
+        "每一个题面没要求的东西（多余的条件、步骤、表、分支），课上示范过这么写吗？",
+        "有没有用到超出课程范围的写法或特性？"
+      ],
+      "core": [
+        "sql",
+        "calc",
+        "short",
+        "model"
+      ],
+      "optional_for": [
+        "code"
+      ]
+    },
+    {
+      "key": "declaration",
+      "title": "AI / 合作声明与实际一致",
+      "types": [
+        "*"
+      ],
+      "tiers": [
+        "allowed",
+        "guided"
+      ],
+      "rounds": "first",
+      "needs": [
+        "read"
+      ],
+      "max_findings": 3,
+      "prompt": "只在 spec 要求声明（AI 使用、合作、引用）时开。对照声明文字和实际使用记录（.tex 注释、<代号>-AI使用记录.md、交接单）：声明是否如实、完整、格式符合 spec 要求？不评 AI 政策本身，不建议改变用法。",
+      "self_check": [
+        "spec 要求的 AI / 合作声明写了吗？内容和实际做法一致吗？"
+      ],
+      "core": [],
+      "optional_for": [],
+      "requires": {
+        "spec_regex": "(include|submit|provide|attach|complete|sign|write|add)\\s+(a|an|the|your)?\\s*((signed|written|short|brief|ai|genai|generative|originality|authorship|academic|integrity|honesty|use|usage)\\s+){0,3}(declaration|statement of (ai|use|originality)|acknowledg)|declaration\\s+of\\s+(originality|authorship|ai|use|generative)|academic\\s+(integrity|honesty)\\s+(declaration|statement|form)|(generative\\s+)?ai\\s+(use|usage)\\s+(declaration|statement|record)|acknowledg\\w*\\s+(any\\s+|the\\s+|your\\s+)?(use|help|assistance|sources)|disclos\\w*\\s+(any\\s+|the\\s+|your\\s+)?(use|ai|assistance)|(ai|合作|使用|写|附|交|提交|填)声明|声明.{0,10}(ai|使用|合作)"
+      },
+      "auto": true
+    },
+    {
+      "key": "regression",
+      "title": "上一轮改动引入的回归",
+      "types": [
+        "*"
+      ],
+      "tiers": [
+        "allowed",
+        "guided"
+      ],
+      "rounds": "followup",
+      "needs": [
+        "read"
+      ],
+      "max_findings": 6,
+      "prompt": "只看上一轮之后改过的地方（README 里有 diff）。查：改动有没有打坏句子 / 行为 / 编译；有没有和别处矛盾；证据还撑不撑得住；有没有悄悄删掉一个得分点；有没有对冲过头、结论不再明确；页数 / 字数是否超了。",
+      "self_check": [
+        "上次改过的地方，重读一遍还通顺、还和别处一致吗？",
+        "改完重新编译 / 运行过吗？"
+      ],
+      "core": [],
+      "optional_for": []
+    },
+    {
+      "key": "adversary",
+      "title": "严格阅卷人找扣分点",
+      "types": [
+        "*"
+      ],
+      "tiers": [
+        "allowed",
+        "guided"
+      ],
+      "rounds": "first",
+      "needs": [
+        "read"
+      ],
+      "max_findings": 6,
+      "prompt": "扮一个想方设法扣分的严格阅卷人。每一项写：依据哪条规则 → 证据在哪 → 阅卷人会怎么扣。只报有规则依据的，不报口味（扣分概率和期望损失由后面的 marker 判断，你不用估）。",
+      "self_check": [
+        "如果阅卷人想扣分，最容易下手的三个地方是哪里？"
+      ],
+      "core": [],
+      "optional_for": [
+        "calc",
+        "code",
+        "model",
+        "report",
+        "short",
+        "sql"
+      ]
+    },
+    {
+      "key": "technical",
+      "title": "技术断言是否站得住",
+      "types": [
+        "report"
+      ],
+      "tiers": [
+        "allowed",
+        "guided"
+      ],
+      "rounds": "all",
+      "needs": [
+        "read"
+      ],
+      "max_findings": 6,
+      "prompt": "先看 README：如果没有列出课件或参考资料（slides、reference），相关的判断写进 not_checked，不凭常识下结论。逐个找出报告里的技术断言（因果、机制、比较、结论），尝试用课件、官方材料或报告自己的数据反驳。特别查：因果关系是真的测过，还是被写成了定论？比较的条件是否一致？",
+      "self_check": [
+        "每个「因为 / 所以」都有数据或资料支撑吗？还是推测写成了定论？"
+      ],
+      "core": [
+        "report"
+      ],
+      "optional_for": []
+    },
+    {
+      "key": "numbers",
+      "title": "数字重算",
+      "types": [
+        "report"
+      ],
+      "tiers": [
+        "allowed",
+        "guided"
+      ],
+      "rounds": "all",
+      "needs": [
+        "read",
+        "raw-data"
+      ],
+      "max_findings": 6,
+      "prompt": "先看 README：如果没有列出原始数据（raw-data），相关的判断写进 not_checked，不凭常识下结论。用原始数据当 ground truth（不是报告里的派生表 —— 只对派生表核是循环论证）。写脚本重算正文里的每个均值、比例、倍数、单位换算、百分比；核对正文、表、图三处的同一个数字是否一致。 【guided 档】evidence 只写位置、命令和 scratch 里的文件路径，不写算出来的正确值、参考查询或期望输出。",
+      "self_check": [
+        "正文、表格、图里的同一个数字一致吗？",
+        "关键数字我从原始数据重算过一遍吗？"
+      ],
+      "core": [
+        "report"
+      ],
+      "optional_for": []
+    },
+    {
+      "key": "evidence",
+      "title": "证据可见性（截图 / 附录）",
+      "types": [
+        "report"
+      ],
+      "tiers": [
+        "allowed",
+        "guided"
+      ],
+      "rounds": "first",
+      "needs": [
+        "read",
+        "images"
+      ],
+      "max_findings": 5,
+      "prompt": "正文引用的每个具体数字 / 字符串，在被引用的截图或附录里是否真的看得见？抽查至少 20 处（真的打开图片看，不凭文件名推断）。",
+      "self_check": [
+        "正文引用的截图里，那个数字真的看得清吗？"
+      ],
+      "core": [
+        "report"
+      ],
+      "optional_for": [],
+      "limits": {
+        "render_pages": 20,
+        "tool_calls": 40
+      }
+    },
+    {
+      "key": "figures",
+      "title": "图表规范",
+      "types": [
+        "report"
+      ],
+      "tiers": [
+        "allowed",
+        "guided"
+      ],
+      "rounds": "first",
+      "needs": [
+        "images"
+      ],
+      "max_findings": 4,
+      "prompt": "每张图表：有编号和标题吗？坐标轴标签和单位齐全吗？图例清楚吗？正文引用了吗？图里的结论和正文说的一致吗？",
+      "self_check": [
+        "每张图都有编号、标题、坐标轴单位，并且在正文里被引用了吗？"
+      ],
+      "core": [],
+      "optional_for": [
+        "report"
+      ]
+    },
+    {
+      "key": "citations",
+      "title": "引用与参考文献",
+      "types": [
+        "report"
+      ],
+      "tiers": [
+        "allowed",
+        "guided"
+      ],
+      "rounds": "first",
+      "needs": [
+        "read"
+      ],
+      "max_findings": 4,
+      "prompt": "引用格式是否符合 spec 要求的风格；正文引用和参考文献表一一对应吗；被引用的说法和来源实际内容一致吗（能核的就核）。",
+      "self_check": [
+        "正文每个引用都在参考文献表里，格式统一吗？"
+      ],
+      "core": [],
+      "optional_for": [
+        "report"
+      ]
+    },
+    {
+      "key": "language",
+      "title": "语言与清晰度",
+      "types": [
+        "report",
+        "short"
+      ],
+      "tiers": [
+        "allowed",
+        "guided"
+      ],
+      "rounds": "all",
+      "needs": [
+        "read"
+      ],
+      "max_findings": 5,
+      "prompt": "先看 README：如果没有列出课件（slides，用来核术语拼写），相关的判断写进 not_checked，不凭常识下结论。只报会影响阅卷人理解或会被扣「表达」分的问题：歧义、术语不一致、和课件拼写不同的术语、结论句缺失。allowed 档可以给同长或更短的改写；guided 档只标位置和问题类别，不给改写。",
+      "self_check": [
+        "术语和课件的拼写一致吗？",
+        "每段的结论句清楚吗？"
+      ],
+      "core": [],
+      "optional_for": [
+        "report",
+        "short"
+      ]
+    },
+    {
+      "key": "cross-ref",
+      "title": "前后一致",
+      "types": [
+        "report"
+      ],
+      "tiers": [
+        "allowed",
+        "guided"
+      ],
+      "rounds": "all",
+      "needs": [
+        "read"
+      ],
+      "max_findings": 4,
+      "prompt": "前后文的数字、术语、结论、章节引用是否一致；摘要 / 结论里说的，正文真的有吗？",
+      "self_check": [
+        "摘要和结论里说的，正文都有对应吗？"
+      ],
+      "core": [],
+      "optional_for": [
+        "report"
+      ]
+    },
+    {
+      "key": "semantic",
+      "title": "查询语义逐题核",
+      "types": [
+        "sql"
+      ],
+      "tiers": [
+        "allowed",
+        "guided"
+      ],
+      "rounds": "all",
+      "needs": [
+        "read",
+        "db"
+      ],
+      "max_findings": 6,
+      "prompt": "逐题：列出题面所有合理的解读，判断查询是否满足最可能被采用的那个；构造边界数据（并列、NULL、大小写、空集、重复）在临时数据库里实际跑（能跑就跑，并在 evidence 里写命令和输出；绝不连生产 / 共享库，DML 一律在事务里回滚）。 【guided 档】evidence 只写位置、命令和 scratch 里的文件路径，不写算出来的正确值、参考查询或期望输出。",
+      "self_check": [
+        "每道题我考虑过并列、NULL、空结果、重复行吗？",
+        "我的理解和题面最自然的读法一致吗？"
+      ],
+      "core": [
+        "sql"
+      ],
+      "optional_for": []
+    },
+    {
+      "key": "deliverable-consistency",
+      "title": "截图 / 代码 / 文档三方一致",
+      "types": [
+        "sql",
+        "code"
+      ],
+      "tiers": [
+        "allowed",
+        "guided"
+      ],
+      "rounds": "all",
+      "needs": [
+        "read",
+        "images"
+      ],
+      "max_findings": 5,
+      "prompt": "交付物里同一个东西的几种形态（截图、源代码、文档里的说明、输出样例）是否一致：列头、行数、文件名、版本。",
+      "self_check": [
+        "截图里的结果和我提交的代码现在跑出来的一样吗？"
+      ],
+      "core": [
+        "sql"
+      ],
+      "optional_for": []
+    },
+    {
+      "key": "env",
+      "title": "运行环境与可重跑",
+      "types": [
+        "sql",
+        "code"
+      ],
+      "tiers": [
+        "allowed",
+        "guided"
+      ],
+      "rounds": "first",
+      "needs": [
+        "read",
+        "run"
+      ],
+      "max_findings": 4,
+      "prompt": "先看 README：如果没有列出运行环境说明（spec 或 reference），相关的判断写进 not_checked，不凭常识下结论。阅卷人的环境（服务器模式、版本、编译器、平台）上能不能原样跑？脚本幂等吗（重跑会不会报错 / 重复插入）？有没有依赖本机才有的东西（绝对路径、本地文件、特定设置）？",
+      "self_check": [
+        "换一台干净的机器 / 阅卷人的环境，能原样跑吗？"
+      ],
+      "core": [],
+      "optional_for": [
+        "code",
+        "sql"
+      ]
+    },
+    {
+      "key": "blind-solve",
+      "title": "盲解对照（仅允许 AI 的作业）",
+      "types": [
+        "sql",
+        "calc",
+        "short"
+      ],
+      "tiers": [
+        "allowed"
+      ],
+      "rounds": "first",
+      "needs": [
+        "read"
+      ],
+      "max_findings": 5,
+      "prompt": "不看学生的作答，先独立解题（写到你的临时目录），再和作答逐题对比；只报两者结论不同、且你能说明谁对的地方。只在允许 AI 的作业上使用 —— 它会在盘上生成一份完整解答。 【guided 档】evidence 只写位置、命令和 scratch 里的文件路径，不写算出来的正确值、参考查询或期望输出。",
+      "self_check": [],
+      "core": [],
+      "optional_for": [
+        "calc",
+        "short",
+        "sql"
+      ]
+    },
+    {
+      "key": "behaviour",
+      "title": "真编译真运行",
+      "types": [
+        "code"
+      ],
+      "tiers": [
+        "allowed",
+        "guided"
+      ],
+      "rounds": "all",
+      "needs": [
+        "read",
+        "run"
+      ],
+      "max_findings": 6,
+      "prompt": "在临时目录里编译并运行，用 spec 给的样例输入，逐字符比对期望输出（空格、换行、大小写都算）。记录命令和实际输出。 【guided 档】evidence 只写位置、命令和 scratch 里的文件路径，不写算出来的正确值、参考查询或期望输出。",
+      "self_check": [
+        "spec 给的每个样例，我的输出逐字符一致吗（含空格、换行）？"
+      ],
+      "core": [
+        "code"
+      ],
+      "optional_for": []
+    },
+    {
+      "key": "hidden-tests",
+      "title": "隐藏测试推测",
+      "types": [
+        "code"
+      ],
+      "tiers": [
+        "allowed",
+        "guided"
+      ],
+      "rounds": "first",
+      "needs": [
+        "read",
+        "run"
+      ],
+      "max_findings": 6,
+      "prompt": "推测阅卷的隐藏测试会测什么（边界、非法输入、空输入、大输入、重复操作），写成脚本跑至少 25 条，带超时抓死循环。只报能复现的失败，并在 evidence 里写复现命令。 【guided 档】evidence 只写位置、命令和 scratch 里的文件路径，不写算出来的正确值、参考查询或期望输出。",
+      "self_check": [
+        "空输入、非法输入、边界值、大输入我都试过吗？"
+      ],
+      "core": [
+        "code"
+      ],
+      "optional_for": [],
+      "limits": {
+        "tool_calls": 40
+      }
+    },
+    {
+      "key": "presentation",
+      "title": "代码规范分",
+      "types": [
+        "code"
+      ],
+      "tiers": [
+        "allowed",
+        "guided"
+      ],
+      "rounds": "first",
+      "needs": [
+        "read"
+      ],
+      "max_findings": 5,
+      "prompt": "按 rubric 里关于代码质量的每一行（命名、注释、缩进、方法长度、重复代码、魔法数字、常量）逐项判。只报 rubric 里有的项。",
+      "self_check": [
+        "命名、注释、缩进、重复代码符合课程的规范要求吗？"
+      ],
+      "core": [
+        "code"
+      ],
+      "optional_for": []
+    },
+    {
+      "key": "structure",
+      "title": "结构与设计",
+      "types": [
+        "code"
+      ],
+      "tiers": [
+        "allowed",
+        "guided"
+      ],
+      "rounds": "first",
+      "needs": [
+        "read"
+      ],
+      "max_findings": 4,
+      "prompt": "先看 README：如果没有列出spec 里的类 / 方法要求或起始代码（starter），相关的判断写进 not_checked，不凭常识下结论。类 / 函数划分是否符合 spec 和课程讲过的设计要求（封装、职责、继承关系、要求的类和方法签名是否一字不差）。",
+      "self_check": [
+        "spec 要求的类名、方法签名一字不差吗？"
+      ],
+      "core": [],
+      "optional_for": [
+        "code"
+      ]
+    },
+    {
+      "key": "scope-forbidden",
+      "title": "禁用特性与提供代码",
+      "types": [
+        "code"
+      ],
+      "tiers": [
+        "allowed",
+        "guided"
+      ],
+      "rounds": "all",
+      "needs": [
+        "read"
+      ],
+      "max_findings": 5,
+      "prompt": "先看 README：如果没有列出起始代码（starter）和禁用清单，相关的判断写进 not_checked，不凭常识下结论。grep spec / 公告里点名禁止的 API、库、语言特性；和课程提供的起始代码逐行 diff，确认没改不许改的部分；查超出课程范围的写法。",
+      "self_check": [
+        "有没有用到 spec 禁止的库 / 特性？",
+        "课程给的起始代码里不许改的部分我动了吗？"
+      ],
+      "core": [
+        "code"
+      ],
+      "optional_for": []
+    },
+    {
+      "key": "style-consistency",
+      "title": "风格前后一致",
+      "types": [
+        "code"
+      ],
+      "tiers": [
+        "allowed",
+        "guided"
+      ],
+      "rounds": "followup",
+      "needs": [
+        "read"
+      ],
+      "max_findings": 3,
+      "prompt": "多轮修改后，各文件的风格（命名习惯、注释写法、格式）是否仍然和作者早期写的部分一致。",
+      "self_check": [
+        "后改的部分和前面写的风格一致吗？"
+      ],
+      "core": [],
+      "optional_for": [
+        "code"
+      ]
+    },
+    {
+      "key": "per-question-check",
+      "title": "逐题逐步核推导",
+      "types": [
+        "calc"
+      ],
+      "tiers": [
+        "allowed",
+        "guided"
+      ],
+      "rounds": "all",
+      "needs": [
+        "read"
+      ],
+      "max_findings": 6,
+      "prompt": "先看 README：如果没有列出课件（slides，用来核记号惯例），相关的判断写进 not_checked，不凭常识下结论。逐题逐步：每一步能从上一步推出来吗？用到的定理 / 公式条件满足吗？记号和书写惯例是否照课件？最终结果的形式（单位、化简程度、渐近记号）符合题目要求吗？guided 档只指出哪一步推不出、为什么，不写正确的推导。 【guided 档】evidence 只写位置、命令和 scratch 里的文件路径，不写算出来的正确值、参考查询或期望输出。",
+      "self_check": [
+        "每一步都能从上一步推出来吗？",
+        "记号和课件一致吗？最终答案的形式是题目要的吗？"
+      ],
+      "core": [
+        "calc"
+      ],
+      "optional_for": []
+    },
+    {
+      "key": "per-question-marker",
+      "title": "逐题判答到点没有",
+      "types": [
+        "short"
+      ],
+      "tiers": [
+        "allowed",
+        "guided"
+      ],
+      "rounds": "all",
+      "needs": [
+        "read"
+      ],
+      "max_findings": 6,
+      "prompt": "先看 README：如果没有列出课件（slides，用来核术语拼写），相关的判断写进 not_checked，不凭常识下结论。逐题：答到题目问的点了吗？问 why 的有没有答成 what？比较 / 方向 / 极性有没有反？用的术语是课件上的拼写吗？字数 / 句数限制遵守了吗？",
+      "self_check": [
+        "问 why 的题，我答的是原因还是现象？",
+        "比较类的题，方向有没有写反？"
+      ],
+      "core": [
+        "short"
+      ],
+      "optional_for": []
+    },
+    {
+      "key": "rules-coverage",
+      "title": "业务规则覆盖",
+      "types": [
+        "model"
+      ],
+      "tiers": [
+        "allowed",
+        "guided"
+      ],
+      "rounds": "all",
+      "needs": [
+        "read",
+        "images"
+      ],
+      "max_findings": 6,
+      "prompt": "把案例描述按板块拆成一条条业务规则，逐条判模型里是 enforced / partial / missing / contradicts，只报后三种。",
+      "self_check": [
+        "案例里的每一条规则，模型里都能指出在哪体现吗？"
+      ],
+      "core": [
+        "model"
+      ],
+      "optional_for": []
+    },
+    {
+      "key": "keys-relations",
+      "title": "键与关系",
+      "types": [
+        "model"
+      ],
+      "tiers": [
+        "allowed",
+        "guided"
+      ],
+      "rounds": "all",
+      "needs": [
+        "read",
+        "images"
+      ],
+      "max_findings": 5,
+      "prompt": "主键、外键、基数、可选性、关系类型是否正确且和案例一致；有没有多余或缺失的关系。",
+      "self_check": [
+        "每个关系的基数和可选性和案例描述一致吗？"
+      ],
+      "core": [
+        "model"
+      ],
+      "optional_for": []
+    },
+    {
+      "key": "diagram-consistency",
+      "title": "图与文字一致",
+      "types": [
+        "model"
+      ],
+      "tiers": [
+        "allowed",
+        "guided"
+      ],
+      "rounds": "first",
+      "needs": [
+        "images"
+      ],
+      "max_findings": 4,
+      "prompt": "读整图和局部放大图：图里的元素和配套文字 / 文档 / 代码是否一致；记号是否符合课程要求的画法。",
+      "self_check": [
+        "图里的记号是课程要求的画法吗？和文字说明一致吗？"
+      ],
+      "core": [
+        "model"
+      ],
+      "optional_for": []
+    },
+    {
+      "key": "ddl-silent",
+      "title": "能建库但有隐患",
+      "types": [
+        "model",
+        "sql"
+      ],
+      "tiers": [
+        "allowed",
+        "guided"
+      ],
+      "rounds": "first",
+      "needs": [
+        "db"
+      ],
+      "max_findings": 4,
+      "prompt": "在临时数据库里真建一次：有没有警告、弃用写法、静默截断、类型隐式转换、约束没生效。",
+      "self_check": [
+        "建库脚本跑一遍有警告吗？"
+      ],
+      "core": [],
+      "optional_for": [
+        "model",
+        "sql"
+      ]
+    }
+  ]
+}

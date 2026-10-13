@@ -6,7 +6,7 @@
 
 [![License: MIT](https://img.shields.io/badge/license-MIT-0969da.svg)](LICENSE) [![Claude Code](https://img.shields.io/badge/Claude_Code-hooks_%2B_slash_commands-cc785c.svg)](https://claude.com/claude-code) [![Python 3.9+](https://img.shields.io/badge/python-3.9%2B-3776AB.svg?logo=python&logoColor=white)](#-依赖) [![Checks](https://img.shields.io/badge/consistency_checks-14-1a7f37.svg)](#-一致性检查) [![Docs](https://img.shields.io/badge/docs-中文-8250df.svg)](docs/架构说明.md) [![LLM](https://img.shields.io/badge/LLM-Claude_%7C_DeepSeek_%7C_Kimi_%7C_OpenAI--compatible-6e7781.svg)](docs/接入其他模型.md) [![Smoke test](https://github.com/Zemmeng/claude-study-system/actions/workflows/smoke.yml/badge.svg)](https://github.com/Zemmeng/claude-study-system/actions/workflows/smoke.yml)
 
-**中文** · [English](README_en.md) · [架构说明](docs/架构说明.md) · [自定义指南](docs/自定义指南.md) · [接入其他模型](docs/接入其他模型.md) · [规则档案](shared/规则档案.md)
+**中文** · [English](README_en.md) · [架构说明](docs/架构说明.md) · [自定义指南](docs/自定义指南.md) · [接入其他模型](docs/接入其他模型.md) · [作业审查](docs/作业审查.md) · [规则档案](shared/规则档案.md)
 
 </div>
 
@@ -29,6 +29,7 @@
 - [一个会话的生命周期](#-一个会话的生命周期)
 - [学一份课件](#-学一份课件)
 - [写文件分区](#-写文件分区)
+- [交前审查](#-交前审查)
 - [实际长什么样](#-实际长什么样)
 - [快速开始](#-快速开始)
 - [接入其他模型](#-接入其他模型)
@@ -89,6 +90,29 @@
 
 </td>
 </tr>
+<tr>
+<td valign="top">
+
+**🔍 交前多 agent 审查**
+
+`/审查`：多个 Sonnet 按镜头并行找问题 → 核实 → 判官出报告。按作业的 AI 政策分三档，不允许 AI 的作业只指出问题、不给答案。
+
+</td>
+<td valign="top">
+
+**🔌 不绑定模型**
+
+Claude Code 可以改用 DeepSeek、Kimi、GLM；自带运行时 `./study` 能接任何 OpenAI 兼容模型。
+
+</td>
+<td valign="top">
+
+**🧪 每次推送自动验证**
+
+GitHub Actions 在 Ubuntu 和 macOS 上跑新用户部署、运行时协议、审查编排三套测试。
+
+</td>
+</tr>
 </table>
 
 ## 🧱 架构总览
@@ -122,6 +146,23 @@
 ## 🔐 写文件分区
 
 <p align="center"><img src="docs/assets/write-partition.svg" alt="学习类与总控类会话的写权限和交接单通道" width="100%"></p>
+
+## 🔍 交前审查
+
+<p align="center"><img src="docs/assets/review-flow.svg" alt="作业交前审查：三档政策和七步流程" width="100%"></p>
+
+写完作业、交之前说一句「审一下」（或 `/审查 <课程> <代号>`）。它从原作者一个学期里 5 套真实的交前审查提炼而来，40 条踩过的坑逐条落成了规则。
+
+| | 做法 |
+|---|---|
+| **档位** | 读 `CLAUDE.md` 分级表里**那一份作业**的那一行定档，只能等于或严于它；表里没有的（未核）最多 `guided` |
+| **镜头** | 30 个镜头按作业类型（报告 · SQL · 代码 · 计算 · 简答 · 建模）选默认组合，`shared/工具/审查镜头库.json` 可增可减 |
+| **核实** | 每条发现先由 facts 镜头亲自核原文（默认不成立），成立的再由 marker 判会不会扣分；判官复现每一条必改 |
+| **防泄漏** | `guided` 档四层：schema 里没有改法字段 → prompt 禁止 → 正则剥除 → 判官通读删答案 |
+| **规模** | 默认 ≤ 10 个 agent，开跑前问一次；超过要单独同意。每个 agent 先落盘，撞限额能续跑 |
+| **不用 Claude Code** | `python3 shared/工具/作业审查.py run …` 用 `.env` 里的任意模型跑简化版（不运行代码、不看图，报告里写明）|
+
+设计、schema 和 40 条教训见 **[作业审查](docs/作业审查.md)**。
 
 ## 📸 实际长什么样
 
@@ -196,6 +237,7 @@ cp .env.example .env      # 填 STUDY_PROVIDER（deepseek · kimi · glm · qwen
 | `/next` | 现算学习看板 PDF（`/总控` 的子流程）|
 | `/week` | 周复盘 + 下周计划 |
 | `/drill <课程> <知识点>` | 出题考你，用于复习和收尾卷 |
+| `/审查 <课程> <代号>` | 作业交前审查（`/作业` 的子流程）：多 agent 找问题 → 核实 → 判官出报告，按 AI 政策分三档 |
 | `/预扫` | 新课件到手先扫一遍：页数 · 页脚 offset · 是不是续篇 · 动画帧 · 前置链 |
 
 不想记命令也行：直接说「学 algorithms w02-L1」「我下了 w03 的录音」「有截图了」「编译一下」，Claude 自己会走对应的流程。
@@ -233,7 +275,8 @@ CLAUDE.md                  常驻规则：会话类型 · 怎么讲 / 出题 / �
 .claude/
 ├── settings.json          三道门的 hook 注册
 ├── hooks/                 inject-context.sh · inject-time.sh · stop-check.sh
-└── commands/              /学 /作业 /总控 /next /week /drill /预扫
+├── commands/              /学 /作业 /总控 /审查 /next /week /drill /预扫
+└── workflows/             assignment-review.js（/审查 用的保存型 workflow）
 shared/
 ├── 配置.json              ⭐ 唯一要按自己学期改的配置
 ├── 模型预设.json           各家模型的接口地址和默认模型
@@ -251,7 +294,7 @@ shared/
 ├── 工具手册.md            杂活怎么做：转录 · 截图 · 归档 · 预扫 · 邮箱 · LaTeX
 ├── 规则档案.md            每条规则为什么存在
 ├── API笔记/               探过的工具 API（Canvas · Ed …）
-└── 工具/                  初始化.py 配置.py 导航.py 检查.py 预扫.py 切换模型.py 对齐.py 转录.sh …
+└── 工具/                  初始化.py 配置.py 导航.py 检查.py 预扫.py 作业审查.py 审查镜头库.json 切换模型.py …
 <课程>/                    示例：algorithms/ networks/
 ├── CLAUDE.md              这门课的考核、hurdle、考试形式
 ├── 课件/  课件/_预扫/      PDF + 每份 deck 的机械事实
@@ -260,8 +303,8 @@ shared/
 └── 答题表达套件.md         把概念写成得分英文句的句式库
 study  runtime/            自带运行时：接任意 OpenAI 兼容模型（配置 · 模型客户端 · hook 调度 · 工具）
 .env.example               模型配置模板（复制成 .env，不会被提交）
-docs/                      架构说明 · 自定义指南 · 接入其他模型 · 图（tools/gen_diagrams.py 重新生成）
-tests/                     smoke.sh：新用户从 clone 到部署 · runtime_test.py：自带运行时协议测试
+docs/                      架构说明 · 自定义指南 · 接入其他模型 · 作业审查 · 图（tools/gen_diagrams.py 重新生成）
+tests/                     smoke.sh 部署 · runtime_test.py 运行时 · workflow_harness.mjs + review_test.py 审查
 ```
 
 </details>

@@ -437,7 +437,73 @@ def partition():
     s.save("write-partition.svg", "学习类与总控类会话各自能写的文件，以及交接单通道")
 
 
-banner(); architecture(); lifecycle(); study_loop(); partition()
+# ====================================================================== review flow
+def review_flow():
+    W, H = 1200, 560
+    s = SVG(W, H, "作业交前审查")
+    s.rect(0.5, 0.5, W - 1, H - 1, "bg", rx=16)
+    s.text(40, 52, "作业交前审查（/审查）", "t", 24, 700)
+    s.text(40, 80, "按那份作业的 AI 政策分三档 · 默认 ≤ 10 个 agent · 扇出全用 sonnet，只有判官用主模型 · 每个 agent 先落盘再返回", "m", 14)
+
+    # 三档
+    tiers = [("allowed", "允许 AI", "给改法：OLD → NEW，他挑着改", "green"),
+             ("guided", "不允许 AI 产出最终件", "只指出哪里错、为什么扣分，不给答案", "orange"),
+             ("forbidden", "spec 禁止任何 AI", "不跑 AI 审查，只出一份自查清单", "red")]
+    for i, (k, a, b, c) in enumerate(tiers):
+        x = 40 + i * 380
+        card(s, x, 102, 360, 76, c)
+        s.chip(x + 20, 116, k, c, 13, mono=True, h=24)
+        s.text(x + 20 + tw(k, 13, True) + 30, 133, a, "t", 14.5, 700, maxw=360 - tw(k, 13, True) - 60)
+        s.text(x + 20, 162, b, "m", 13, maxw=330)
+
+    # 主流程
+    y = 214
+    steps = [
+        (40, 150, "① 定档位", "只能等于或严于分级表", "gray", None),
+        (210, 150, "② 机械预检", "冻结 · 哈希 · 页数字数", "gray", None),
+        (380, 130, "③ 问一次", "N 个 agent · 开始？", "gray", None),
+        (530, 170, "④ Find", "每个镜头一个 finder", "blue", "sonnet × 4–5"),
+        (720, 130, "⑤ Merge", "去重 · 核引文", "blue", "sonnet × 1"),
+        (870, 150, "⑥ Verify", "facts → marker", "orange", "sonnet × 2"),
+        (1040, 120, "⑦ Judge", "复现 · 分级", "purple", "主模型 × 1"),
+    ]
+    for (x, w, a, b, c, m) in steps:
+        card(s, x, y, w, 92, c, accent=(c != "gray"))
+        s.text(x + w / 2, y + 32, a, "t", 15, 700, "middle", maxw=w - 14)
+        s.text(x + w / 2, y + 54, b, "m", 12.5, anchor="middle", maxw=w - 14)
+        if m:
+            s.text(x + w / 2, y + 76, m, "c-" + c, 12, 600, "middle", mono=True, maxw=w - 14)
+    for x1, x2 in [(190, 210), (360, 380), (510, 530), (700, 720), (850, 870), (1020, 1040)]:
+        s.line([(x1, y + 46), (x2 - 2, y + 46)])
+
+    # forbidden 分支
+    s.path(f"M115,{y + 92} L115,{y + 128} L300,{y + 128}", color="red")
+    s.rect(302, y + 110, 330, 38, "s-red", rx=8)
+    s.add(f'<rect x="302" y="{y + 110}" width="330" height="38" rx="8" fill="none" class="k-red" stroke-width="1.2"/>')
+    s.text(318, y + 134, "forbidden → 作业审查.py checklist（零模型 · 零网络）", "c-red", 13, 600)
+
+    # 报告 → 他改 → 下一轮
+    ry = 400
+    card(s, 40, ry, 340, 120, "purple")
+    s.text(62, ry + 32, "报告（报告-rN.md → PDF）", "t", 15, 700)
+    for j, t in enumerate(["必改 · 值得改 · 留着不改（理由必填）", "已驳回进 settled，下一轮不再提", "只给客观计数，不写「可以交了」"]):
+        s.text(62, ry + 58 + j * 21, t, "m", 13)
+    card(s, 400, ry, 360, 120, "green")
+    s.text(422, ry + 32, "他决定改哪些", "t", 15, 700)
+    for j, t in enumerate(["allowed：多选挑补丁，「我改 / 你自己改」", "guided：他自己改，我只重跑机械检查", "改完 prep --round N+1，只审差异"]):
+        s.text(422, ry + 58 + j * 21, t, "m", 13)
+    card(s, 780, ry, 380, 120, "gray", accent=False)
+    s.text(802, ry + 32, "停下来的条件（任一）", "t", 15, 700)
+    for j, t in enumerate(["没有新的必改 / 值得改 · 跑满 3 轮", "哈希没变 · 必改全是上一轮引入的回归", "离截止不到 6 小时 · 他说停"]):
+        s.text(802, ry + 58 + j * 21, t, "m", 13)
+    s.line([(1100, y + 92), (1100, 372), (210, 372), (210, ry - 2)], color="purple")
+    s.line([(380, ry + 60), (398, ry + 60)])
+    s.line([(760, ry + 60), (778, ry + 60)])
+    s.save("review-flow.svg", "作业交前审查的三档政策和七步流程")
+
+
+
+banner(); architecture(); lifecycle(); study_loop(); partition(); review_flow()
 for w in WARN:
     print("⚠️", w)
 print("done:", sorted(os.listdir(OUT)))

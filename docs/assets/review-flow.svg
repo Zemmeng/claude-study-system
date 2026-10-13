@@ -1,0 +1,116 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="560" viewBox="0 0 1200 560" role="img" aria-label="作业交前审查">
+<title>作业交前审查</title><desc>作业交前审查的三档政策和七步流程</desc>
+<style>
+text{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Hiragino Sans GB","Microsoft YaHei","Noto Sans CJK SC","Noto Sans SC",sans-serif}
+.mono{font-family:"SF Mono",SFMono-Regular,Menlo,Consolas,"Liberation Mono","PingFang SC","Microsoft YaHei",monospace}
+.bg{fill:#ffffff;stroke:#d1d9e0}
+.band{fill:#f6f8fa;stroke:#d1d9e0}
+.card{fill:#ffffff;stroke:#d1d9e0}
+.t{fill:#1f2328}.m{fill:#59636e}.w{fill:#ffffff}
+.ln{stroke:#8c959f;fill:none}.ahf{fill:#8c959f}
+.k-blue{stroke:#0969da}.f-blue{fill:#0969da}.s-blue{fill:#ddf4ff}.c-blue{fill:#0969da}
+.k-orange{stroke:#bc4c00}.f-orange{fill:#bc4c00}.s-orange{fill:#fff1e5}.c-orange{fill:#bc4c00}
+.k-green{stroke:#1a7f37}.f-green{fill:#1a7f37}.s-green{fill:#dafbe1}.c-green{fill:#1a7f37}
+.k-red{stroke:#cf222e}.f-red{fill:#cf222e}.s-red{fill:#ffebe9}.c-red{fill:#cf222e}
+.k-purple{stroke:#8250df}.f-purple{fill:#8250df}.s-purple{fill:#fbefff}.c-purple{fill:#8250df}
+.k-gray{stroke:#818b98}.f-gray{fill:#59636e}.s-gray{fill:#f6f8fa}.c-gray{fill:#59636e}
+.g0{stop-color:#f6f8fa}.g1{stop-color:#eaf2ff}
+.slide{fill:#ffffff;stroke:#d1d9e0}.ph{fill:#d1d9e0}
+@media (prefers-color-scheme: dark){
+.bg{fill:#0d1117;stroke:#3d444d}
+.band{fill:#151b23;stroke:#3d444d}
+.card{fill:#0d1117;stroke:#3d444d}
+.t{fill:#e6edf3}.m{fill:#9198a1}
+.ln{stroke:#656c76}.ahf{fill:#656c76}
+.k-blue{stroke:#4493f8}.f-blue{fill:#1f6feb}.s-blue{fill:rgba(56,139,253,.15)}.c-blue{fill:#4493f8}
+.k-orange{stroke:#f0883e}.f-orange{fill:#bd561d}.s-orange{fill:rgba(219,109,40,.15)}.c-orange{fill:#f0883e}
+.k-green{stroke:#3fb950}.f-green{fill:#238636}.s-green{fill:rgba(46,160,67,.15)}.c-green{fill:#3fb950}
+.k-red{stroke:#f85149}.f-red{fill:#da3633}.s-red{fill:rgba(248,81,73,.15)}.c-red{fill:#f85149}
+.k-purple{stroke:#ab7df8}.f-purple{fill:#8957e5}.s-purple{fill:rgba(171,125,248,.15)}.c-purple{fill:#ab7df8}
+.k-gray{stroke:#656c76}.f-gray{fill:#6e7681}.s-gray{fill:rgba(110,118,129,.12)}.c-gray{fill:#9198a1}
+.g0{stop-color:#0d1117}.g1{stop-color:#132039}
+.slide{fill:#151b23;stroke:#3d444d}.ph{fill:#3d444d}
+}
+</style>
+<defs><marker id="ah-blue" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="c-blue"/></marker><marker id="ah-orange" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="c-orange"/></marker><marker id="ah-green" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="c-green"/></marker><marker id="ah-red" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="c-red"/></marker><marker id="ah-purple" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="c-purple"/></marker><marker id="ah-gray" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="c-gray"/></marker><marker id="ah-n" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="ahf"/></marker><linearGradient id="hero" x1="0" y1="0" x2="1" y2="1"><stop offset="0" class="g0"/><stop offset="1" class="g1"/></linearGradient></defs>
+<rect x="0.5" y="0.5" width="1199" height="559" rx="16" class="bg" />
+<text x="40" y="52" class="t" font-size="24" font-weight="700" text-anchor="start">作业交前审查（/审查）</text>
+<text x="40" y="80" class="m" font-size="14" font-weight="400" text-anchor="start">按那份作业的 AI 政策分三档 · 默认 ≤ 10 个 agent · 扇出全用 sonnet，只有判官用主模型 · 每个 agent 先落盘再返回</text>
+<rect x="40" y="102" width="360" height="76" rx="10" class="card" stroke-width="1"/>
+<rect x="41" y="114" width="4" height="52" rx="2" class="f-green" />
+<rect x="60" y="116" width="72.6" height="24" rx="12.0" class="f-green" />
+<text x="96.3" y="132.68" class="w mono" font-size="13" font-weight="600" text-anchor="middle">allowed</text>
+<text x="144.6" y="133" class="t" font-size="14.5" font-weight="700" text-anchor="start">允许 AI</text>
+<text x="60" y="162" class="m" font-size="13" font-weight="400" text-anchor="start">给改法：OLD → NEW，他挑着改</text>
+<rect x="420" y="102" width="360" height="76" rx="10" class="card" stroke-width="1"/>
+<rect x="421" y="114" width="4" height="52" rx="2" class="f-orange" />
+<rect x="440" y="116" width="64.8" height="24" rx="12.0" class="f-orange" />
+<text x="472.4" y="132.68" class="w mono" font-size="13" font-weight="600" text-anchor="middle">guided</text>
+<text x="516.8" y="133" class="t" font-size="14.5" font-weight="700" text-anchor="start">不允许 AI 产出最终件</text>
+<text x="440" y="162" class="m" font-size="13" font-weight="400" text-anchor="start">只指出哪里错、为什么扣分，不给答案</text>
+<rect x="800" y="102" width="360" height="76" rx="10" class="card" stroke-width="1"/>
+<rect x="801" y="114" width="4" height="52" rx="2" class="f-red" />
+<rect x="820" y="116" width="88.19999999999999" height="24" rx="12.0" class="f-red" />
+<text x="864.1" y="132.68" class="w mono" font-size="13" font-weight="600" text-anchor="middle">forbidden</text>
+<text x="920.2" y="133" class="t" font-size="14.5" font-weight="700" text-anchor="start">spec 禁止任何 AI</text>
+<text x="820" y="162" class="m" font-size="13" font-weight="400" text-anchor="start">不跑 AI 审查，只出一份自查清单</text>
+<rect x="40" y="214" width="150" height="92" rx="10" class="card" stroke-width="1"/>
+<text x="115.0" y="246" class="t" font-size="15" font-weight="700" text-anchor="middle">① 定档位</text>
+<text x="115.0" y="268" class="m" font-size="12.5" font-weight="400" text-anchor="middle">只能等于或严于分级表</text>
+<rect x="210" y="214" width="150" height="92" rx="10" class="card" stroke-width="1"/>
+<text x="285.0" y="246" class="t" font-size="15" font-weight="700" text-anchor="middle">② 机械预检</text>
+<text x="285.0" y="268" class="m" font-size="12.5" font-weight="400" text-anchor="middle">冻结 · 哈希 · 页数字数</text>
+<rect x="380" y="214" width="130" height="92" rx="10" class="card" stroke-width="1"/>
+<text x="445.0" y="246" class="t" font-size="15" font-weight="700" text-anchor="middle">③ 问一次</text>
+<text x="445.0" y="268" class="m" font-size="12.5" font-weight="400" text-anchor="middle">N 个 agent · 开始？</text>
+<rect x="530" y="214" width="170" height="92" rx="10" class="card" stroke-width="1"/>
+<rect x="531" y="226" width="4" height="68" rx="2" class="f-blue" />
+<text x="615.0" y="246" class="t" font-size="15" font-weight="700" text-anchor="middle">④ Find</text>
+<text x="615.0" y="268" class="m" font-size="12.5" font-weight="400" text-anchor="middle">每个镜头一个 finder</text>
+<text x="615.0" y="290" class="c-blue mono" font-size="12" font-weight="600" text-anchor="middle">sonnet × 4–5</text>
+<rect x="720" y="214" width="130" height="92" rx="10" class="card" stroke-width="1"/>
+<rect x="721" y="226" width="4" height="68" rx="2" class="f-blue" />
+<text x="785.0" y="246" class="t" font-size="15" font-weight="700" text-anchor="middle">⑤ Merge</text>
+<text x="785.0" y="268" class="m" font-size="12.5" font-weight="400" text-anchor="middle">去重 · 核引文</text>
+<text x="785.0" y="290" class="c-blue mono" font-size="12" font-weight="600" text-anchor="middle">sonnet × 1</text>
+<rect x="870" y="214" width="150" height="92" rx="10" class="card" stroke-width="1"/>
+<rect x="871" y="226" width="4" height="68" rx="2" class="f-orange" />
+<text x="945.0" y="246" class="t" font-size="15" font-weight="700" text-anchor="middle">⑥ Verify</text>
+<text x="945.0" y="268" class="m" font-size="12.5" font-weight="400" text-anchor="middle">facts → marker</text>
+<text x="945.0" y="290" class="c-orange mono" font-size="12" font-weight="600" text-anchor="middle">sonnet × 2</text>
+<rect x="1040" y="214" width="120" height="92" rx="10" class="card" stroke-width="1"/>
+<rect x="1041" y="226" width="4" height="68" rx="2" class="f-purple" />
+<text x="1100.0" y="246" class="t" font-size="15" font-weight="700" text-anchor="middle">⑦ Judge</text>
+<text x="1100.0" y="268" class="m" font-size="12.5" font-weight="400" text-anchor="middle">复现 · 分级</text>
+<text x="1100.0" y="290" class="c-purple mono" font-size="12" font-weight="600" text-anchor="middle">主模型 × 1</text>
+<path d="M190,260 L208,260" class="ln" fill="none" stroke-width="1.6"  marker-end="url(#ah-n)"/>
+<path d="M360,260 L378,260" class="ln" fill="none" stroke-width="1.6"  marker-end="url(#ah-n)"/>
+<path d="M510,260 L528,260" class="ln" fill="none" stroke-width="1.6"  marker-end="url(#ah-n)"/>
+<path d="M700,260 L718,260" class="ln" fill="none" stroke-width="1.6"  marker-end="url(#ah-n)"/>
+<path d="M850,260 L868,260" class="ln" fill="none" stroke-width="1.6"  marker-end="url(#ah-n)"/>
+<path d="M1020,260 L1038,260" class="ln" fill="none" stroke-width="1.6"  marker-end="url(#ah-n)"/>
+<path d="M115,306 L115,342 L300,342" class="k-red" fill="none" stroke-width="1.6"  marker-end="url(#ah-red)"/>
+<rect x="302" y="324" width="330" height="38" rx="8" class="s-red" />
+<rect x="302" y="324" width="330" height="38" rx="8" fill="none" class="k-red" stroke-width="1.2"/>
+<text x="318" y="348" class="c-red" font-size="13" font-weight="600" text-anchor="start">forbidden → 作业审查.py checklist（零模型 · 零网络）</text>
+<rect x="40" y="400" width="340" height="120" rx="10" class="card" stroke-width="1"/>
+<rect x="41" y="412" width="4" height="96" rx="2" class="f-purple" />
+<text x="62" y="432" class="t" font-size="15" font-weight="700" text-anchor="start">报告（报告-rN.md → PDF）</text>
+<text x="62" y="458" class="m" font-size="13" font-weight="400" text-anchor="start">必改 · 值得改 · 留着不改（理由必填）</text>
+<text x="62" y="479" class="m" font-size="13" font-weight="400" text-anchor="start">已驳回进 settled，下一轮不再提</text>
+<text x="62" y="500" class="m" font-size="13" font-weight="400" text-anchor="start">只给客观计数，不写「可以交了」</text>
+<rect x="400" y="400" width="360" height="120" rx="10" class="card" stroke-width="1"/>
+<rect x="401" y="412" width="4" height="96" rx="2" class="f-green" />
+<text x="422" y="432" class="t" font-size="15" font-weight="700" text-anchor="start">他决定改哪些</text>
+<text x="422" y="458" class="m" font-size="13" font-weight="400" text-anchor="start">allowed：多选挑补丁，「我改 / 你自己改」</text>
+<text x="422" y="479" class="m" font-size="13" font-weight="400" text-anchor="start">guided：他自己改，我只重跑机械检查</text>
+<text x="422" y="500" class="m" font-size="13" font-weight="400" text-anchor="start">改完 prep --round N+1，只审差异</text>
+<rect x="780" y="400" width="380" height="120" rx="10" class="card" stroke-width="1"/>
+<text x="802" y="432" class="t" font-size="15" font-weight="700" text-anchor="start">停下来的条件（任一）</text>
+<text x="802" y="458" class="m" font-size="13" font-weight="400" text-anchor="start">没有新的必改 / 值得改 · 跑满 3 轮</text>
+<text x="802" y="479" class="m" font-size="13" font-weight="400" text-anchor="start">哈希没变 · 必改全是上一轮引入的回归</text>
+<text x="802" y="500" class="m" font-size="13" font-weight="400" text-anchor="start">离截止不到 6 小时 · 他说停</text>
+<path d="M1100,306 L1100,372 L210,372 L210,398" class="k-purple" fill="none" stroke-width="1.6"  marker-end="url(#ah-purple)"/>
+<path d="M380,460 L398,460" class="ln" fill="none" stroke-width="1.6"  marker-end="url(#ah-n)"/>
+<path d="M760,460 L778,460" class="ln" fill="none" stroke-width="1.6"  marker-end="url(#ah-n)"/>
+</svg>

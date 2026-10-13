@@ -40,3 +40,10 @@ jobs:
           LANG: C.UTF-8
           PYTHONIOENCODING: utf-8
         run: python3 tests/runtime_test.py
+      - name: Review workflow orchestration (offline harness)
+        run: node tests/workflow_harness.mjs
+      - name: Review tool (mock LLM server)
+        env:
+          LANG: C.UTF-8
+          PYTHONIOENCODING: utf-8
+        run: python3 tests/review_test.py

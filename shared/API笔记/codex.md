@@ -50,3 +50,14 @@ Codex 自己的 finding：反过来由 3 个 Sonnet 判官投票
 
 workflow 脚本自己写（agent 数 > 10 先问他，见主 `CLAUDE.md`「大规模开 subagent」节）；
 每个 agent 先落盘再返回的做法见 `shared/工具手册.md`。
+
+## 在 `/审查` 里怎么用
+
+`/审查` 的 workflow 里有一个可选的 `xmodel-runner`（`args.xmodel: true`），它照上面的配方：
+隔离副本 + `git init` + README（已知且刻意 / 已修 / settled）→ `codex exec … </dev/null` → 把 Codex 的发现转成和 Sonnet finder 同一个 schema。
+
+- 没装 Codex：runner 直接返回「跳过」，报告里写 `xmodelState: skipped`，不报错。
+- Codex 的发现**走同一条核实流水线**（facts → marker → 判官），不直接采信；它的改写**只采纳问题，不采纳措辞**。
+- 原始输出留在 scratch 目录，不写进学生的作业目录。
+- 每份作业累计 ≤ 2 次（额度有限）。
+

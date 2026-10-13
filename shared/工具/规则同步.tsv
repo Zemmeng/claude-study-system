@@ -13,9 +13,10 @@ SESS-PARTITION	两类会话可以并行	.claude/commands/学.md;.claude/commands
 HANDOVER	shared/交接/	.claude/commands/学.md;.claude/commands/作业.md;.claude/commands/总控.md;.claude/commands/next.md	交接	3b83c64b	学习会话回写账本的唯一通道
 SESSION-REG	活动会话\.tsv	.claude/commands/学.md;.claude/commands/作业.md;.claude/commands/总控.md	活动会话\.tsv	7beca0c9	会话开场登记 + 收尾翻 done
 DASH-2PDF	两份\*\*现算、现编译、一起发	.claude/commands/next.md	两份一起发|两份 PDF 一起	e06cad4c	看板和 DDL 总表两份一起发
-AI-POLICY	但这条\*\*按课分级\*\*	.claude/commands/作业.md	唯一出处	98153658	AI 政策唯一出处是主文件那张表
+AI-POLICY	但这条\*\*按课分级\*\*	.claude/commands/作业.md	唯一出处	c47d3956	AI 政策唯一出处是主文件那张表
 PRESCAN-SAVE	\*\*预扫\*\*有两条路	.claude/commands/学.md;.claude/commands/总控.md;.claude/commands/预扫.md	--save	7125db96	预扫落盘用 --save，不手抄
 NO-MORNING	不许出现「上午」	.claude/commands/next.md	上午	98cb3017	排时段不许出现「上午」（他 12 点起床）
 ALIGN	对齐\.py	.claude/commands/总控.md;.claude/commands/next.md;.claude/commands/week.md	对齐\.py	b92524ba	总控每次发言都跑对齐.py
 QUIZ-EN	题目一律全英文	.claude/commands/学.md;.claude/hooks/inject-time.sh	全英文	4b370478	出题全英文（题干/选项/指令），hook 每条消息注入
 TEACH-VIVID	不许照搬课件和老师的抽象措辞	.claude/commands/学.md	抽象措辞|生动形象	e41ecbd1	讲课先给能「看见」的场景再上术语（09-14 他定）
+REVIEW-TIER	严于这张表那一行	.claude/commands/审查.md;.claude/commands/作业.md	严于分级表|严于那一行	f599a706	交前审查的档位只能等于或严于分级表（未核最多 guided）
